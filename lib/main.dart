@@ -1,10 +1,13 @@
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_config/flutter_config.dart';
 
 import 'common/beach_combine.dart';
 import 'screens/home_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); //추가
+  await FlutterConfig.loadEnvVariables(); //추가
   runApp(const MyApp());
 }
 
@@ -14,6 +17,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    print(FlutterConfig.get('ANDROID_MAP_KEY'));
     return MaterialApp(
       title: 'Beach-Combine',
       debugShowCheckedModeBanner: false,
