@@ -1,3 +1,4 @@
+import 'package:beach_combine/screens/Ranking/all_time_ranking_screen.dart';
 import 'package:beach_combine/screens/Ranking/month_ranking_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:flutter/material.dart';
@@ -40,9 +41,7 @@ class RankingScreen extends StatelessWidget {
           body: TabBarView(
             children: [
               MonthRankingScreen(),
-              Center(
-                child: Text('All time'),
-              ),
+              AllTimeRankingScreen(),
             ],
           )),
     );

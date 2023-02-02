@@ -1,5 +1,6 @@
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 class RankingCard extends StatelessWidget {
   final bool isMe;
@@ -19,27 +20,47 @@ class RankingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: isMe ? Color(0x445CDEB7) : Styles.whiteColor,
       width: double.infinity,
       height: 80,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            '$index',
-            style: Styles.body12Text,
+      child: Stack(children: [
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 24, right: 24),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  '$index',
+                  style: Styles.body12Text,
+                ),
+                Gap(30),
+                CircleAvatar(
+                  radius: 22,
+                  backgroundImage: AssetImage(path),
+                ),
+                Gap(15),
+                Text(
+                  '$nickname',
+                  style: Styles.body12Text,
+                ),
+                Spacer(),
+                Text(
+                  '${point}pt',
+                  style: Styles.body21Text,
+                )
+              ],
+            ),
           ),
-          CircleAvatar(
-            radius: 22,
-            backgroundImage: AssetImage(path),
-          ),
-          Text('$nickname'),
-          Spacer(),
-          Text(
-            '${point}pt',
-            style: Styles.body21Text,
-          )
-        ],
-      ),
+        ),
+        isMe
+            ? Container(
+                color: Styles.primaryColor,
+                height: 80,
+                width: 10,
+              )
+            : Gap(0)
+      ]),
     );
   }
 }

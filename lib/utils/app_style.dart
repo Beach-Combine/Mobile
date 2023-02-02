@@ -52,4 +52,16 @@ class Styles {
       fontWeight: FontWeight.w500,
       height: 1.5,
       letterSpacing: -0.24);
+  static TextStyle number1Text = TextStyle(
+      fontFamily: 'SpoqaHanSansNeo',
+      fontSize: 36,
+      fontWeight: FontWeight.w700,
+      height: 1.5,
+      letterSpacing: -0.24);
+  static TextStyle number2Text = TextStyle(
+      fontFamily: 'SpoqaHanSansNeo',
+      fontSize: 20,
+      fontWeight: FontWeight.w700,
+      height: 1.5,
+      letterSpacing: -0.24);
 }
