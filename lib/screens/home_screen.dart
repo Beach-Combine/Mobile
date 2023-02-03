@@ -1,5 +1,6 @@
 import 'dart:ui' as ui;
 
+import 'package:beach_combine/utils/app_style.dart';
 import 'package:beach_combine/widgets/home_appbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   addMarkers() async {
     final Uint8List markerIcon =
-        await getBytesFromAsset('assets/icons/selfmarker.png', 150);
+        await getBytesFromAsset('assets/icons/selfmarker.png', 180);
     final Marker marker = Marker(
         icon: BitmapDescriptor.fromBytes(markerIcon),
         markerId: MarkerId('self'),
@@ -88,19 +89,16 @@ class _DoubleFloatingButton extends StatelessWidget {
         children: [
           GestureDetector(
             child: Container(
-              height: 65,
-              width: 250,
+              height: 60,
+              width: 222,
               decoration: BoxDecoration(
                   color: Colors.black, borderRadius: BorderRadius.circular(50)),
               child: Center(
-                  child: Text(
-                "Start cleaning here",
-                style: GoogleFonts.poppins(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 18,
-                  color: Colors.white,
+                child: Text(
+                  "Start cleaning here",
+                  style: Styles.body12TextWhite,
                 ),
-              )),
+              ),
             ),
             onTap: () {},
           ),
@@ -109,8 +107,8 @@ class _DoubleFloatingButton extends StatelessWidget {
           ),
           GestureDetector(
             child: Container(
-              height: 65,
-              width: 65,
+              height: 60,
+              width: 60,
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(100)),

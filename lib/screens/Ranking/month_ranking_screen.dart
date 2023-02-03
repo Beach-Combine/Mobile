@@ -11,6 +11,7 @@ class MonthRankingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Styles.whiteColor,
         body: SingleChildScrollView(
           physics: ScrollPhysics(),
           child: Column(

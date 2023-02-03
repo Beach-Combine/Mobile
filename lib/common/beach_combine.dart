@@ -1,6 +1,6 @@
 import 'package:beach_combine/screens/Ranking/ranking_screen.dart';
 import 'package:beach_combine/screens/community_screen.dart';
-import 'package:beach_combine/screens/mine_screen.dart';
+import 'package:beach_combine/screens/Mine/mine_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

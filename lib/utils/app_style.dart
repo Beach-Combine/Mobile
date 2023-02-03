@@ -37,6 +37,12 @@ class Styles {
       fontWeight: FontWeight.w500,
       height: 1.5,
       letterSpacing: -0.24);
+  static TextStyle body12TextWhite = GoogleFonts.poppins(
+      fontSize: 16,
+      color: Colors.white,
+      fontWeight: FontWeight.w500,
+      height: 1.5,
+      letterSpacing: -0.24);
   static TextStyle body21Text = GoogleFonts.poppins(
       fontSize: 14,
       fontWeight: FontWeight.w400,
@@ -44,6 +50,12 @@ class Styles {
       letterSpacing: -0.24);
   static TextStyle body3Text = GoogleFonts.poppins(
       fontSize: 12,
+      fontWeight: FontWeight.w400,
+      height: 1.5,
+      letterSpacing: -0.24);
+  static TextStyle body3TextGray1 = GoogleFonts.poppins(
+      fontSize: 12,
+      color: gray1Color,
       fontWeight: FontWeight.w400,
       height: 1.5,
       letterSpacing: -0.24);
@@ -64,4 +76,5 @@ class Styles {
       fontWeight: FontWeight.w700,
       height: 1.5,
       letterSpacing: -0.24);
+  //static double bottomBarHeight;
 }
