@@ -1,5 +1,5 @@
 import 'package:beach_combine/screens/Ranking/ranking_screen.dart';
-import 'package:beach_combine/screens/community_screen.dart';
+import 'package:beach_combine/screens/community/community_screen.dart';
 import 'package:beach_combine/screens/Mine/mine_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +36,7 @@ class _BeachCombineState extends State<BeachCombine> {
         ],
       ),
       bottomNavigationBar: Container(
-        height: MediaQuery.of(context).size.height / 9,
+        height: MediaQuery.of(context).size.height / 10,
         decoration: BoxDecoration(
           color: Colors.transparent,
           borderRadius: BorderRadius.only(

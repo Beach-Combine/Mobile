@@ -1,8 +1,9 @@
+import 'package:beach_combine/screens/community/select_to_write_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:beach_combine/widgets/flat_appbar.dart';
 import 'package:beach_combine/widgets/post_card.dart';
-import 'package:beach_combine/widgets/round_appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CommunityScreen extends StatefulWidget {
   const CommunityScreen({super.key});
@@ -24,7 +25,9 @@ class _CommunityScreenState extends State<CommunityScreen> {
               AssetImage("assets/icons/writing.png"),
               color: Styles.buttonBlackColor,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Get.to(SelectToWriteScreen());
+            },
           ),
         ),
         body: ListView.builder(
