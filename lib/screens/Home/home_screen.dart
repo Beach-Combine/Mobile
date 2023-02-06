@@ -1,11 +1,10 @@
 import 'dart:ui' as ui;
 
 import 'package:beach_combine/utils/app_style.dart';
+import 'package:beach_combine/utils/map_manager.dart';
 import 'package:beach_combine/widgets/home_appbar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -16,7 +15,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
   GoogleMapController? mapController;
   Set<Marker> markers = Set();
   LatLng sourceLocation = LatLng(35.153884196941334, 129.11847977037488);
@@ -24,31 +22,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    addMarkers();
+    _addMarkers();
     super.initState();
   }
 
-  addMarkers() async {
-    final Uint8List markerIcon =
-        await getBytesFromAsset('assets/icons/selfmarker.png', 180);
-    final Marker marker = Marker(
-        icon: BitmapDescriptor.fromBytes(markerIcon),
-        markerId: MarkerId('self'),
-        position: sourceLocation);
+  _addMarkers() async {
+    final Marker marker = await MapMananger.resizeImage(
+        sourceLocation, 'assets/icons/selfmarker.png', 'self', 180);
 
     setState(() {
       markers.add(marker);
     });
-  }
-
-  Future<Uint8List> getBytesFromAsset(String path, int width) async {
-    ByteData data = await rootBundle.load(path);
-    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
-        targetWidth: width);
-    ui.FrameInfo fi = await codec.getNextFrame();
-    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
-        .buffer
-        .asUint8List();
   }
 
   @override
@@ -65,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
               zoomControlsEnabled: false,
               myLocationButtonEnabled: true,
               initialCameraPosition:
-                  CameraPosition(target: sourceLocation, zoom: 14.5),
+                  CameraPosition(target: sourceLocation, zoom: 16.5),
               markers: markers,
             ),
             _DoubleFloatingButton(),

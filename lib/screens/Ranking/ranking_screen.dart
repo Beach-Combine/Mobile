@@ -58,6 +58,7 @@ class _RankingScreenState extends State<RankingScreen>
           ),
         ),
         body: TabBarView(
+          physics: NeverScrollableScrollPhysics(),
           controller: _tabController,
           children: [
             MonthRankingScreen(),

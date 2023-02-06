@@ -41,6 +41,7 @@ dependencies:
   get: ^4.6.5
   google_fonts: ^4.0.1
   intl: ^0.18.0
+  location: ^4.4.0
 
 dev_dependencies:
   flutter_test:

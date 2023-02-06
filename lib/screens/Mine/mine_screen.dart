@@ -1,3 +1,4 @@
+import 'package:beach_combine/screens/Mine/history_screen.dart';
 import 'package:beach_combine/screens/Mine/point_screen.dart';
 import 'package:beach_combine/screens/Mine/setting_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
@@ -69,12 +70,11 @@ class _MineScreenState extends State<MineScreen> with TickerProviderStateMixin {
           ),
         ),
         body: TabBarView(
+          physics: NeverScrollableScrollPhysics(),
           controller: _tabController,
           children: [
             PointScreen(),
-            Center(
-              child: Text('History'),
-            )
+            HistoryScreen(),
           ],
         ));
   }

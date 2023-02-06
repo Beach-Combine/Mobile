@@ -1,10 +1,10 @@
+import 'package:beach_combine/screens/Home/home_screen.dart';
 import 'package:beach_combine/screens/Ranking/ranking_screen.dart';
 import 'package:beach_combine/screens/community/community_screen.dart';
 import 'package:beach_combine/screens/Mine/mine_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../screens/home_screen.dart';
 
 class BeachCombine extends StatefulWidget {
   const BeachCombine({super.key});
