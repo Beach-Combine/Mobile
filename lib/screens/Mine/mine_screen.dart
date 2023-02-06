@@ -1,9 +1,9 @@
 import 'package:beach_combine/screens/Mine/point_screen.dart';
+import 'package:beach_combine/screens/Mine/setting_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:beach_combine/widgets/flat_tabbar.dart';
 import 'package:flutter/material.dart';
-
-import '../Ranking/month_ranking_screen.dart';
+import 'package:get/get.dart';
 
 class MineScreen extends StatefulWidget {
   const MineScreen({super.key});
@@ -24,6 +24,21 @@ class _MineScreenState extends State<MineScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          actions: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: GestureDetector(
+                onTap: () {
+                  Get.to(SettingScreen());
+                },
+                child: ImageIcon(
+                  AssetImage("assets/icons/settings.png"),
+                  color: Styles.buttonBlackColor,
+                  size: 25,
+                ),
+              ),
+            ),
+          ],
           elevation: 0,
           centerTitle: false,
           title: Text("Mine", style: Styles.titleText),

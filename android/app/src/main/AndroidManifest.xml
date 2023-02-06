@@ -3,7 +3,7 @@
    <application
         android:label="beach_combine"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/beach_conbine_logo">
         <activity
             android:name=".MainActivity"
             android:exported="true"

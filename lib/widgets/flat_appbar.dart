@@ -1,6 +1,6 @@
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
+import 'package:flutter/services.dart';
 
 class FlatAppBar extends StatelessWidget with PreferredSizeWidget {
   final double barHeight = 0;
@@ -11,10 +11,13 @@ class FlatAppBar extends StatelessWidget with PreferredSizeWidget {
       : super(key: key);
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight + barHeight);
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(statusBarColor: Colors.white // 원하는 색
+            ));
     return AppBar(
       elevation: 0,
       backgroundColor: Styles.whiteColor,

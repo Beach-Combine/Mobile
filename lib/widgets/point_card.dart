@@ -1,7 +1,9 @@
+import 'package:beach_combine/screens/Mine/purchase_history_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:beach_combine/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 
 class PointCard extends StatelessWidget {
   final int point;
@@ -38,7 +40,16 @@ class PointCard extends StatelessWidget {
           ],
         ),
         Gap(25),
-        PrimaryButton(height: 60, text: "View exchange history")
+        PrimaryButton(
+          height: 60,
+          text: "View exchange history",
+          point: point,
+          onTap: () {
+            Get.to(PurchaseHistoryScreen(
+              point: point,
+            ));
+          },
+        )
       ]),
     );
   }

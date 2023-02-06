@@ -56,6 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Container(
       color: Colors.white,
       child: SafeArea(
+        top: false,
         bottom: false,
         child: Scaffold(
           body: Stack(children: [
