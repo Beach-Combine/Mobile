@@ -28,7 +28,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   _addMarkers() async {
     final Marker marker = await MapMananger.resizeImage(
-        sourceLocation, 'assets/icons/selfmarker.png', 'self', 180);
+        sourceLocation, 'assets/icons/selfmarker.png', 'self', 180, (() {
+      print('Clicked');
+    }));
 
     setState(() {
       markers.add(marker);
@@ -81,7 +83,7 @@ class _DoubleFloatingButton extends StatelessWidget {
               child: Center(
                 child: Text(
                   "Start cleaning here",
-                  style: Styles.body12TextWhite,
+                  style: Styles.body12Text.copyWith(color: Colors.white),
                 ),
               ),
             ),

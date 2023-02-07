@@ -60,7 +60,8 @@ class PostCard extends StatelessWidget {
                         ),
                         Text(
                           location,
-                          style: Styles.body3TextGray1,
+                          style: Styles.body3Text
+                              .copyWith(color: Styles.gray1Color),
                         )
                       ],
                     ),

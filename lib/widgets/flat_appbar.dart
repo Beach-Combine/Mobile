@@ -16,7 +16,7 @@ class FlatAppBar extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(statusBarColor: Colors.white // 원하는 색
+        SystemUiOverlayStyle(statusBarColor: Styles.whiteColor // 원하는 색
             ));
     return AppBar(
       elevation: 0,
