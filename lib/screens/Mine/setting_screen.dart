@@ -1,6 +1,7 @@
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 
@@ -31,24 +32,16 @@ class SettingScreen extends StatelessWidget {
           Divider(
             color: Styles.gray1Color,
             thickness: 1,
-            height: 30,
+            height: 44,
           ),
           _ButtonText(
             text: "Logout",
           ),
-          Divider(
-            color: Styles.gray1Color,
-            thickness: 1,
-            height: 30,
-          ),
+          Gap(44),
           _ButtonText(
             text: "Delete Account",
           ),
-          Divider(
-            color: Styles.gray1Color,
-            thickness: 1,
-            height: 30,
-          ),
+          Gap(44),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

@@ -59,25 +59,29 @@ class _BeachCombineState extends State<BeachCombine> {
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: ImageIcon(
-                  AssetImage("assets/icons/home_selected.png"),
+                  AssetImage("assets/icons/home.png"),
+                  size: 20,
                 ),
                 label: 'Home',
               ),
               BottomNavigationBarItem(
                 icon: ImageIcon(
-                  AssetImage("assets/icons/ranking_selected.png"),
+                  AssetImage("assets/icons/ranking.png"),
+                  size: 20,
                 ),
                 label: 'Ranking',
               ),
               BottomNavigationBarItem(
                 icon: ImageIcon(
-                  AssetImage("assets/icons/community_selected.png"),
+                  AssetImage("assets/icons/community.png"),
+                  size: 20,
                 ),
                 label: 'Community',
               ),
               BottomNavigationBarItem(
                 icon: ImageIcon(
-                  AssetImage("assets/icons/mine_selected.png"),
+                  AssetImage("assets/icons/mine.png"),
+                  size: 20,
                 ),
                 label: 'Mine',
               ),

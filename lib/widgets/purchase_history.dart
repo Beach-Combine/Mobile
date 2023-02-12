@@ -1,5 +1,6 @@
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 
 class PurchaseHistory extends StatelessWidget {
@@ -29,7 +30,10 @@ class PurchaseHistory extends StatelessWidget {
             radius: radius,
             backgroundImage: AssetImage(path),
           ),
+          Gap(12),
           Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 name,
@@ -46,6 +50,7 @@ class PurchaseHistory extends StatelessWidget {
             'assets/icons/point.png',
             width: 18,
           ),
+          Gap(4),
           Text(
             "${point}pt",
             style: Styles.body12Text,

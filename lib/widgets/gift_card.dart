@@ -1,6 +1,7 @@
 import 'package:beach_combine/screens/Mine/purchase_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
 class GiftCard extends StatelessWidget {
@@ -36,6 +37,7 @@ class GiftCard extends StatelessWidget {
               radius: radius,
               backgroundImage: AssetImage(path),
             ),
+            Gap(12),
             Column(
               children: [
                 Text(

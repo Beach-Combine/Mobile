@@ -1,8 +1,12 @@
 import 'dart:ui' as ui;
 
+import 'package:beach_combine/screens/Home/before_camera_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:beach_combine/utils/map_manager.dart';
 import 'package:beach_combine/widgets/home_appbar.dart';
+import 'package:beach_combine/widgets/modal_dialog.dart';
+import 'package:beach_combine/widgets/trashcan_modal.dart';
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -17,8 +21,11 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   GoogleMapController? mapController;
   Set<Marker> markers = Set();
-  LatLng sourceLocation = LatLng(35.153884196941334, 129.11847977037488);
+  LatLng sourceLocation = LatLng(35.15371303154973, 129.11984887319667);
   LatLng destination = LatLng(35.153884196941334, 129.11847977037488);
+  LatLng trashcan1 = LatLng(35.15458529236469, 129.1213574320733);
+  LatLng trashcan2 = LatLng(35.15334245544671, 129.11916901035525);
+  LatLng beach = LatLng(35.15411732197925, 129.12055697747124);
 
   @override
   void initState() {
@@ -27,13 +34,56 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   _addMarkers() async {
-    final Marker marker = await MapMananger.resizeImage(
+    final Marker selfmarker = await MapMananger.resizeImage(
         sourceLocation, 'assets/icons/selfmarker.png', 'self', 180, (() {
       print('Clicked');
     }));
 
+    final Marker trashcanmarker1 = await MapMananger.resizeImage(
+        trashcan1,
+        'assets/icons/trashcan.png',
+        'trashcan1',
+        100,
+        () => showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => TrashcanModal(
+                  address:
+                      '222, Gwanganhaebyeon-ro 54beon-gil, Suyeong-gu, Busan, Republic of Korea',
+                )));
+    final Marker trashcanmarker2 = await MapMananger.resizeImage(
+        trashcan2,
+        'assets/icons/trashcan.png',
+        'trashcan2',
+        100,
+        () => showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => TrashcanModal(
+                  address:
+                      '222, Gwanganhaebyeon-ro 54beon-gil, Suyeong-gu, Busan, Republic of Korea',
+                )));
+
+    final Marker beachmarker = await MapMananger.resizeImage(
+        beach,
+        'assets/icons/beach.png',
+        'beach',
+        100,
+        () => showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => ModalDialog(
+                  afterPath: 'assets/images/after.png',
+                  beforePath: 'assets/images/AdobeStock_210419020.png',
+                  date: DateTime.utc(2022, 4, 5),
+                  location: "Gwangalli Beach",
+                  imagePath: 'assets/icons/beach.png',
+                  range: 100,
+                  time: '00:59:59',
+                )));
+
     setState(() {
-      markers.add(marker);
+      markers.add(selfmarker);
+      markers.add(trashcanmarker1);
+      markers.add(beachmarker);
+      markers.add(trashcanmarker2);
     });
   }
 
@@ -87,7 +137,12 @@ class _DoubleFloatingButton extends StatelessWidget {
                 ),
               ),
             ),
-            onTap: () {},
+            onTap: () async {
+              await availableCameras().then((value) => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => BeforeCameraScreen(cameras: value))));
+            },
           ),
           SizedBox(
             width: MediaQuery.of(context).size.width / 20,
