@@ -39,6 +39,7 @@ class GiftCard extends StatelessWidget {
             ),
             Gap(12),
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   storeName,

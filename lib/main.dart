@@ -18,7 +18,7 @@ class _App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           primaryColor: Styles.primaryColor, fontFamily: "SpoqaHanSansNeo"),
-      home: const BeachCombine(),
+      home: const BeachCombine()  ,
     );
   }
 }

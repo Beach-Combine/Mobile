@@ -29,37 +29,46 @@ class ModalDialog extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(24),
       ),
-      child: Container(
-        height: 380,
-        width: 268,
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
+      child: Wrap(children: [
+        Container(
+          width: 280,
           child: Column(
             children: [
-              _BackButton(),
-              Image.asset(
-                imagePath,
-                width: 56,
+              Padding(
+                padding: const EdgeInsets.all(5),
+                child: _BackButton(),
               ),
-              Gap(12),
-              Text(
-                DateFormat('yy.MM.dd').format(date),
-                style: Styles.body21Text.copyWith(color: Styles.gray1Color),
-              ),
-              _LocationText(
-                location: location,
-              ),
-              Gap(12),
-              _TimeRangeText(time: time, range: range),
-              Gap(12),
-              _BeforeAfterImage(
-                beforePath: beforePath,
-                afterPath: afterPath,
+              Padding(
+                padding: const EdgeInsets.only(right: 24, left: 24, bottom: 24),
+                child: Column(
+                  children: [
+                    Image.asset(
+                      imagePath,
+                      width: 56,
+                    ),
+                    Gap(12),
+                    Text(
+                      DateFormat('yy.MM.dd').format(date),
+                      style:
+                          Styles.body21Text.copyWith(color: Styles.gray1Color),
+                    ),
+                    _LocationText(
+                      location: location,
+                    ),
+                    Gap(12),
+                    _TimeRangeText(time: time, range: range),
+                    Gap(12),
+                    _BeforeAfterImage(
+                      beforePath: beforePath,
+                      afterPath: afterPath,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
         ),
-      ),
+      ]),
     );
   }
 }

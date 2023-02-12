@@ -1,5 +1,6 @@
 import 'package:beach_combine/common/beach_combine.dart';
 import 'package:beach_combine/screens/Home/home_screen.dart';
+import 'package:beach_combine/screens/Home/method_select_screen.dart';
 import 'package:beach_combine/screens/Home/preview_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:camera/camera.dart';
@@ -93,19 +94,20 @@ class _AfterCameraScreenState extends State<AfterCameraScreen> {
                       children: [
                         Expanded(
                             child: IconButton(
-                          onPressed: () {
-                            Get.to(PreviewScreen(
-                              imagePath: "assets/images/afterpic.png",
-                              onTap: () {
-                                Get.offAll(BeachCombine());
-                              },
-                            ));
-                          },
-                          iconSize: 65,
-                          padding: EdgeInsets.zero,
-                          constraints: const BoxConstraints(),
-                          icon: Icon(Icons.circle, color: Styles.primaryColor),
-                        )),
+                                onPressed: () {
+                                  Get.to(PreviewScreen(
+                                    imagePath: "assets/images/afterpic.png",
+                                    onTap: () {
+                                      Get.to(MethodSelectScreen());
+                                    },
+                                  ));
+                                },
+                                iconSize: 65,
+                                padding: EdgeInsets.zero,
+                                constraints: const BoxConstraints(),
+                                icon: Image.asset(
+                                  'assets/icons/camerabutton.png',
+                                ))),
                       ]),
                 ),
               )

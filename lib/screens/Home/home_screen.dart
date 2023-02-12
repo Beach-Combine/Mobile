@@ -1,6 +1,8 @@
 import 'dart:ui' as ui;
 
-import 'package:beach_combine/screens/Home/before_camera_screen.dart';
+import 'package:beach_combine/screens/Home/camera_screen.dart';
+import 'package:beach_combine/screens/Home/cleaning_screen.dart';
+import 'package:beach_combine/screens/Home/preview_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:beach_combine/utils/map_manager.dart';
 import 'package:beach_combine/widgets/home_appbar.dart';
@@ -9,6 +11,7 @@ import 'package:beach_combine/widgets/trashcan_modal.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -141,7 +144,17 @@ class _DoubleFloatingButton extends StatelessWidget {
               await availableCameras().then((value) => Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (_) => BeforeCameraScreen(cameras: value))));
+                      builder: (_) => CameraScreen(
+                            cameras: value,
+                            onPressed: () {
+                              Get.to(PreviewScreen(
+                                imagePath: "assets/images/beforepic.png",
+                                onTap: () {
+                                  Get.offAll(CleaningScreen());
+                                },
+                              ));
+                            },
+                          ))));
             },
           ),
           SizedBox(
