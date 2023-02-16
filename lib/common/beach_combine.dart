@@ -36,18 +36,18 @@ class _BeachCombineState extends State<BeachCombine> {
         ],
       ),
       bottomNavigationBar: Container(
-        height: MediaQuery.of(context).size.height / 10,
+        //height: MediaQuery.of(context).size.height / 10,
         decoration: BoxDecoration(
           color: Colors.transparent,
           borderRadius: BorderRadius.only(
-              topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+              topRight: Radius.circular(24), topLeft: Radius.circular(24)),
           boxShadow: [
             BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 10),
           ],
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+              topLeft: Radius.circular(24), topRight: Radius.circular(24)),
           child: BottomNavigationBar(
             unselectedItemColor: Styles.gray2Color, // 선택되지 않은 아이콘 색상
             showSelectedLabels: true, // 선택된 항목 label 숨기기
@@ -60,28 +60,28 @@ class _BeachCombineState extends State<BeachCombine> {
               BottomNavigationBarItem(
                 icon: ImageIcon(
                   AssetImage("assets/icons/home.png"),
-                  size: 20,
+                  size: 18,
                 ),
                 label: 'Home',
               ),
               BottomNavigationBarItem(
                 icon: ImageIcon(
                   AssetImage("assets/icons/ranking.png"),
-                  size: 20,
+                  size: 18,
                 ),
                 label: 'Ranking',
               ),
               BottomNavigationBarItem(
                 icon: ImageIcon(
                   AssetImage("assets/icons/community.png"),
-                  size: 20,
+                  size: 18,
                 ),
                 label: 'Community',
               ),
               BottomNavigationBarItem(
                 icon: ImageIcon(
                   AssetImage("assets/icons/mine.png"),
-                  size: 20,
+                  size: 18,
                 ),
                 label: 'Mine',
               ),

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "465537717851",
+    "project_id": "beach-combine-5d3de",
+    "storage_bucket": "beach-combine-5d3de.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:465537717851:android:95bd93afcbb5c0b1da517e",
+        "android_client_info": {
+          "package_name": "com.example.beach_combine"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "465537717851-uc79sgpa45s27o32517qkng9sh8fpkev.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBajYoyWxX6n42jc-ULBkZEo0UoJb48VdY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "465537717851-uc79sgpa45s27o32517qkng9sh8fpkev.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

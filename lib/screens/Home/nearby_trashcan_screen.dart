@@ -1,7 +1,12 @@
+import 'package:beach_combine/screens/Home/camera_screen.dart';
+import 'package:beach_combine/screens/Home/preview_screen.dart';
 import 'package:beach_combine/screens/Home/reward_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:beach_combine/utils/map_manager.dart';
+import 'package:beach_combine/widgets/black_button.dart';
+import 'package:beach_combine/widgets/notice_modal.dart';
 import 'package:beach_combine/widgets/primary_button.dart';
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -41,6 +46,33 @@ class _NearbyTrashcanScreenState extends State<NearbyTrashcanScreen> {
     });
   }
 
+  _showBottomSheet() {
+    showModalBottomSheet(
+        barrierColor: Colors.transparent,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        context: context,
+        builder: (context) {
+          return _SeparateBottomSheet(
+            onPressed: () {
+              // setState(() {
+              //   isTextClicked = !isTextClicked;
+              //   print(isTextClicked);
+              // });
+              Get.back();
+              showDialog<String>(
+                  barrierDismissible: false,
+                  context: context,
+                  builder: (BuildContext context) => NoticeModal(
+                        onTap: () {
+                          Get.back();
+                          _showBottomSheet();
+                        },
+                      ));
+            },
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,14 +87,19 @@ class _NearbyTrashcanScreenState extends State<NearbyTrashcanScreen> {
       ),
       Align(
         alignment: Alignment.bottomCenter,
-        child: _SeparateBottomSheet(),
+        child: TextButton(
+          child: Text('asdf'),
+          onPressed: () {
+            _showBottomSheet();
+          },
+        ),
       ),
     ]));
   }
 }
 
-class _SeparateBottomSheet extends StatelessWidget {
-  const _SeparateBottomSheet({
+class _DiscoverBottomSheet extends StatelessWidget {
+  const _DiscoverBottomSheet({
     Key? key,
   }) : super(key: key);
 
@@ -107,5 +144,72 @@ class _SeparateBottomSheet extends StatelessWidget {
         ),
       ),
     ]);
+  }
+}
+
+class _SeparateBottomSheet extends StatelessWidget {
+  final onPressed;
+  const _SeparateBottomSheet({
+    Key? key,
+    required this.onPressed,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: Wrap(children: [
+        Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(24), topRight: Radius.circular(24))),
+          child: Padding(
+            padding:
+                const EdgeInsets.only(left: 24, right: 24, bottom: 24, top: 14),
+            child: Column(
+              children: [
+                TextButton(
+                  onPressed: onPressed,
+                  child: Text(
+                    'if the trash can is not registered on the map?',
+                    style: Styles.body3Text.copyWith(
+                      color: Styles.gray1Color,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
+                BlackButton(
+                    height: 60,
+                    text: 'Saparate the trash here and report it',
+                    onTap: () async {
+                      await availableCameras().then((value) => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => CameraScreen(
+                                    cameras: value,
+                                    onPressed: () {
+                                      Get.to(PreviewScreen(
+                                        imagePath:
+                                            "assets/images/trashcan_location.png",
+                                        onTap: () {
+                                          Get.offAll(RewardScreen(
+                                            isDifferentArea: true,
+                                            location: 'Gwangalli Beach',
+                                          ));
+                                        },
+                                      ));
+                                    },
+                                  ))));
+                    })
+              ],
+            ),
+          ),
+        ),
+      ]),
+    );
   }
 }

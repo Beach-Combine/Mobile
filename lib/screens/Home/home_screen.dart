@@ -177,7 +177,7 @@ class _DoubleFloatingButton extends StatelessWidget {
         ],
       ),
       SizedBox(
-        height: MediaQuery.of(context).size.height / 8,
+        height: MediaQuery.of(context).size.height / 10,
       )
     ]);
   }

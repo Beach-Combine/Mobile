@@ -1,10 +1,18 @@
+import 'package:beach_combine/screens/login_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 import 'common/beach_combine.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const _App());
 }
 
@@ -18,7 +26,7 @@ class _App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           primaryColor: Styles.primaryColor, fontFamily: "SpoqaHanSansNeo"),
-      home: const BeachCombine()  ,
+      home: LoginScreen(),
     );
   }
 }

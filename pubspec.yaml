@@ -44,6 +44,9 @@ dependencies:
   location: ^4.4.0
   geolocator: ^9.0.2
   camera: ^0.10.3
+  google_sign_in: ^5.4.4
+  firebase_core: ^2.6.0
+  firebase_auth: ^4.2.2
 
 dev_dependencies:
   flutter_test:
