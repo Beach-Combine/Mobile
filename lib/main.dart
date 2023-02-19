@@ -13,11 +13,11 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const _App());
+  runApp(const MyApp());
 }
 
-class _App extends StatelessWidget {
-  const _App({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
@@ -26,7 +26,7 @@ class _App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           primaryColor: Styles.primaryColor, fontFamily: "SpoqaHanSansNeo"),
-      home: LoginScreen(),
+      home: BeachCombine(),
     );
   }
 }

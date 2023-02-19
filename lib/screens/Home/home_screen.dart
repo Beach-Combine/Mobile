@@ -1,5 +1,8 @@
+import 'dart:async';
+import 'dart:math';
 import 'dart:ui' as ui;
 
+import 'package:beach_combine/controllers/location_controller.dart';
 import 'package:beach_combine/screens/Home/camera_screen.dart';
 import 'package:beach_combine/screens/Home/cleaning_screen.dart';
 import 'package:beach_combine/screens/Home/preview_screen.dart';
@@ -13,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,26 +26,56 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  GoogleMapController? mapController;
+  final Completer<GoogleMapController> _controller = Completer();
   Set<Marker> markers = Set();
   LatLng sourceLocation = LatLng(35.15371303154973, 129.11984887319667);
   LatLng destination = LatLng(35.153884196941334, 129.11847977037488);
   LatLng trashcan1 = LatLng(35.15458529236469, 129.1213574320733);
   LatLng trashcan2 = LatLng(35.15334245544671, 129.11916901035525);
   LatLng beach = LatLng(35.15411732197925, 129.12055697747124);
+  LocationData? currentLocation;
+
+  void getCurrentLocation() async {
+    Location location = Location();
+
+    location.getLocation().then((location) {
+      setState(() {
+        currentLocation = location;
+      });
+    });
+
+    GoogleMapController googleMapController = await _controller.future;
+
+    location.onLocationChanged.listen(
+      (newLoc) {
+        googleMapController.animateCamera(CameraUpdate.newCameraPosition(
+            CameraPosition(
+                zoom: 16.5,
+                target: LatLng(newLoc.latitude!, newLoc.longitude!))));
+        setState(() {
+          currentLocation = newLoc;
+        });
+      },
+    );
+  }
 
   @override
   void initState() {
-    _addMarkers();
+    //getCurrentLocation();
+    //_addMarkers();
+    getCurrentLocation();
     super.initState();
   }
 
   _addMarkers() async {
-    final Marker selfmarker = await MapMananger.resizeImage(
-        sourceLocation, 'assets/icons/selfmarker.png', 'self', 180, (() {
-      print('Clicked');
-    }));
-
+    // final Marker selfmarker = await MapMananger.resizeImage(
+    //     LatLng(currentLocation!.latitude!, currentLocation!.longitude!),
+    //     'assets/icons/selfmarker.png',
+    //     'self',
+    //     180, (() {
+    //   print('Clicked');
+    // }));
+    GoogleMapController googleMapController = await _controller.future;
     final Marker trashcanmarker1 = await MapMananger.resizeImage(
         trashcan1,
         'assets/icons/trashcan.png',
@@ -81,13 +115,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   range: 100,
                   time: '00:59:59',
                 )));
-
-    setState(() {
-      markers.add(selfmarker);
-      markers.add(trashcanmarker1);
-      markers.add(beachmarker);
-      markers.add(trashcanmarker2);
-    });
+    googleMapController.add
+    // setState(() {
+    //   //markers.add(selfmarker);
+    //   markers.add(trashcanmarker1);
+    //   markers.add(beachmarker);
+    //   markers.add(trashcanmarker2);
+    // });
   }
 
   @override
@@ -98,21 +132,52 @@ class _HomeScreenState extends State<HomeScreen> {
         top: false,
         bottom: false,
         child: Scaffold(
-          body: Stack(children: [
-            GoogleMap(
-              zoomGesturesEnabled: true,
-              zoomControlsEnabled: false,
-              myLocationButtonEnabled: true,
-              initialCameraPosition:
-                  CameraPosition(target: sourceLocation, zoom: 16.5),
-              markers: markers,
-            ),
-            _DoubleFloatingButton(),
-            HomeAppbar(),
-          ]),
+          body: currentLocation == null
+              ? Center(
+                  child: Text('Loading'),
+                )
+              : Stack(children: [
+                  GoogleMap(
+                    zoomGesturesEnabled: true,
+                    zoomControlsEnabled: false,
+                    myLocationButtonEnabled: true,
+                    initialCameraPosition: CameraPosition(
+                        target: LatLng(currentLocation!.latitude!,
+                            currentLocation!.longitude!),
+                        zoom: 16.5),
+                    markers: {
+                      Marker(
+                          markerId: MarkerId('currentLocation'),
+                          position: LatLng(currentLocation!.latitude!,
+                              currentLocation!.longitude!)),
+                    },
+                    onMapCreated: (controller) {
+                      _controller.complete(controller);
+                    },
+                  ),
+                  _DoubleFloatingButton(),
+                  HomeAppbar(),
+                ]),
         ),
       ),
     );
+  }
+}
+
+class _MapBuilder extends StatelessWidget {
+  const _MapBuilder({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<LocationController>(builder: ((controller) {
+      return controller.currentLocation == null
+          ? Center(
+              child: Text('Loading..'),
+            )
+          : Container();
+    }));
   }
 }
 

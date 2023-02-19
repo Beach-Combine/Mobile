@@ -42,11 +42,12 @@ dependencies:
   google_fonts: ^4.0.1
   intl: ^0.18.0
   location: ^4.4.0
-  geolocator: ^9.0.2
   camera: ^0.10.3
   google_sign_in: ^5.4.4
   firebase_core: ^2.6.0
   firebase_auth: ^4.2.2
+  dio: ^5.0.0
+  json_annotation: ^4.8.0
 
 dev_dependencies:
   flutter_test:
@@ -58,7 +59,8 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
-
+  build_runner: ^2.3.3
+  json_serializable: ^6.6.1
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

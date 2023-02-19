@@ -1,3 +1,1 @@
-import 'package:flutter/material.dart';
-
-const Color primaryColor = Color(0X5CDEB7);
+final String baseUrl = 'http://35.216.84.77:8080/';

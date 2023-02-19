@@ -3,10 +3,10 @@ import 'package:beach_combine/screens/Mine/history_list_screen.dart';
 import 'package:beach_combine/utils/map_manager.dart';
 import 'package:beach_combine/widgets/modal_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 
 class HistoryMapScreen extends StatefulWidget {
   const HistoryMapScreen({super.key});
@@ -17,8 +17,8 @@ class HistoryMapScreen extends StatefulWidget {
 
 class _HistoryMapScreenState extends State<HistoryMapScreen> {
   final controller = Get.put(HistoryContorller());
-  Position? position;
   GoogleMapController? mapController;
+  LocationData? currentLocation;
   Set<Marker> markers = Set();
   static final LatLng kMapCenter = LatLng(35.3830798112092, 127.75461824125226);
   static final List<LatLng> myBadgeList = [
@@ -91,7 +91,7 @@ class _HistoryMapScreenState extends State<HistoryMapScreen> {
         child: Stack(children: [
           GoogleMap(
             myLocationEnabled: false,
-            zoomGesturesEnabled: false,
+            zoomGesturesEnabled: true,
             zoomControlsEnabled: false,
             myLocationButtonEnabled: false,
             initialCameraPosition: _kInitialPosition,
