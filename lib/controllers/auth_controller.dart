@@ -26,22 +26,22 @@ class AuthController extends GetxController {
 
   void signInWithGoogle() async {
     try {
-      //googleAcc.value = await _googlesignIn.signIn();
-      await _googleSignIn.signIn().then((result) {
-        result!.authentication.then((googleKey) {
-          //print(googleKey.accessToken);
-          token = googleKey.accessToken;
-          //print(googleKey.idToken);
-          name = _googleSignIn.currentUser!.displayName;
-          email = _googleSignIn.currentUser!.email;
-          id = _googleSignIn.currentUser!.id;
-        }).catchError((err) {
-          print('inner error');
-        });
-      }).catchError((err) {
-        print('error occured');
-      });
-      isSignedIn.value = true;
+      googleAcc.value = await _googleSignIn.signIn();
+      // await _googleSignIn.signIn().then((result) {
+      //   result!.authentication.then((googleKey) {
+      //     //print(googleKey.accessToken);
+      //     token = googleKey.accessToken;
+      //     //print(googleKey.idToken);
+      //     name = _googleSignIn.currentUser!.displayName;
+      //     email = _googleSignIn.currentUser!.email;
+      //     id = _googleSignIn.currentUser!.id;
+      //   }).catchError((err) {
+      //     print('inner error');
+      //   });
+      // }).catchError((err) {
+      //   print('error occured');
+      // });
+      // isSignedIn.value = true;
       update();
       // final GoogleSignInAuthentication googleSignInAuthentication =
       // await _googlesignIn.;
@@ -54,16 +54,21 @@ class AuthController extends GetxController {
       // print(googleAcc.value!.authentication.then((value) {
       //   value.accessToken;
       // }));
-      print(token);
       getToken();
       //Get.offAll(BeachCombine());
     } catch (e) {
+      print(e);
       Get.snackbar('Error occured!', e.toString(),
           snackPosition: SnackPosition.BOTTOM);
     }
   }
 
   void getToken() async {
-    await authService.getToken(name, email, id, token);
+    await authService.getToken(
+        id: googleAcc.value!.id,
+        displayName: googleAcc.value!.displayName!,
+        photoUrl: googleAcc.value!.photoUrl!,
+        code: googleAcc.value!.serverAuthCode!,
+        email: googleAcc.value!.email);
   }
 }

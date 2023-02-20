@@ -17,6 +17,13 @@ class MapMananger {
     return marker;
   }
 
+  static Future<BitmapDescriptor> resizedIcon(
+      String markerPath, int size) async {
+    final Uint8List markerIcon = await getBytesFromAsset(markerPath, size);
+    final icon = BitmapDescriptor.fromBytes(markerIcon);
+    return icon;
+  }
+
   static Future<Uint8List> getBytesFromAsset(String path, int width) async {
     ByteData data = await rootBundle.load(path);
     ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),

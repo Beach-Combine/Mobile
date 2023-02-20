@@ -1,85 +1,92 @@
+import 'dart:ui' as ui;
+
 import 'package:beach_combine/controllers/time_controller.dart';
 import 'package:beach_combine/screens/Home/after_camera_screen.dart';
+import 'package:beach_combine/screens/Home/camera_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
+import 'package:beach_combine/utils/map_manager.dart';
+import 'package:beach_combine/widgets/home_appbar.dart';
 import 'package:beach_combine/widgets/primary_button.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class CleaningScreen extends StatefulWidget {
+  const CleaningScreen({super.key});
+
   @override
-  CleaningScreennState createState() => CleaningScreennState();
+  State<CleaningScreen> createState() => _CleaningScreenState();
 }
 
-class CleaningScreennState extends State<CleaningScreen> {
+class _CleaningScreenState extends State<CleaningScreen> {
   GoogleMapController? mapController;
-  Position? currentPosition;
-  Set<Marker> markers = {};
+  Set<Marker> markers = Set();
+  LatLng sourceLocation = LatLng(35.15371303154973, 129.11984887319667);
+  LatLng destination = LatLng(35.153884196941334, 129.11847977037488);
+  LatLng trashcan1 = LatLng(35.15458529236469, 129.1213574320733);
+  LatLng trashcan2 = LatLng(35.15334245544671, 129.11916901035525);
+  LatLng beach = LatLng(35.15411732197925, 129.12055697747124);
   final timecontroller = Get.put(TimerController());
 
   @override
   void initState() {
+    _addMarkers();
     super.initState();
-    _getCurrentLocation();
+  }
+
+  _addMarkers() async {
+    final Marker selfmarker = await MapMananger.resizeImage(
+        sourceLocation, 'assets/icons/selfmarker.png', 'self', 180, (() {
+      print('Clicked');
+    }));
+
+    setState(() {
+      markers.add(selfmarker);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: currentPosition == null
-            ? Center(child: Text('loading'))
-            : Stack(children: [
-                GoogleMap(
-                  initialCameraPosition: CameraPosition(
-                    target: LatLng(
-                        currentPosition!.latitude, currentPosition!.longitude),
-                    zoom: 15,
-                  ),
-                  onMapCreated: (GoogleMapController controller) {
-                    mapController = controller;
-                  },
-                  markers: markers,
-                ),
-                Align(
-                    alignment: Alignment.bottomCenter,
-                    child: _BottomSheetCleaning(timecontroller: timecontroller))
-              ]),
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    //   showModalBottomSheet(
+    //     shape: const RoundedRectangleBorder(
+    //       // <-- SEE HERE
+    //       borderRadius: BorderRadius.vertical(
+    //         top: Radius.circular(25.0),
+    //       ),
+    //     ),
+    //     barrierColor: Colors.transparent,
+    //     isDismissible: false,
+    //     enableDrag: false,
+    //     context: context,
+    //     builder: (BuildContext context) {
+    //       return _BottomSheetCleaning(timecontroller: timecontroller);
+    //     },
+    //   );
+    // });
+    return SafeArea(
+      top: false,
+      bottom: false,
+      child: Scaffold(
+        body: Stack(children: [
+          GoogleMap(
+            zoomGesturesEnabled: true,
+            zoomControlsEnabled: false,
+            myLocationButtonEnabled: true,
+            initialCameraPosition:
+                CameraPosition(target: sourceLocation, zoom: 16.5),
+            markers: markers,
+          ),
+          Align(
+              alignment: Alignment.bottomCenter,
+              child: _BottomSheetCleaning(timecontroller: timecontroller))
+        ]),
       ),
     );
-  }
-
-  Future<void> _getCurrentLocation() async {
-    final Position position = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high,
-    );
-    setState(() {
-      currentPosition = position;
-      markers.add(
-        Marker(
-          markerId: MarkerId('current_position'),
-          position: LatLng(position.latitude, position.longitude),
-        ),
-      );
-    });
-
-    final Stream<Position> positionStream = Geolocator.getPositionStream();
-    positionStream.listen((Position position) {
-      setState(() {
-        currentPosition = position;
-        markers.removeWhere(
-            (marker) => marker.markerId.value == 'current_position');
-        markers.add(
-          Marker(
-            markerId: MarkerId('current_position'),
-            position: LatLng(position.latitude, position.longitude),
-          ),
-        );
-      });
-    });
   }
 }
 

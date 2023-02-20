@@ -7,14 +7,18 @@ part of 'get_token_body.dart';
 // **************************************************************************
 
 GetTokenBody _$GetTokenBodyFromJson(Map<String, dynamic> json) => GetTokenBody(
-      json['name'] as String,
-      json['email'] as String,
-      json['id'] as String,
+      email: json['email'] as String,
+      id: json['id'] as String,
+      displayName: json['displayName'] as String,
+      photoUrl: json['photoUrl'] as String,
+      serverAuthCode: json['serverAuthCode'] as String,
     );
 
 Map<String, dynamic> _$GetTokenBodyToJson(GetTokenBody instance) =>
     <String, dynamic>{
       'id': instance.id,
       'email': instance.email,
-      'name': instance.name,
+      'displayName': instance.displayName,
+      'photoUrl': instance.photoUrl,
+      'serverAuthCode': instance.serverAuthCode,
     };

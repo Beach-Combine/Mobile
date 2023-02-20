@@ -1,4 +1,6 @@
 import 'package:beach_combine/screens/Home/home_screen.dart';
+import 'package:beach_combine/screens/Home/map_screen.dart';
+import 'package:beach_combine/screens/Home/cleaning_screen.dart';
 import 'package:beach_combine/screens/Ranking/ranking_screen.dart';
 import 'package:beach_combine/screens/community/community_screen.dart';
 import 'package:beach_combine/screens/Mine/mine_screen.dart';
@@ -29,7 +31,7 @@ class _BeachCombineState extends State<BeachCombine> {
       body: IndexedStack(
         index: _selectedIndex, // index 순서에 해당하는 child를 맨 위에 보여줌
         children: [
-          HomeScreen(),
+          MapScreen(),
           RankingScreen(),
           CommunityScreen(),
           MineScreen(),

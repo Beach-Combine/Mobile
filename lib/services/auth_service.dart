@@ -26,11 +26,35 @@ class AuthService {
   }
 
   Future<bool> getToken(
-      String name, String email, String id, String token) async {
+      {required String displayName,
+      required String email,
+      required String id,
+      required String photoUrl,
+      required String code}) async {
     try {
-      final res = await Dio().post("$url/login/google",
-          options: Options(headers: {'Authorization': 'Bearer $token'}),
-          data: {"profileObj": GetTokenBody(name, email, id)});
+      print('$url/google');
+      print(displayName);
+      print(email);
+      print(id);
+      print(photoUrl);
+      print(code);
+      print(GetTokenBody(
+          email: email,
+          id: id,
+          displayName: displayName,
+          photoUrl: photoUrl,
+          serverAuthCode: code));
+      final res = await Dio().post("$url/google",
+          options: Options(headers: {
+            "Accept": "application/json",
+            "content-type": "application/json"
+          }),
+          data: GetTokenBody(
+              id: id,
+              email: email,
+              displayName: displayName,
+              photoUrl: photoUrl,
+              serverAuthCode: code));
       print(res.data);
       return true;
     } catch (e) {
