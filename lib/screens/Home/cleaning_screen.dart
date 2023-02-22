@@ -19,6 +19,26 @@ class CleaningScreennState extends State<CleaningScreen> {
   Position? currentPosition;
   Set<Marker> markers = {};
   final timecontroller = Get.put(TimerController());
+  BitmapDescriptor currentLocationIcon = BitmapDescriptor.defaultMarker;
+  Future<void> setCustomMarkerIcon() async {
+    // await MapMananger.resizedIcon("assets/icons/current_location.png", 180)
+    //     .then(
+    //   (icon) {
+    //     setState(() {
+    //       currentLocationIcon = icon;
+    //     });
+    //   },
+    // );
+    BitmapDescriptor.fromAssetImage(
+            const ImageConfiguration(), "assets/icons/current_location.png")
+        .then(
+      (icon) {
+        setState(() {
+          currentLocationIcon = icon;
+        });
+      },
+    );
+  }
 
   @override
   void initState() {
@@ -60,6 +80,7 @@ class CleaningScreennState extends State<CleaningScreen> {
       currentPosition = position;
       markers.add(
         Marker(
+          icon: currentLocationIcon,
           markerId: MarkerId('current_position'),
           position: LatLng(position.latitude, position.longitude),
         ),
@@ -74,6 +95,7 @@ class CleaningScreennState extends State<CleaningScreen> {
             (marker) => marker.markerId.value == 'current_position');
         markers.add(
           Marker(
+            icon: currentLocationIcon,
             markerId: MarkerId('current_position'),
             position: LatLng(position.latitude, position.longitude),
           ),

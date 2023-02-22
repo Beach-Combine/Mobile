@@ -49,6 +49,8 @@ dependencies:
   dio: ^5.0.0
   json_annotation: ^4.8.0
   geolocator: ^9.0.2
+  get_storage: ^2.0.3
+  flutter_switch: ^0.3.2
 
 dev_dependencies:
   flutter_test:

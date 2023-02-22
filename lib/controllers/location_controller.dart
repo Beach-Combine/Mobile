@@ -1,3 +1,4 @@
+import 'package:beach_combine/services/location_service.dart';
 import 'package:beach_combine/utils/map_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,12 +11,18 @@ class LocationController extends GetxController {
   LatLng trashcan2 = LatLng(35.15334245544671, 129.11916901035525);
   LatLng beach = LatLng(35.15411732197925, 129.12055697747124);
   List<Marker> markers = [];
+  final locationService = LocationService();
 
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
     setCustomMarkerIcon();
+  }
+
+  Future<bool> getBeachLocation() async {
+    final result = await locationService.getBeachLocation();
+    return result;
   }
 
   // @override

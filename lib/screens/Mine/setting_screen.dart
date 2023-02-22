@@ -1,3 +1,5 @@
+import 'package:beach_combine/controllers/auth_controller.dart';
+import 'package:beach_combine/screens/Mine/account_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +8,9 @@ import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 
 class SettingScreen extends StatelessWidget {
-  const SettingScreen({super.key});
+  SettingScreen({super.key});
+
+  final authCtrl = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +31,7 @@ class SettingScreen extends StatelessWidget {
         padding: const EdgeInsets.all(24.0),
         child: ListView(children: [
           _ButtonText(
+            onTap: () => Get.to(AccountScreen()),
             text: "Account",
           ),
           Divider(
@@ -35,10 +40,12 @@ class SettingScreen extends StatelessWidget {
             height: 44,
           ),
           _ButtonText(
+            onTap: () => authCtrl.logoutGoogle(),
             text: "Logout",
           ),
           Gap(44),
           _ButtonText(
+            onTap: () => print('delete clicked'),
             text: "Delete Account",
           ),
           Gap(44),
@@ -63,12 +70,13 @@ class SettingScreen extends StatelessWidget {
 
 class _ButtonText extends StatelessWidget {
   final String text;
-  const _ButtonText({Key? key, required this.text}) : super(key: key);
+  Function()? onTap;
+  _ButtonText({Key? key, required this.text, this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: onTap,
       child: Text(
         text,
         style: Styles.body12Text,

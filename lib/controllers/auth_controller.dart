@@ -1,4 +1,5 @@
 import 'package:beach_combine/common/beach_combine.dart';
+import 'package:beach_combine/screens/login_screen.dart';
 import 'package:beach_combine/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -27,48 +28,35 @@ class AuthController extends GetxController {
   void signInWithGoogle() async {
     try {
       googleAcc.value = await _googleSignIn.signIn();
-      // await _googleSignIn.signIn().then((result) {
-      //   result!.authentication.then((googleKey) {
-      //     //print(googleKey.accessToken);
-      //     token = googleKey.accessToken;
-      //     //print(googleKey.idToken);
-      //     name = _googleSignIn.currentUser!.displayName;
-      //     email = _googleSignIn.currentUser!.email;
-      //     id = _googleSignIn.currentUser!.id;
-      //   }).catchError((err) {
-      //     print('inner error');
-      //   });
-      // }).catchError((err) {
-      //   print('error occured');
-      // });
-      // isSignedIn.value = true;
+      isSignedIn.value = true;
       update();
-      // final GoogleSignInAuthentication googleSignInAuthentication =
-      // await _googlesignIn.;
-      // final AuthCredential credential = GoogleAuthProvider.getCredential(
-      //   accessToken: googleSignInAuthentication.accessToken,
-      //   idToken: googleSignInAuthentication.idToken,
-      // );
-      // final authResult = await     _auth.signInWithCredential(credential);
-      // print(googleAcc.value);
-      // print(googleAcc.value!.authentication.then((value) {
-      //   value.accessToken;
-      // }));
-      getToken();
-      //Get.offAll(BeachCombine());
+      print(googleAcc.value!.authentication);
+
+      final bool isFinished = await _login();
+      print(FirebaseAuth.instance.currentUser);
+      if (isFinished) {
+        Get.offAll(BeachCombine());
+      }
     } catch (e) {
       print(e);
-      Get.snackbar('Error occured!', e.toString(),
-          snackPosition: SnackPosition.BOTTOM);
+      // Get.snackbar('Error occured!', e.toString(),
+      //     snackPosition: SnackPosition.BOTTOM);
     }
   }
 
-  void getToken() async {
-    await authService.getToken(
+  Future<bool> _login() async {
+    final result = await authService.login(
         id: googleAcc.value!.id,
         displayName: googleAcc.value!.displayName!,
         photoUrl: googleAcc.value!.photoUrl!,
         code: googleAcc.value!.serverAuthCode!,
         email: googleAcc.value!.email);
+    return result;
+  }
+
+  Future<void> logoutGoogle() async {
+    await _googleSignIn.signOut();
+    await authService.logout();
+    Get.offAll(LoginScreen()); // navigate to your wanted page after logout.
   }
 }

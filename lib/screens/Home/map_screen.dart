@@ -42,14 +42,6 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   Future<void> setCustomMarkerIcon() async {
-    // await MapMananger.resizedIcon("assets/icons/current_location.png", 180)
-    //     .then(
-    //   (icon) {
-    //     setState(() {
-    //       currentLocationIcon = icon;
-    //     });
-    //   },
-    // );
     BitmapDescriptor.fromAssetImage(
             const ImageConfiguration(), "assets/icons/current_location.png")
         .then(
@@ -98,7 +90,9 @@ class _MapScreenState extends State<MapScreen> {
                   },
                   markers: markers,
                 ),
-                _DoubleFloatingButton(),
+                _DoubleFloatingButton(
+                  controller: locationCtrl,
+                ),
                 HomeAppbar(),
               ]));
   }
@@ -145,7 +139,9 @@ class _MapScreenState extends State<MapScreen> {
 }
 
 class _DoubleFloatingButton extends StatelessWidget {
+  final controller;
   const _DoubleFloatingButton({
+    required this.controller,
     Key? key,
   }) : super(key: key);
 
@@ -189,6 +185,10 @@ class _DoubleFloatingButton extends StatelessWidget {
             width: MediaQuery.of(context).size.width / 20,
           ),
           GestureDetector(
+            onTap: () async {
+              final result = await controller.getBeachLocation();
+              print(result);
+            },
             child: Container(
               height: 60,
               width: 60,
