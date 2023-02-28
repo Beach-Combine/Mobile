@@ -28,7 +28,7 @@ class PurchaseHistoryScreen extends StatelessWidget {
                 itemCount: 10,
                 itemBuilder: (context, index) {
                   return PurchaseHistory(
-                    point: -500,
+                    point: -600,
                     date: DateTime.utc(2022, 9, 29),
                     path: "assets/images/store.png",
                     name: "zero-waste store",

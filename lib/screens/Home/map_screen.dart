@@ -1,10 +1,9 @@
 import 'dart:async';
 
-import 'package:beach_combine/controllers/location_controller.dart';
+import 'package:beach_combine/controllers/map_controller.dart';
 import 'package:beach_combine/screens/Home/cleaning_screen.dart';
 import 'package:beach_combine/screens/Home/preview_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
-import 'package:beach_combine/utils/map_manager.dart';
 import 'package:beach_combine/widgets/home_appbar.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -23,23 +22,19 @@ class _MapScreenState extends State<MapScreen> {
   GoogleMapController? mapController;
   Position? currentPosition;
   Set<Marker> markers = {};
-  LatLng destination = LatLng(35.153884196941334, 129.11847977037488);
-  LatLng trashcan1 = LatLng(35.15458529236469, 129.1213574320733);
-  LatLng trashcan2 = LatLng(35.15334245544671, 129.11916901035525);
-  LatLng beach = LatLng(35.15411732197925, 129.12055697747124);
   StreamSubscription? stream;
 
   BitmapDescriptor currentLocationIcon = BitmapDescriptor.defaultMarker;
 
-  final locationCtrl = Get.put(LocationController());
+  final locationCtrl = Get.put(MapController());
 
-  void addMarkers() {
-    print('maker추가시작');
-    setState(() {
-      markers.addAll(locationCtrl.getMarkers());
-    });
-    print('추가완료');
-  }
+  // void addMarkers() {
+  //   print('maker추가시작');
+  //   setState(() {
+  //     markers.addAll(locationCtrl.getMarkers());
+  //   });
+  //   print('추가완료');
+  // }
 
   Future<void> setCustomMarkerIcon() async {
     BitmapDescriptor.fromAssetImage(
@@ -58,6 +53,7 @@ class _MapScreenState extends State<MapScreen> {
     super.initState();
     setCustomMarkerIcon();
     _getCurrentLocation();
+    locationCtrl.getLocation();
     //addMarkers();
   }
 
@@ -70,9 +66,9 @@ class _MapScreenState extends State<MapScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: currentPosition == null
+        body: Obx(() => locationCtrl.markers.isEmpty
             ? Center(
-                child: Text('Loading..'),
+                child: CircularProgressIndicator(color: Styles.primaryColor),
               )
             : Stack(children: [
                 GoogleMap(
@@ -84,27 +80,32 @@ class _MapScreenState extends State<MapScreen> {
                         currentPosition!.latitude, currentPosition!.longitude),
                     zoom: 16.5,
                   ),
+                  // initialCameraPosition: CameraPosition(
+                  //   target: LatLng(
+                  //       double.parse(locationCtrl.beachLocations.first.lat),
+                  //       double.parse(locationCtrl.beachLocations.first.lng)),
+                  //   zoom: 13,
+                  // ),
                   onMapCreated: (GoogleMapController controller) {
                     mapController = controller;
-                    addMarkers();
                   },
-                  markers: markers,
+                  markers: locationCtrl.markers,
                 ),
                 _DoubleFloatingButton(
                   controller: locationCtrl,
                 ),
                 HomeAppbar(),
-              ]));
+              ])));
   }
 
   Future<void> _getCurrentLocation() async {
-    print('asfd');
+    print('현재위치 검색 시작');
     final Position position = await Geolocator.getCurrentPosition(
       desiredAccuracy: LocationAccuracy.high,
     );
     setState(() {
       currentPosition = position;
-      markers.add(
+      locationCtrl.markers.add(
         Marker(
           icon: currentLocationIcon,
           markerId: MarkerId('current_position'),
@@ -114,13 +115,14 @@ class _MapScreenState extends State<MapScreen> {
     });
 
     final Stream<Position> positionStream = Geolocator.getPositionStream(
-        locationSettings: LocationSettings(accuracy: LocationAccuracy.high));
+      desiredAccuracy: LocationAccuracy.high,
+    );
     stream = positionStream.listen((Position position) {
       setState(() {
         currentPosition = position;
-        markers.removeWhere(
+        locationCtrl.markers.removeWhere(
             (marker) => marker.markerId.value == 'current_position');
-        markers.add(
+        locationCtrl.markers.add(
           Marker(
             icon: currentLocationIcon,
             markerId: MarkerId('current_position'),

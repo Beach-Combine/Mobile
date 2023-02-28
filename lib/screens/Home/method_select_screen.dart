@@ -1,5 +1,5 @@
 import 'package:beach_combine/screens/Home/different_area_screen.dart';
-import 'package:beach_combine/screens/Home/nearby_trashcan_screen.dart';
+import 'package:beach_combine/screens/Home/nearby_trashcan_screen_temp.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:beach_combine/widgets/black_button.dart';
 import 'package:beach_combine/widgets/primary_button.dart';
@@ -25,32 +25,46 @@ class MethodSelectScreen extends StatelessWidget {
           },
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(24),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-          Container(
-            width: double.infinity,
-            child: Text(
-              'Select a method\nfor throwing away your trash',
-              style: Styles.titleText,
+      body: Stack(children: [
+        Padding(
+          padding: EdgeInsets.all(24),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 250),
+              child: Container(
+                width: double.infinity,
+                child: Text(
+                  'Thank you\n for your effort!',
+                  textAlign: TextAlign.center,
+                  style: Styles.titleText,
+                ),
+              ),
+            ),
+            Spacer(),
+            PrimaryButton(
+              height: 60,
+              text: 'Nearby trash can',
+              onTap: () => Get.to(NearbyTrashcanScreen()),
+            ),
+            Gap(12),
+            BlackButton(
+              height: 60,
+              text: 'a different area',
+              onTap: () => Get.to(DifferentAreaScreen()),
+            )
+          ]),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 130),
+          child: Center(
+            child: Image.asset(
+              'assets/images/stars.png',
+              width: 300,
             ),
           ),
-          Gap(94),
-          Image.asset('assets/images/example.png'),
-          Spacer(),
-          PrimaryButton(
-            height: 60,
-            text: 'Nearby trash can',
-            onTap: () => Get.to(NearbyTrashcanScreen()),
-          ),
-          Gap(12),
-          BlackButton(
-            height: 60,
-            text: 'a different area',
-            onTap: () => Get.to(DifferentAreaScreen()),
-          )
-        ]),
-      ),
+        ),
+      ]),
     );
   }
 }

@@ -9,6 +9,16 @@ class RankingCard extends StatelessWidget {
   final int point;
   final int index;
 
+  String changePoint(point) {
+    if (point >= 10000000) {
+      return '${(point / 1000000).round()} m';
+    }
+    if (point >= 100000) {
+      return '${(point / 1000000).round()} k';
+    }
+    return '${point}';
+  }
+
   const RankingCard(
       {super.key,
       required this.nickname,
@@ -46,7 +56,7 @@ class RankingCard extends StatelessWidget {
                 ),
                 Spacer(),
                 Text(
-                  '${point}pt',
+                  '${changePoint(point)} pt',
                   style: Styles.body21Text,
                 )
               ],

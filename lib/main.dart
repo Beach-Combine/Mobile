@@ -1,7 +1,10 @@
 import 'package:beach_combine/data.dart';
+import 'package:beach_combine/map.dart';
 import 'package:beach_combine/screens/Home/cleaning_map_screen.dart';
+import 'package:beach_combine/screens/Home/map_screen.dart';
 import 'package:beach_combine/screens/login_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
+import 'package:beach_combine/utils/token_manager.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,9 +23,8 @@ void main() async {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatelessWidget with TokenManager {
   MyApp({super.key});
-  final box = GetStorage();
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           primaryColor: Styles.primaryColor, fontFamily: "SpoqaHanSansNeo"),
-      initialRoute: box.read(ACCESS_TOKEN_KEY) == null ? '/home' : '/login',
+      initialRoute: getToken(ACCESS_TOKEN_KEY) == null ? '/home' : '/login',
       getPages: [
         GetPage(name: '/login', page: () => LoginScreen()),
         GetPage(name: '/home', page: () => BeachCombine()),

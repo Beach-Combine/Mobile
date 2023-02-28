@@ -21,14 +21,6 @@ class CleaningScreennState extends State<CleaningScreen> {
   final timecontroller = Get.put(TimerController());
   BitmapDescriptor currentLocationIcon = BitmapDescriptor.defaultMarker;
   Future<void> setCustomMarkerIcon() async {
-    // await MapMananger.resizedIcon("assets/icons/current_location.png", 180)
-    //     .then(
-    //   (icon) {
-    //     setState(() {
-    //       currentLocationIcon = icon;
-    //     });
-    //   },
-    // );
     BitmapDescriptor.fromAssetImage(
             const ImageConfiguration(), "assets/icons/current_location.png")
         .then(
@@ -43,6 +35,7 @@ class CleaningScreennState extends State<CleaningScreen> {
   @override
   void initState() {
     super.initState();
+    setCustomMarkerIcon();
     _getCurrentLocation();
   }
 
@@ -173,7 +166,7 @@ class _BottomSheetCleaningState extends State<_BottomSheetCleaning> {
                             .copyWith(color: Styles.gray1Color),
                       ),
                       Text(
-                        '199km',
+                        '001km',
                         style: Styles.number1Text,
                       )
                     ],

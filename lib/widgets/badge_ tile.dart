@@ -20,7 +20,7 @@ class BadgeTile extends StatelessWidget {
                 beforePath: 'assets/images/AdobeStock_210419020.png',
                 date: DateTime.utc(2022, 4, 5),
                 location: "Gwangalli Beach",
-                imagePath: 'assets/icons/badge.png',
+                imagePath: 'assets/images/badge_final.png',
                 range: 100,
                 time: '00:59:59',
               )),
@@ -29,8 +29,8 @@ class BadgeTile extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/images/list_badge.png',
-              width: 80,
+              'assets/images/badge_final.png',
+              width: 85,
             ),
             Gap(12),
             Text(

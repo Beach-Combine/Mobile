@@ -1,100 +1,63 @@
-// import 'package:beach_combine/data.dart';
-// import 'package:beach_combine/services/location_service.dart';
-// import 'package:flutter/material.dart';
-// import 'package:geolocator/geolocator.dart';
-// import 'package:google_maps_flutter/google_maps_flutter.dart';
-// import 'package:http/http.dart' as http;
-// import 'dart:convert';
+import 'dart:math';
 
-// import 'package:get/get.dart';
+import 'package:beach_combine/models/beach_location.dart';
+import 'package:beach_combine/models/trashcan_location.dart';
+import 'package:beach_combine/services/location_service.dart';
+import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:custom_marker/marker_icon.dart';
+import 'package:http/http.dart' as http;
 
-// class MapController extends GetxController {
-//   final mapService = MapService();
-//   var currentPosition = Position(
-//     longitude: 0,
-//     latitude: 0,
-//     timestamp: DateTime.now(),
-//     accuracy: 0,
-//     altitude: 0,
-//     heading: 0,
-//     speed: 0,
-//     speedAccuracy: 0,
-//   ).obs;
-//   var beachName = ''.obs;
+class MapController extends GetxController {
+  List<BeachLocation> beachLocations = <BeachLocation>[].obs;
+  List<TrashcanLocation> trashcanLocations = <TrashcanLocation>[].obs;
+  var markers = RxSet<Marker>();
+  var isLoading = false.obs;
+  LocationService locationService = LocationService();
 
-//   late GoogleMapController mapController;
-//   Set<Marker> markers = {};
+  getLocation() async {
+    final beaches = await locationService.getBeachLocation();
+    final trashcans = await locationService.getTrashcanLocation();
+    beachLocations.addAll(beaches);
+    trashcanLocations.addAll(trashcans);
+    print(beaches);
+    print(trashcans);
+    // locations.addAll(trashcans);
+    // print(locations);
+    createMarkers();
+  }
 
-//   @override
-//   void onInit() {
-//     super.onInit();
-//     _getCurrentLocation();
-//   }
+  getTrashcanLocation() async {}
 
-//   Future<void> _getCurrentLocation() async {
-//     final Position position = await Geolocator.getCurrentPosition(
-//       desiredAccuracy: LocationAccuracy.high,
-//     );
-//     currentPosition.value = position;
+  createMarkers() {
+    beachLocations.forEach((element) async {
+      //http.Response response = await http.get(Uri.parse(element.image));
+      markers.add(
+        Marker(
+          markerId: MarkerId(element.id.toString()),
+          icon: await MarkerIcon.pictureAsset(
+              assetPath: "assets/icons/beach.png", width: 150, height: 150),
+          position: LatLng(
+            double.parse(element.lat),
+            double.parse(element.lng),
+          ),
+        ),
+      );
+    });
 
-//     markers.add(
-//       Marker(
-//         markerId: MarkerId('current_position'),
-//         position: LatLng(position.latitude, position.longitude),
-//       ),
-//     );
-
-//     final Stream<Position> positionStream = Geolocator.getPositionStream();
-//     positionStream.listen((Position position) {
-//       currentPosition.value = position;
-
-//       markers
-//           .removeWhere((marker) => marker.markerId.value == 'current_position');
-//       markers.add(
-//         Marker(
-//           markerId: MarkerId('current_position'),
-//           position: LatLng(position.latitude, position.longitude),
-//         ),
-//       );
-
-//       _getBeachName(position.latitude, position.longitude);
-//     });
-//   }
-
-//   Future<void> _getBeachName(double lat, double lng) async {
-//     final apiKey = ANDROID_MAP_KEY;
-//     final url =
-//         'https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&key=$apiKey';
-//     final response = await http.get(Uri.parse(url));
-//     final decodedResponse = json.decode(response.body);
-
-//     for (var result in decodedResponse['results']) {
-//       for (var address in result['address_components']) {
-//         if (address['types'][0] == 'natural_feature') {
-//           beachName.value = address['long_name'];
-//           return;
-//         }
-//       }
-//     }
-
-//     beachName.value = '';
-//   }
-
-//   Widget buildMap() {
-//     return GoogleMap(
-//       initialCameraPosition: CameraPosition(
-//         target: LatLng(37.5665, 126.9780),
-//         zoom: 15,
-//       ),
-//       onMapCreated: (GoogleMapController controller) {
-//         mapController = controller;
-//       },
-//       markers: markers,
-//     );
-//   }
-
-//   Future<bool> getBeachLocation() async {
-//     final result = await mapService.getBeachLocation();
-//     return result;
-//   }
-// }
+    trashcanLocations.forEach((element) async {
+      //http.Response response = await http.get(Uri.parse(element.image));
+      markers.add(
+        Marker(
+          markerId: MarkerId('trashcan${element.id.toString()}'),
+          icon: await MarkerIcon.pictureAsset(
+              assetPath: "assets/icons/trashcan.png", width: 130, height: 130),
+          position: LatLng(
+            double.parse(element.lat),
+            double.parse(element.lng),
+          ),
+        ),
+      );
+    });
+  }
+}

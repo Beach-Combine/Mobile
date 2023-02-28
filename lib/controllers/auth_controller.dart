@@ -1,13 +1,15 @@
 import 'package:beach_combine/common/beach_combine.dart';
+import 'package:beach_combine/data.dart';
 import 'package:beach_combine/screens/login_screen.dart';
 import 'package:beach_combine/services/auth_service.dart';
+import 'package:beach_combine/utils/token_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-class AuthController extends GetxController {
+class AuthController extends GetxController with TokenManager {
   final authService = AuthService();
   FirebaseAuth auth = FirebaseAuth.instance;
   var _googleSignIn = GoogleSignIn();
@@ -54,9 +56,16 @@ class AuthController extends GetxController {
     return result;
   }
 
+  Future<bool> refreshToken() async {
+    final result = await authService.refreshToken();
+    return result;
+  }
+
   Future<void> logoutGoogle() async {
     await _googleSignIn.signOut();
     await authService.logout();
+    Future.wait(
+        [removeToken(ACCESS_TOKEN_KEY), removeToken(REFRESH_TOKEN_KEY)]);
     Get.offAll(LoginScreen()); // navigate to your wanted page after logout.
   }
 }

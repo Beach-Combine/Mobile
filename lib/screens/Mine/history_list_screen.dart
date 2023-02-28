@@ -28,7 +28,7 @@ class HistoryListScreen extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: MediaQuery.of(context).size.width / 14,
-                vertical: MediaQuery.of(context).size.width / 19),
+                vertical: MediaQuery.of(context).size.width / 18),
             child: Align(
                 alignment: Alignment.bottomRight,
                 child: GestureDetector(

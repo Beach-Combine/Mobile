@@ -36,7 +36,7 @@ class _PointScreenState extends State<PointScreen> {
                   path: "assets/images/store.png",
                   address: "Gangnam-gu",
                   storeName: "zero-waste store",
-                  point: 500),
+                  point: 1500),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 24, right: 24, bottom: 12),
@@ -44,7 +44,7 @@ class _PointScreenState extends State<PointScreen> {
                   path: "assets/images/store.png",
                   address: "Gangnam-gu",
                   storeName: "zero-waste store",
-                  point: 1500),
+                  point: 1200),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 24, right: 24, bottom: 12),
@@ -60,7 +60,7 @@ class _PointScreenState extends State<PointScreen> {
                   path: "assets/images/store.png",
                   address: "Gangnam-gu\nSeoul",
                   storeName: "zero-waste store",
-                  point: 500),
+                  point: 600),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 24, right: 24, bottom: 12),
@@ -68,7 +68,7 @@ class _PointScreenState extends State<PointScreen> {
                   path: "assets/images/store.png",
                   address: "Gangnam-gu",
                   storeName: "zero-waste store",
-                  point: 500),
+                  point: 300),
             ),
           ]),
         ),

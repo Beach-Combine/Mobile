@@ -28,7 +28,7 @@ class _HistoryMapScreenState extends State<HistoryMapScreen> {
     LatLng(34.713383506552844, 127.27149712084598),
     LatLng(334.824204931234306, 128.43994213019323),
     LatLng(35.031682077724405, 128.68978990449128),
-    LatLng(35.158600984231235, 129.16059220041083),
+    LatLng(35.159087, 129.162814),
     LatLng(38.11788478931436, 128.63388806207118),
     LatLng(38.02511097211657, 128.72204637081694),
     LatLng(33.211082568254106, 126.26074339287213),
@@ -56,7 +56,7 @@ class _HistoryMapScreenState extends State<HistoryMapScreen> {
           markerId: MarkerId("mylocation"),
           draggable: true,
           onTap: () => print("Marker!"),
-          position: LatLng(37.401463272811135, 126.97630042670981)));
+          position: LatLng(35.1539, 129.1203)));
     });
 
     for (int i = 0; i < myBadgeList.length; i++) {
@@ -72,7 +72,7 @@ class _HistoryMapScreenState extends State<HistoryMapScreen> {
                     beforePath: 'assets/images/AdobeStock_210419020.png',
                     date: DateTime.utc(2022, 4, 5),
                     location: "Gwangalli Beach",
-                    imagePath: 'assets/icons/badge.png',
+                    imagePath: 'assets/icons/badge_ver2.png',
                     range: 100,
                     time: '00:59:59',
                   ))));
@@ -99,7 +99,7 @@ class _HistoryMapScreenState extends State<HistoryMapScreen> {
           ),
           Padding(
             padding: EdgeInsets.symmetric(
-                vertical: MediaQuery.of(context).size.height / 8,
+                vertical: MediaQuery.of(context).size.height / 10.5,
                 horizontal: MediaQuery.of(context).size.width / 14),
             child: Align(
                 alignment: Alignment.bottomRight,

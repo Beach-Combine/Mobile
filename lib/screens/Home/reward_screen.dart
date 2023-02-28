@@ -92,7 +92,7 @@ class _TimeRangeTextBox extends StatelessWidget {
               style: Styles.body21Text.copyWith(color: Styles.gray1Color),
             ),
             Text(
-              '00:59:59',
+              '00:00:05',
               style: Styles.number2Text,
             )
           ],
@@ -102,11 +102,11 @@ class _TimeRangeTextBox extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'Time',
+              'Range',
               style: Styles.body21Text.copyWith(color: Styles.gray1Color),
             ),
             Text(
-              '00:59:59',
+              '001km',
               style: Styles.number2Text,
             )
           ],

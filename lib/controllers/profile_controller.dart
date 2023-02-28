@@ -6,4 +6,6 @@ class ProfileController extends GetxController {
   void switchStatus() {
     status.value = !status.value;
   }
+
+  
 }

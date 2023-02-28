@@ -27,6 +27,22 @@ class AuthService with TokenManager {
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
+  Future<bool> refreshToken() async {
+    try {
+      final res = await Dio().post('$url/token',
+          options: Options(headers: {
+            "Accept": "application/json",
+            "content-type": "application/json"
+          }),
+          data: {"refreshToken": "Bearer ${getToken(REFRESH_TOKEN_KEY)}"});
+      saveToken(ACCESS_TOKEN_KEY, res.data['accessToken']);
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
   Future<bool> login(
       {required String displayName,
       required String email,

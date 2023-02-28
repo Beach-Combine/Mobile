@@ -79,20 +79,29 @@ class PostCard extends StatelessWidget {
               ],
             ),
             Gap(12),
-            Center(
-                child: Text(
-              comment,
-              style: Styles.body21Text,
-            )),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Text(
+                comment,
+                style: Styles.body21Text,
+                textAlign: TextAlign.left,
+              ),
+            ),
             Gap(12),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
+                  fit: BoxFit.cover,
                   beforePath,
+                  width: 160,
+                  height: 160,
                 ),
                 Gap(6),
                 Image.asset(
+                  fit: BoxFit.cover,
+                  width: 160,
+                  height: 160,
                   afterPath,
                 ),
               ],
