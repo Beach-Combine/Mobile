@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:beach_combine/controllers/map_controller.dart';
+import 'package:beach_combine/screens/Home/beach_select_screen.dart';
 import 'package:beach_combine/screens/Home/cleaning_screen.dart';
 import 'package:beach_combine/screens/Home/preview_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
@@ -27,14 +28,6 @@ class _MapScreenState extends State<MapScreen> {
   BitmapDescriptor currentLocationIcon = BitmapDescriptor.defaultMarker;
 
   final locationCtrl = Get.put(MapController());
-
-  // void addMarkers() {
-  //   print('maker추가시작');
-  //   setState(() {
-  //     markers.addAll(locationCtrl.getMarkers());
-  //   });
-  //   print('추가완료');
-  // }
 
   Future<void> setCustomMarkerIcon() async {
     BitmapDescriptor.fromAssetImage(
@@ -103,8 +96,26 @@ class _MapScreenState extends State<MapScreen> {
     final Position position = await Geolocator.getCurrentPosition(
       desiredAccuracy: LocationAccuracy.high,
     );
-    setState(() {
+    currentPosition = position;
+    Get.find<MapController>().currentPosition = position;
+
+    locationCtrl.markers.add(
+      Marker(
+        icon: currentLocationIcon,
+        markerId: MarkerId('current_position'),
+        position: LatLng(position.latitude, position.longitude),
+      ),
+    );
+
+    final Stream<Position> positionStream = Geolocator.getPositionStream(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+    stream = positionStream.listen((Position position) {
       currentPosition = position;
+      Get.find<MapController>().currentPosition = position;
+
+      locationCtrl.markers
+          .removeWhere((marker) => marker.markerId.value == 'current_position');
       locationCtrl.markers.add(
         Marker(
           icon: currentLocationIcon,
@@ -112,30 +123,6 @@ class _MapScreenState extends State<MapScreen> {
           position: LatLng(position.latitude, position.longitude),
         ),
       );
-    });
-
-    final Stream<Position> positionStream = Geolocator.getPositionStream(
-      desiredAccuracy: LocationAccuracy.high,
-    );
-    stream = positionStream.listen((Position position) {
-      setState(() {
-        currentPosition = position;
-        locationCtrl.markers.removeWhere(
-            (marker) => marker.markerId.value == 'current_position');
-        locationCtrl.markers.add(
-          Marker(
-            icon: currentLocationIcon,
-            markerId: MarkerId('current_position'),
-            position: LatLng(position.latitude, position.longitude),
-          ),
-        );
-      });
-      // if (mapController != null) {
-      //   mapController!.animateCamera(CameraUpdate.newCameraPosition(
-      //       CameraPosition(
-      //           zoom: 16.5,
-      //           target: LatLng(position.latitude, position.longitude))));
-      // }
     });
   }
 }
@@ -167,20 +154,21 @@ class _DoubleFloatingButton extends StatelessWidget {
               ),
             ),
             onTap: () async {
-              await availableCameras().then((value) => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (_) => CameraScreen(
-                            cameras: value,
-                            onPressed: () {
-                              Get.to(PreviewScreen(
-                                imagePath: "assets/images/beforepic.png",
-                                onTap: () {
-                                  Get.offAll(CleaningScreen());
-                                },
-                              ));
-                            },
-                          ))));
+              // await availableCameras().then((value) => Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (_) => CameraScreen(
+              //               cameras: value,
+              //               onPressed: () {
+              //                 Get.to(PreviewScreen(
+              //                   imagePath: "assets/images/beforepic.png",
+              //                   onTap: () {
+              //                     Get.offAll(CleaningScreen());
+              //                   },
+              //                 ));
+              //               },
+              //             ))));
+              Get.to(BeachSelectScreen(), arguments: controller);
             },
           ),
           SizedBox(

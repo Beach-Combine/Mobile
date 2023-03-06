@@ -1,3 +1,4 @@
+import 'package:beach_combine/controllers/range_controller.dart';
 import 'package:beach_combine/screens/Home/camera_screen.dart';
 import 'package:beach_combine/screens/Home/preview_screen.dart';
 import 'package:beach_combine/screens/Home/reward_screen.dart';
@@ -75,18 +76,48 @@ class _NearbyTrashcanScreenState extends State<NearbyTrashcanScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(LocationController());
     return Scaffold(
-        body: Stack(children: [
-      GoogleMap(
-        zoomGesturesEnabled: true,
-        zoomControlsEnabled: false,
-        myLocationButtonEnabled: true,
-        initialCameraPosition:
-            CameraPosition(target: sourceLocation, zoom: 16.5),
-        markers: markers,
-      ),
-      Align(alignment: Alignment.bottomCenter, child: _DiscoverBottomSheet()),
-    ]));
+      body: Stack(children: [
+        GoogleMap(
+          zoomGesturesEnabled: true,
+          zoomControlsEnabled: false,
+          myLocationButtonEnabled: true,
+          initialCameraPosition:
+              CameraPosition(target: sourceLocation, zoom: 16.5),
+          markers: markers,
+        ),
+        // GetBuilder<LocationController>(builder: ((controller) {
+        //   return controller.isDiscovered.value
+        //       ? Get.bottomSheet(_SeparateBottomSheet(onPressed: () {
+        //           controller.discover();
+        //         }))
+        //       : Get.bottomSheet(_DiscoverBottomSheet());
+        //   // Align(
+        //   //     alignment: Alignment.bottomCenter,
+        //   //     child: _SeparateBottomSheet(
+        //   //       onPressed: () {
+        //   //         controller.discover();
+        //   //       },
+        //   //     ))
+        //   // : Align(
+        //   //     alignment: Alignment.bottomCenter,
+        //   //     child: _DiscoverBottomSheet(),
+        //   //   );
+        // })),
+      ]),
+      bottomSheet: Obx(() {
+        if (controller.isDiscovered.value) {
+          return _DiscoverBottomSheet();
+        } else if (controller.isSepered.value) {
+          return _SeparateBottomSheet(onPressed: () {
+            controller.showDiscover();
+          });
+        } else {
+          return Container();
+        }
+      }),
+    );
   }
 }
 
@@ -126,10 +157,17 @@ class _DiscoverBottomSheet extends StatelessWidget {
                   height: 60,
                   text: 'Saparate the trash here',
                   onTap: () async {
-                    Get.offAll(RewardScreen(
-                      isDifferentArea: false,
-                      location: 'Gwangalli Beach',
-                    ));
+                    Get.find<LocationController>().showSeper();
+                    // Get.offAll(RewardScreen(
+                    //   isDifferentArea: false,
+                    //   location: 'Gwangalli Beach',
+                    // ));
+                    // Get.bottomSheet(_SeparateBottomSheet(onPressed: () {
+                    //   Get.back();
+                    //   Get.bottomSheet(_DiscoverBottomSheet());
+                    // }));
+
+                    print('asdf');
                   })
             ],
           ),
@@ -178,24 +216,24 @@ class _SeparateBottomSheet extends StatelessWidget {
                     height: 60,
                     text: 'Saparate the trash here and report it',
                     onTap: () async {
-                      await availableCameras().then((value) => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => CameraScreen(
-                                    cameras: value,
-                                    onPressed: () {
-                                      Get.to(PreviewScreen(
-                                        imagePath:
-                                            "assets/images/trashcan_location.png",
-                                        onTap: () {
-                                          Get.offAll(RewardScreen(
-                                            isDifferentArea: true,
-                                            location: 'Gwangalli Beach',
-                                          ));
-                                        },
-                                      ));
-                                    },
-                                  ))));
+                      // await availableCameras().then((value) => Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (_) => CameraScreen(
+                      //               cameras: value,
+                      //               onPressed: () {
+                      //                 Get.to(PreviewScreen(
+                      //                   imagePath:
+                      //                       "assets/images/trashcan_location.png",
+                      //                   onTap: () {
+                      //                     Get.offAll(RewardScreen(
+                      //                       isDifferentArea: true,
+                      //                       location: 'Gwangalli Beach',
+                      //                     ));
+                      //                   },
+                      //                 ));
+                      //               },
+                      //             ))));
                     })
               ],
             ),

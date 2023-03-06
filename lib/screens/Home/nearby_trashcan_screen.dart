@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:beach_combine/controllers/map_controller.dart';
 import 'package:beach_combine/screens/Home/camera_screen.dart';
 import 'package:beach_combine/screens/Home/preview_screen.dart';
 import 'package:beach_combine/screens/Home/reward_screen.dart';
@@ -7,10 +10,11 @@ import 'package:beach_combine/widgets/black_button.dart';
 import 'package:beach_combine/widgets/notice_modal.dart';
 import 'package:beach_combine/widgets/primary_button.dart';
 import 'package:camera/camera.dart';
+import 'package:custom_marker/marker_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class NearbyTrashcanScreen extends StatefulWidget {
@@ -23,27 +27,21 @@ class NearbyTrashcanScreen extends StatefulWidget {
 class _NearbyTrashcanScreenState extends State<NearbyTrashcanScreen> {
   GoogleMapController? mapController;
   Set<Marker> markers = Set();
+  Position? currentPosition;
+  StreamSubscription? stream;
   LatLng sourceLocation = LatLng(35.15371303154973, 129.11984887319667);
   LatLng destination = LatLng(35.153884196941334, 129.11847977037488);
   LatLng trashcan1 = LatLng(35.15458529236469, 129.1213574320733);
   LatLng trashcan2 = LatLng(35.15334245544671, 129.11916901035525);
   LatLng beach = LatLng(35.15411732197925, 129.12055697747124);
+  final locationCtrl = Get.put(MapController());
 
   @override
   void initState() {
-    _addMarkers();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _showBottomSheet());
+    _getCurrentLocation();
+    locationCtrl.getLocation();
     super.initState();
-  }
-
-  _addMarkers() async {
-    final Marker selfmarker = await MapMananger.resizeImage(
-        sourceLocation, 'assets/icons/selfmarker.png', 'self', 180, (() {
-      print('Clicked');
-    }));
-
-    setState(() {
-      markers.add(selfmarker);
-    });
   }
 
   _showBottomSheet() {
@@ -54,10 +52,6 @@ class _NearbyTrashcanScreenState extends State<NearbyTrashcanScreen> {
         builder: (context) {
           return _SeparateBottomSheet(
             onPressed: () {
-              // setState(() {
-              //   isTextClicked = !isTextClicked;
-              //   print(isTextClicked);
-              // });
               Get.back();
               showDialog<String>(
                   barrierDismissible: false,
@@ -76,25 +70,64 @@ class _NearbyTrashcanScreenState extends State<NearbyTrashcanScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Stack(children: [
-      GoogleMap(
-        zoomGesturesEnabled: true,
-        zoomControlsEnabled: false,
-        myLocationButtonEnabled: true,
-        initialCameraPosition:
-            CameraPosition(target: sourceLocation, zoom: 16.5),
-        markers: markers,
+        body: Obx(() => locationCtrl.markers.isEmpty
+            ? Center(
+                child: CircularProgressIndicator(color: Styles.primaryColor),
+              )
+            : Stack(children: [
+                GoogleMap(
+                  zoomGesturesEnabled: true,
+                  zoomControlsEnabled: false,
+                  myLocationButtonEnabled: true,
+                  initialCameraPosition:
+                      CameraPosition(target: sourceLocation, zoom: 16.5),
+                  markers: locationCtrl.markers,
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: TextButton(
+                    child: Text('asdf'),
+                    onPressed: () {
+                      _showBottomSheet();
+                    },
+                  ),
+                ),
+              ])));
+  }
+
+  Future<void> _getCurrentLocation() async {
+    print('현재위치 검색 시작');
+    final Position position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+    currentPosition = position;
+    locationCtrl.markers.add(
+      Marker(
+        icon: await MarkerIcon.pictureAsset(
+            assetPath: 'assets/icons/selfmarker.png', width: 150, height: 150),
+        markerId: MarkerId('current_position'),
+        position: LatLng(position.latitude, position.longitude),
       ),
-      Align(
-        alignment: Alignment.bottomCenter,
-        child: TextButton(
-          child: Text('asdf'),
-          onPressed: () {
-            _showBottomSheet();
-          },
+    );
+
+    final Stream<Position> positionStream = Geolocator.getPositionStream(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+    stream = positionStream.listen((Position position) async {
+      currentPosition = position;
+      locationCtrl.markers
+          .removeWhere((marker) => marker.markerId.value == 'current_position');
+      locationCtrl.markers.add(
+        Marker(
+          icon: await MarkerIcon.pictureAsset(
+              assetPath: 'assets/icons/selfmarker.png',
+              width: 150,
+              height: 150),
+          markerId: MarkerId('current_position'),
+          position: LatLng(position.latitude, position.longitude),
         ),
-      ),
-    ]));
+      );
+    });
   }
 }
 

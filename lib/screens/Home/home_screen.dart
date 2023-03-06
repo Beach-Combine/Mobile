@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:beach_combine/controllers/location_controller.dart';
 import 'package:beach_combine/screens/Home/camera_screen.dart';
-import 'package:beach_combine/screens/Home/cleaning_screen_temp.dart';
+import 'package:beach_combine/screens/Home/cleaning_screen.dart';
 import 'package:beach_combine/screens/Home/preview_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:beach_combine/utils/map_manager.dart';

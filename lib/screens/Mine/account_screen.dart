@@ -8,7 +8,7 @@ import 'package:flutter_switch/flutter_switch.dart';
 
 class AccountScreen extends StatelessWidget {
   AccountScreen({super.key});
-  final controller = Get.put(ProfileController());
+  final profileController = Get.put(ProfileController(), permanent: true);
 
   @override
   Widget build(BuildContext context) {
@@ -67,10 +67,10 @@ class AccountScreen extends StatelessWidget {
                     toggleSize: 25,
                     padding: 2,
                     activeColor: Styles.primaryColor,
-                    value: controller.status.value,
+                    value: profileController.status.value,
                     borderRadius: 50,
                     onToggle: (value) {
-                      controller.switchStatus();
+                      profileController.switchStatus();
                     }))
               ],
             ),

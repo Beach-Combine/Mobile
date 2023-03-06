@@ -1,5 +1,6 @@
 import 'package:beach_combine/common/Dio/dio.dart';
 import 'package:beach_combine/data.dart';
+import 'package:beach_combine/models/Beach_Info/beach_info.dart';
 import 'package:beach_combine/models/beach_location.dart';
 import 'package:beach_combine/models/trashcan_location.dart';
 import 'package:beach_combine/utils/token_manager.dart';
@@ -21,7 +22,8 @@ class LocationService with TokenManager {
         options: Options(headers: {
           "Accept": "application/json",
           "Content-type": "application/json",
-          "Authorization": "Bearer ${getToken(ACCESS_TOKEN_KEY)}",
+          //"Authorization": "Bearer ${getToken(ACCESS_TOKEN_KEY)}",
+          "accessToken": "true",
         }),
       );
       print(res.data);
@@ -54,6 +56,26 @@ class LocationService with TokenManager {
     } catch (e) {
       print(e);
       return [];
+    }
+  }
+
+  Future<BeachInfo?> getBeachInfo(int id) async {
+    try {
+      final dio = Dio();
+      dio.interceptors.add(CustomInterceptor());
+      final res = await dio.get('$url/beaches/${id}',
+          options: Options(headers: {
+            "Accept": "application/json",
+            "Content-type": "application/json",
+            "accessToken": "true"
+          }));
+      print(res.data);
+      final beachInfo = BeachInfo.fromJson(res.data);
+      print(beachInfo.beach.name);
+      return beachInfo;
+    } catch (e) {
+      print(e);
+      return null;
     }
   }
 }

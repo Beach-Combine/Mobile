@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:beach_combine/controllers/time_controller.dart';
 import 'package:beach_combine/screens/Home/after_camera_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
@@ -9,6 +11,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../controllers/range_controller.dart';
+
 class CleaningScreen extends StatefulWidget {
   @override
   CleaningScreennState createState() => CleaningScreennState();
@@ -18,7 +22,9 @@ class CleaningScreennState extends State<CleaningScreen> {
   GoogleMapController? mapController;
   Position? currentPosition;
   Set<Marker> markers = {};
+  StreamSubscription? stream;
   final timecontroller = Get.put(TimerController());
+  final rangeController = Get.put(LocationController());
   BitmapDescriptor currentLocationIcon = BitmapDescriptor.defaultMarker;
   Future<void> setCustomMarkerIcon() async {
     BitmapDescriptor.fromAssetImage(
@@ -37,6 +43,12 @@ class CleaningScreennState extends State<CleaningScreen> {
     super.initState();
     setCustomMarkerIcon();
     _getCurrentLocation();
+  }
+
+  @override
+  void dispose() {
+    stream!.cancel();
+    super.dispose();
   }
 
   @override
@@ -69,7 +81,9 @@ class CleaningScreennState extends State<CleaningScreen> {
     final Position position = await Geolocator.getCurrentPosition(
       desiredAccuracy: LocationAccuracy.high,
     );
+
     setState(() {
+      rangeController.updateLocation(position);
       currentPosition = position;
       markers.add(
         Marker(
@@ -81,8 +95,9 @@ class CleaningScreennState extends State<CleaningScreen> {
     });
 
     final Stream<Position> positionStream = Geolocator.getPositionStream();
-    positionStream.listen((Position position) {
+    stream = positionStream.listen((Position position) {
       setState(() {
+        rangeController.updateLocation(position);
         currentPosition = position;
         markers.removeWhere(
             (marker) => marker.markerId.value == 'current_position');
@@ -111,6 +126,13 @@ class _BottomSheetCleaning extends StatefulWidget {
 }
 
 class _BottomSheetCleaningState extends State<_BottomSheetCleaning> {
+  distanceCarculate() {
+    final dist = Get.find<LocationController>().distance;
+    return dist >= 1000
+        ? '${(dist / 1000).toStringAsFixed(2)} km'
+        : '${dist.round()} m';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Wrap(children: [
@@ -166,7 +188,7 @@ class _BottomSheetCleaningState extends State<_BottomSheetCleaning> {
                             .copyWith(color: Styles.gray1Color),
                       ),
                       Text(
-                        '001km',
+                        distanceCarculate(),
                         style: Styles.number1Text,
                       )
                     ],
@@ -180,11 +202,9 @@ class _BottomSheetCleaningState extends State<_BottomSheetCleaning> {
                   onTap: () async {
                     print(
                         '${widget.timecontroller.hoursString.value}:${widget.timecontroller.minuteString.value}:${widget.timecontroller.secondString.value}');
-                    await availableCameras().then((value) => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) =>
-                                AfterCameraScreen(cameras: value))));
+                    print(distanceCarculate());
+                    await availableCameras().then(
+                        (value) => Get.to(AfterCameraScreen(cameras: value)));
                   })
             ],
           ),
