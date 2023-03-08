@@ -11,6 +11,7 @@ TrashcanLocation _$TrashcanLocationFromJson(Map<String, dynamic> json) =>
       lat: json['lat'] as String,
       lng: json['lng'] as String,
       id: json['id'] as int,
+      address: json['address'] as String,
     );
 
 Map<String, dynamic> _$TrashcanLocationToJson(TrashcanLocation instance) =>
@@ -18,4 +19,5 @@ Map<String, dynamic> _$TrashcanLocationToJson(TrashcanLocation instance) =>
       'lat': instance.lat,
       'lng': instance.lng,
       'id': instance.id,
+      'address': instance.address,
     };

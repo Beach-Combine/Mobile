@@ -129,16 +129,16 @@ class _SeparateBottomSheet extends StatelessWidget {
                             builder: (_) => CameraScreen(
                                   cameras: value,
                                   onPressed: () {
-                                    Get.to(PreviewScreen(
-                                      imagePath:
-                                          "assets/images/trashcan_location.png",
-                                      onTap: () {
-                                        Get.offAll(RewardScreen(
-                                          isDifferentArea: true,
-                                          location: 'Gwangalli Beach',
-                                        ));
-                                      },
-                                    ));
+                                    // Get.to(PreviewScreen(
+                                    //   imagePath:
+                                    //       "assets/images/trashcan_location.png",
+                                    //   onTap: () {
+                                    //     Get.offAll(RewardScreen(
+                                    //       isDifferentArea: true,
+                                    //       location: 'Gwangalli Beach',
+                                    //     ));
+                                    //   },
+                                    // ));
                                   },
                                 ))));
                   })

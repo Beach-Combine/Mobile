@@ -1,5 +1,4 @@
 import 'package:beach_combine/data.dart';
-import 'package:beach_combine/screens/Home/cleaning_map_screen.dart';
 import 'package:beach_combine/screens/Home/location_track_screen.dart';
 import 'package:beach_combine/screens/Home/map_screen.dart';
 import 'package:beach_combine/screens/login_screen.dart';

@@ -13,11 +13,13 @@ class TrashcanLocation {
     required this.lat,
     required this.lng,
     required this.id,
+    required this.address,
   });
 
   String lat;
   String lng;
   int id;
+  String address;
 
   /// A necessary factory constructor for creating a new User instance
   /// from a map. Pass the map to the generated `_$UserFromJson()` constructor.

@@ -200,9 +200,8 @@ class _BottomSheetCleaningState extends State<_BottomSheetCleaning> {
                   height: 60,
                   text: 'Stop Cleaning',
                   onTap: () async {
-                    print(
-                        '${widget.timecontroller.hoursString.value}:${widget.timecontroller.minuteString.value}:${widget.timecontroller.secondString.value}');
-                    print(distanceCarculate());
+                    Get.find<LocationController>().setCleaningDistance();
+                    Get.find<TimerController>().setCleaningTime();
                     await availableCameras().then(
                         (value) => Get.to(AfterCameraScreen(cameras: value)));
                   })

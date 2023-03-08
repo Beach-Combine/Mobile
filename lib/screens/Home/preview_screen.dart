@@ -1,15 +1,17 @@
+import 'dart:io';
+
 import 'package:beach_combine/utils/app_style.dart';
+import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 
 class PreviewScreen extends StatelessWidget {
-  final String imagePath;
+  final XFile picture;
   final onTap;
 
-  const PreviewScreen(
-      {super.key, required this.imagePath, required this.onTap});
+  const PreviewScreen({super.key, required this.picture, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +33,8 @@ class PreviewScreen extends StatelessWidget {
       // constructor with the given path to display the image.
       body: Stack(children: [
         Center(
-            child: Image.asset(
-          imagePath,
-          width: double.infinity,
-          fit: BoxFit.fitWidth,
-        )),
+          child: Image.file(File(picture.path), fit: BoxFit.fitWidth),
+        ),
         Align(
           alignment: Alignment.bottomCenter,
           child: Container(

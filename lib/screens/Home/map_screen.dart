@@ -106,6 +106,13 @@ class _MapScreenState extends State<MapScreen> {
         position: LatLng(position.latitude, position.longitude),
       ),
     );
+    locationCtrl.beachSelectionMarkers.add(
+      Marker(
+        icon: currentLocationIcon,
+        markerId: MarkerId('current_position'),
+        position: LatLng(position.latitude, position.longitude),
+      ),
+    );
 
     final Stream<Position> positionStream = Geolocator.getPositionStream(
       desiredAccuracy: LocationAccuracy.high,
@@ -117,6 +124,16 @@ class _MapScreenState extends State<MapScreen> {
       locationCtrl.markers
           .removeWhere((marker) => marker.markerId.value == 'current_position');
       locationCtrl.markers.add(
+        Marker(
+          icon: currentLocationIcon,
+          markerId: MarkerId('current_position'),
+          position: LatLng(position.latitude, position.longitude),
+        ),
+      );
+
+      locationCtrl.beachSelectionMarkers
+          .removeWhere((marker) => marker.markerId.value == 'current_position');
+      locationCtrl.beachSelectionMarkers.add(
         Marker(
           icon: currentLocationIcon,
           markerId: MarkerId('current_position'),
@@ -154,20 +171,6 @@ class _DoubleFloatingButton extends StatelessWidget {
               ),
             ),
             onTap: () async {
-              // await availableCameras().then((value) => Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //         builder: (_) => CameraScreen(
-              //               cameras: value,
-              //               onPressed: () {
-              //                 Get.to(PreviewScreen(
-              //                   imagePath: "assets/images/beforepic.png",
-              //                   onTap: () {
-              //                     Get.offAll(CleaningScreen());
-              //                   },
-              //                 ));
-              //               },
-              //             ))));
               Get.to(BeachSelectScreen(), arguments: controller);
             },
           ),

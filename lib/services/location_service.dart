@@ -78,4 +78,22 @@ class LocationService with TokenManager {
       return null;
     }
   }
+
+  Future<bool> checkBeachRange(double lat, double lng, int id) async {
+    try {
+      print('[현재위치] lat :$lat | lng :$lng');
+      Dio dio = Dio();
+      dio.interceptors.add(CustomInterceptor());
+      final res = await dio.get('$url/beaches/${id}',
+          options: Options(
+            headers: {'accessToken': 'true'},
+          ),
+          data: {"lat": lat, "lng": lng});
+      print(res.data);
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
 }

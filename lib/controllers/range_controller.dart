@@ -8,10 +8,15 @@ class LocationController extends GetxController {
   var lng = 0.0.obs;
   var isDiscovered = false.obs;
   var isSepered = false.obs;
-
+  int cleaningDistance = 0;
   @override
   void onInit() async {
     super.onInit();
+  }
+
+  setCleaningDistance() {
+    cleaningDistance = distance.value.round();
+    print(cleaningDistance);
   }
 
   showDiscover() {

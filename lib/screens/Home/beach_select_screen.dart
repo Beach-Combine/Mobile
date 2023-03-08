@@ -32,7 +32,7 @@ class _BeachSelectScreenState extends State<BeachSelectScreen> {
   }
 
   Set<Marker> getMarkers() {
-    controller.markers.forEach((marker) {
+    controller.beachSelectionMarkers.forEach((marker) {
       if (!marker.markerId.value.contains('trashcan')) {
         markers.add(marker);
       }

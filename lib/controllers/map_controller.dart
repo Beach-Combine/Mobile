@@ -4,6 +4,7 @@ import 'package:beach_combine/models/Beach_Info/beach_info.dart';
 import 'package:beach_combine/models/beach_location.dart';
 import 'package:beach_combine/models/trashcan_location.dart';
 import 'package:beach_combine/services/location_service.dart';
+import 'package:beach_combine/widgets/beach_select_bottom_sheet.dart';
 import 'package:beach_combine/widgets/modal_dialog.dart';
 import 'package:beach_combine/widgets/not_cleaned_modal.dart';
 import 'package:beach_combine/widgets/trashcan_modal.dart';
@@ -18,9 +19,15 @@ class MapController extends GetxController {
   List<BeachLocation> beachLocations = <BeachLocation>[].obs;
   List<TrashcanLocation> trashcanLocations = <TrashcanLocation>[].obs;
   var markers = RxSet<Marker>();
+  var beachSelectionMarkers = RxSet<Marker>();
   var isLoading = false.obs;
   LocationService locationService = LocationService();
   Position? currentPosition;
+  int selectedBeach = 0;
+
+  setSelectedBeach(int id) {
+    selectedBeach = id;
+  }
 
   getLocation() async {
     final beaches = await locationService.getBeachLocation();
@@ -53,7 +60,7 @@ class MapController extends GetxController {
                 double.parse(element.lng),
               ),
               onTap: (() {
-                print(element.id);
+                Get.dialog(TrashcanModal(address: element.address));
               })),
         );
       });
@@ -95,12 +102,39 @@ class MapController extends GetxController {
                 }
               }),
         );
+
+        beachSelectionMarkers.add(Marker(
+          markerId: MarkerId(element.id.toString()),
+          icon: beachInfo.record == null
+              ? await MarkerIcon.pictureAsset(
+                  assetPath: "assets/icons/not_cleaned.png",
+                  width: 100,
+                  height: 100)
+              : await MarkerIcon.pictureAsset(
+                  assetPath: "assets/icons/beach.png", width: 150, height: 150),
+          position: LatLng(
+            double.parse(element.lat),
+            double.parse(element.lng),
+          ),
+          onTap: () => Get.bottomSheet(
+              barrierColor: Colors.transparent,
+              BeachSelectBottomSheet(
+                  name: beachInfo.beach.name,
+                  lat: currentPosition!.latitude,
+                  lng: currentPosition!.longitude,
+                  id: element.id)),
+        ));
       });
     }
   }
 
   Future<BeachInfo?> getBeachInfo(int id) async {
     final result = await locationService.getBeachInfo(id);
+    return result;
+  }
+
+  Future<bool> checkBeachRange(double lat, double lng, int id) async {
+    final result = locationService.checkBeachRange(lat, lng, id);
     return result;
   }
 }

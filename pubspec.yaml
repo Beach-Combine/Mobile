@@ -42,7 +42,7 @@ dependencies:
   google_fonts: ^4.0.1
   intl: ^0.18.0
   location: ^4.4.0
-  camera: ^0.10.3
+  camera: ^0.9.4+19
   google_sign_in: ^5.4.4
   firebase_core: ^2.6.0
   firebase_auth: ^4.2.2

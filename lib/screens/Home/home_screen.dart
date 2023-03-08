@@ -247,12 +247,12 @@ class _DoubleFloatingButton extends StatelessWidget {
                       builder: (_) => CameraScreen(
                             cameras: value,
                             onPressed: () {
-                              Get.to(PreviewScreen(
-                                imagePath: "assets/images/beforepic.png",
-                                onTap: () {
-                                  Get.offAll(CleaningScreen());
-                                },
-                              ));
+                              // Get.to(PreviewScreen(
+                              //   imagePath: "assets/images/beforepic.png",
+                              //   onTap: () {
+                              //     Get.offAll(CleaningScreen());
+                              //   },
+                              // ));
                             },
                           ))));
             },

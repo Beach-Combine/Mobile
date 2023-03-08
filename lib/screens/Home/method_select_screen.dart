@@ -1,3 +1,4 @@
+import 'package:beach_combine/controllers/record_controller.dart';
 import 'package:beach_combine/screens/Home/different_area_screen.dart';
 import 'package:beach_combine/screens/Home/nearby_trashcan_screen_temp.dart';
 import 'package:beach_combine/utils/app_style.dart';
@@ -9,7 +10,9 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
 class MethodSelectScreen extends StatelessWidget {
-  const MethodSelectScreen({super.key});
+  MethodSelectScreen({super.key});
+
+  final recordController = Get.put(RecordController());
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +48,10 @@ class MethodSelectScreen extends StatelessWidget {
             PrimaryButton(
               height: 60,
               text: 'Nearby trash can',
-              onTap: () => Get.to(NearbyTrashcanScreen()),
+              onTap: () {
+                recordController.recordCleaning();
+                //=> Get.to(NearbyTrashcanScreen())
+              },
             ),
             Gap(12),
             BlackButton(

@@ -10,6 +10,8 @@ class TimerController extends GetxController {
   int hours = 0, minutes = 0, seconds = 0;
   bool isTimerRunning = false, isResetButtonVisible = false;
 
+  int cleaningTime = 0;
+
   @override
   void onReady() {
     startTimer();
@@ -22,6 +24,11 @@ class TimerController extends GetxController {
       _timer!.cancel();
     }
     super.onClose();
+  }
+
+  setCleaningTime() {
+    cleaningTime = hours * 3600 + minutes * 60 + seconds;
+    print(cleaningTime);
   }
 
   void startTimer() {

@@ -95,12 +95,12 @@ class _AfterCameraScreenState extends State<AfterCameraScreen> {
                         Expanded(
                             child: IconButton(
                                 onPressed: () {
-                                  Get.to(PreviewScreen(
-                                    imagePath: "assets/images/afterpic.png",
-                                    onTap: () {
-                                      Get.to(MethodSelectScreen());
-                                    },
-                                  ));
+                                  // Get.to(PreviewScreen(
+                                  //   imagePath: "assets/images/afterpic.png",
+                                  //   onTap: () {
+                                  //     Get.to(MethodSelectScreen());
+                                  //   },
+                                  // ));
                                 },
                                 iconSize: 65,
                                 padding: EdgeInsets.zero,
