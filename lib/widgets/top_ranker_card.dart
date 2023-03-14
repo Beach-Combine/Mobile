@@ -5,12 +5,12 @@ import '../utils/app_style.dart';
 
 class TopRankerCard extends StatelessWidget {
   final double width;
-  final String rankerPath;
+  String? rankerPath;
   final String nickname;
   final int point;
   final int rank;
 
-  const TopRankerCard(
+  TopRankerCard(
       {super.key,
       required this.width,
       required this.rankerPath,
@@ -23,10 +23,12 @@ class TopRankerCard extends StatelessWidget {
     return Stack(children: [
       Column(
         children: [
-          CircleAvatar(
-            radius: width,
-            backgroundImage: AssetImage(rankerPath),
-          ),
+          rankerPath == null
+              ? CircleAvatar(
+                  radius: width,
+                  backgroundImage: AssetImage('assets/images/nullprofile.png'))
+              : CircleAvatar(
+                  radius: width, backgroundImage: NetworkImage(rankerPath!)),
           Gap(20),
           Text(
             nickname,

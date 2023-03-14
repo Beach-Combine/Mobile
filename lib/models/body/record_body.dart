@@ -10,12 +10,11 @@ part 'record_body.g.dart';
 @JsonSerializable()
 class RecordBody {
   RecordBody(
-      {required this.id,
+      {
       required this.range,
       required this.time,
       required this.beforeImage,
       required this.afterImage});
-  int id;
   int range;
   int time;
   dynamic beforeImage;

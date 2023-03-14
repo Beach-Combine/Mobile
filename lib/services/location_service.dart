@@ -22,7 +22,6 @@ class LocationService with TokenManager {
         options: Options(headers: {
           "Accept": "application/json",
           "Content-type": "application/json",
-          //"Authorization": "Bearer ${getToken(ACCESS_TOKEN_KEY)}",
           "accessToken": "true",
         }),
       );

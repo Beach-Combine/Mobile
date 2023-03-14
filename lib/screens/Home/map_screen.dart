@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:beach_combine/controllers/map_controller.dart';
 import 'package:beach_combine/screens/Home/beach_select_screen.dart';
 import 'package:beach_combine/screens/Home/cleaning_screen.dart';
-import 'package:beach_combine/screens/Home/preview_screen.dart';
+import 'package:beach_combine/screens/Home/before_preview_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:beach_combine/widgets/home_appbar.dart';
 import 'package:camera/camera.dart';
@@ -27,7 +27,7 @@ class _MapScreenState extends State<MapScreen> {
 
   BitmapDescriptor currentLocationIcon = BitmapDescriptor.defaultMarker;
 
-  final locationCtrl = Get.put(MapController());
+  final locationCtrl = Get.put(MapController(), permanent: true);
 
   Future<void> setCustomMarkerIcon() async {
     BitmapDescriptor.fromAssetImage(
@@ -59,7 +59,8 @@ class _MapScreenState extends State<MapScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Obx(() => locationCtrl.markers.isEmpty
+        body: Obx(() => locationCtrl.markers.isEmpty ||
+                locationCtrl.currentPosition == null
             ? Center(
                 child: CircularProgressIndicator(color: Styles.primaryColor),
               )
@@ -69,8 +70,8 @@ class _MapScreenState extends State<MapScreen> {
                   zoomControlsEnabled: false,
                   myLocationButtonEnabled: true,
                   initialCameraPosition: CameraPosition(
-                    target: LatLng(
-                        currentPosition!.latitude, currentPosition!.longitude),
+                    target: LatLng(locationCtrl.currentPosition!.latitude,
+                        locationCtrl.currentPosition!.longitude),
                     zoom: 16.5,
                   ),
                   // initialCameraPosition: CameraPosition(

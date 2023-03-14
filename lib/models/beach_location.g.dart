@@ -11,7 +11,7 @@ BeachLocation _$BeachLocationFromJson(Map<String, dynamic> json) =>
       lat: json['lat'] as String,
       lng: json['lng'] as String,
       id: json['id'] as int,
-      image: json['image'] as String,
+      image: json['image'] as String?,
     );
 
 Map<String, dynamic> _$BeachLocationToJson(BeachLocation instance) =>

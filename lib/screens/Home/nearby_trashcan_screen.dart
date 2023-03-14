@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:beach_combine/controllers/map_controller.dart';
+import 'package:beach_combine/data.dart';
 import 'package:beach_combine/screens/Home/camera_screen.dart';
-import 'package:beach_combine/screens/Home/preview_screen.dart';
+import 'package:beach_combine/screens/Home/before_preview_screen.dart';
 import 'package:beach_combine/screens/Home/reward_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:beach_combine/utils/map_manager.dart';
@@ -224,6 +225,8 @@ class _SeparateBottomSheet extends StatelessWidget {
                           MaterialPageRoute(
                               builder: (_) => CameraScreen(
                                     cameras: value,
+                                    imageType: BEFORE_IMAGE,
+                                    text: 'before',
                                     onPressed: () {
                                       // Get.to(PreviewScreen(
                                       //   imagePath:

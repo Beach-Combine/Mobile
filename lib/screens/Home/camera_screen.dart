@@ -1,5 +1,8 @@
+import 'package:beach_combine/data.dart';
+import 'package:beach_combine/screens/Home/after_preview_screen.dart';
+import 'package:beach_combine/screens/Home/cleaning_screen.dart';
 import 'package:beach_combine/screens/Home/preview_page.dart';
-import 'package:beach_combine/screens/Home/preview_screen.dart';
+import 'package:beach_combine/screens/Home/before_preview_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,8 +12,14 @@ import 'package:get/get.dart';
 class CameraScreen extends StatefulWidget {
   final List<CameraDescription>? cameras;
   final onPressed;
+  final text;
+  final imageType;
   const CameraScreen(
-      {super.key, required this.cameras, required this.onPressed});
+      {super.key,
+      required this.cameras,
+      required this.onPressed,
+      required this.imageType,
+      required this.text});
 
   @override
   State<CameraScreen> createState() => _CameraScreenState();
@@ -45,7 +54,13 @@ class _CameraScreenState extends State<CameraScreen> {
       print('시작');
       XFile picture = await controller.takePicture();
       print('끝');
-      Get.to(PreviewScreen(picture: picture, onTap: () => {}));
+      widget.imageType == BEFORE_IMAGE
+          ? Get.to(BeforePreviewScreen(
+              picture: picture,
+              onTap: widget.onPressed,
+            ))
+          : Get.to(
+              AfterPreviewScreen(picture: picture, onTap: widget.onPressed));
       // Navigator.push(
       //     context,
       //     MaterialPageRoute(
@@ -81,7 +96,7 @@ class _CameraScreenState extends State<CameraScreen> {
                 child: Column(
                   children: [
                     Text(
-                      'Please take a picture\nbefore cleaning',
+                      'Please take a picture\n${widget.text} cleaning',
                       style: Styles.titleText.copyWith(color: Colors.white),
                     ),
                     Text(

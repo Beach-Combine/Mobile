@@ -7,7 +7,6 @@ part of 'record_body.dart';
 // **************************************************************************
 
 RecordBody _$RecordBodyFromJson(Map<String, dynamic> json) => RecordBody(
-      id: json['id'] as int,
       range: json['range'] as int,
       time: json['time'] as int,
       beforeImage: json['beforeImage'],
@@ -16,7 +15,6 @@ RecordBody _$RecordBodyFromJson(Map<String, dynamic> json) => RecordBody(
 
 Map<String, dynamic> _$RecordBodyToJson(RecordBody instance) =>
     <String, dynamic>{
-      'id': instance.id,
       'range': instance.range,
       'time': instance.time,
       'beforeImage': instance.beforeImage,

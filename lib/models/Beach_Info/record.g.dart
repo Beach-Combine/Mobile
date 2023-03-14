@@ -9,7 +9,7 @@ part of 'record.dart';
 Record _$RecordFromJson(Map<String, dynamic> json) => Record(
       id: json['id'] as int,
       date: json['date'] as String,
-      time: json['time'] as int,
+      time: json['time'] as String,
       range: json['range'] as int,
       beforeImage: json['beforeImage'] as String,
       afterImage: json['afterImage'] as String,

@@ -1,6 +1,6 @@
 import 'package:beach_combine/controllers/range_controller.dart';
 import 'package:beach_combine/screens/Home/camera_screen.dart';
-import 'package:beach_combine/screens/Home/preview_screen.dart';
+import 'package:beach_combine/screens/Home/before_preview_screen.dart';
 import 'package:beach_combine/screens/Home/reward_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:beach_combine/utils/map_manager.dart';

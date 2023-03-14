@@ -40,6 +40,8 @@ class CustomInterceptor extends Interceptor with TokenManager {
     // 다시 새로운 토큰으로 요청을 한다.
     print('[ERR] [${err.requestOptions.method}] ${err.requestOptions.uri}');
 
+    //handler.resolve(err.response!);
+    print(err.response!.data);
     final refreshToken = await getToken(REFRESH_TOKEN_KEY);
 
     // refreshToken이 없으면

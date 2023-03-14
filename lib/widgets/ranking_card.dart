@@ -5,7 +5,7 @@ import 'package:gap/gap.dart';
 class RankingCard extends StatelessWidget {
   final bool isMe;
   final String nickname;
-  final String path;
+  final String? path;
   final int point;
   final int index;
 
@@ -45,10 +45,16 @@ class RankingCard extends StatelessWidget {
                   style: Styles.body12Text,
                 ),
                 Gap(30),
-                CircleAvatar(
-                  radius: 22,
-                  backgroundImage: AssetImage(path),
-                ),
+                path == null
+                    ? CircleAvatar(
+                        radius: 22,
+                        backgroundImage:
+                            AssetImage('assets/images/nullprofile.png'),
+                      )
+                    : CircleAvatar(
+                        radius: 22,
+                        backgroundImage: NetworkImage(path!),
+                      ),
                 Gap(15),
                 Text(
                   '$nickname',

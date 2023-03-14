@@ -69,12 +69,6 @@ class _BeachSelectScreenState extends State<BeachSelectScreen> {
                         controller.currentPosition.longitude),
                     zoom: 16.5,
                   ),
-                  // initialCameraPosition: CameraPosition(
-                  //   target: LatLng(
-                  //       double.parse(locationCtrl.beachLocations.first.lat),
-                  //       double.parse(locationCtrl.beachLocations.first.lng)),
-                  //   zoom: 13,
-                  // ),
                   onMapCreated: (GoogleMapController controller) {
                     mapController = controller;
                   },

@@ -1,6 +1,7 @@
 import 'package:beach_combine/controllers/record_controller.dart';
 import 'package:beach_combine/screens/Home/different_area_screen.dart';
 import 'package:beach_combine/screens/Home/nearby_trashcan_screen_temp.dart';
+import 'package:beach_combine/screens/Home/saperate_trash_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:beach_combine/widgets/black_button.dart';
 import 'package:beach_combine/widgets/primary_button.dart';
@@ -47,18 +48,9 @@ class MethodSelectScreen extends StatelessWidget {
             Spacer(),
             PrimaryButton(
               height: 60,
-              text: 'Nearby trash can',
-              onTap: () {
-                recordController.recordCleaning();
-                //=> Get.to(NearbyTrashcanScreen())
-              },
+              text: 'Go to seperate the trash',
+              onTap: () => Get.offAll(SeperateTrashScreen()),
             ),
-            Gap(12),
-            BlackButton(
-              height: 60,
-              text: 'a different area',
-              onTap: () => Get.to(DifferentAreaScreen()),
-            )
           ]),
         ),
         Padding(
