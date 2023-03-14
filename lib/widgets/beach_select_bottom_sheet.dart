@@ -56,8 +56,12 @@ class BeachSelectBottomSheet extends StatelessWidget {
                   height: 60,
                   text: 'Take a picture before cleaning',
                   onTap: () async {
-                    final result =
-                        await controller.checkBeachRange(lat, lng, id);
+                    print(
+                        '[현재 위치] lat : ${controller.currentPosition!.latitude} | lng : ${controller.currentPosition!.longitude}');
+                    final result = await controller.checkBeachRange(
+                        controller.currentPosition!.latitude,
+                        controller.currentPosition!.longitude,
+                        id);
                     print(result);
                     controller.setSelectedBeach(id);
                     if (result) {
