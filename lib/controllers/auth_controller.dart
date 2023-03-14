@@ -1,5 +1,6 @@
 import 'package:beach_combine/common/beach_combine.dart';
 import 'package:beach_combine/data.dart';
+import 'package:beach_combine/screens/Home/method_select_screen.dart';
 import 'package:beach_combine/screens/login_screen.dart';
 import 'package:beach_combine/services/auth_service.dart';
 import 'package:beach_combine/utils/token_manager.dart';
@@ -38,6 +39,7 @@ class AuthController extends GetxController with TokenManager {
       print(FirebaseAuth.instance.currentUser);
       if (isFinished) {
         Get.offAll(BeachCombine());
+        // Get.offAll(MethodSelectScreen());
       }
     } catch (e) {
       print(e);

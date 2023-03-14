@@ -36,8 +36,6 @@ class MapController extends GetxController {
     trashcanLocations.addAll(trashcans);
     print(beaches);
     print(trashcans);
-    // locations.addAll(trashcans);
-    // print(locations);
     createMarkers();
   }
 

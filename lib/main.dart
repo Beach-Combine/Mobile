@@ -1,6 +1,7 @@
 import 'package:beach_combine/data.dart';
 import 'package:beach_combine/screens/Home/location_track_screen.dart';
 import 'package:beach_combine/screens/Home/map_screen.dart';
+import 'package:beach_combine/screens/Home/method_select_screen.dart';
 import 'package:beach_combine/screens/login_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:beach_combine/utils/token_manager.dart';

@@ -1,5 +1,7 @@
+import 'package:beach_combine/common/beach_combine.dart';
 import 'package:beach_combine/screens/Home/camera_screen.dart';
-import 'package:beach_combine/screens/Home/preview_screen.dart';
+import 'package:beach_combine/screens/Home/before_preview_screen.dart';
+import 'package:beach_combine/screens/Home/map_screen.dart';
 import 'package:beach_combine/screens/Home/reward_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:beach_combine/utils/map_manager.dart';
@@ -123,24 +125,27 @@ class _SeparateBottomSheet extends StatelessWidget {
                   height: 60,
                   text: 'Saparate the trash here and report it',
                   onTap: () async {
-                    await availableCameras().then((value) => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => CameraScreen(
-                                  cameras: value,
-                                  onPressed: () {
-                                    // Get.to(PreviewScreen(
-                                    //   imagePath:
-                                    //       "assets/images/trashcan_location.png",
-                                    //   onTap: () {
-                                    //     Get.offAll(RewardScreen(
-                                    //       isDifferentArea: true,
-                                    //       location: 'Gwangalli Beach',
-                                    //     ));
-                                    //   },
-                                    // ));
-                                  },
-                                ))));
+                    Get.offAll(BeachCombine());
+                    // await availableCameras().then((value) => Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (_) => CameraScreen(
+                    //           text: 'before',
+
+                    //               cameras: value,
+                    //               onPressed: () {
+                    //                 // Get.to(PreviewScreen(
+                    //                 //   imagePath:
+                    //                 //       "assets/images/trashcan_location.png",
+                    //                 //   onTap: () {
+                    //                 //     Get.offAll(RewardScreen(
+                    //                 //       isDifferentArea: true,
+                    //                 //       location: 'Gwangalli Beach',
+                    //                 //     ));
+                    //                 //   },
+                    //                 // ));
+                    //               },
+                    //             ))));
                   })
             ],
           ),

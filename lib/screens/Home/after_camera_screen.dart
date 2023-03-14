@@ -1,7 +1,7 @@
 import 'package:beach_combine/common/beach_combine.dart';
 import 'package:beach_combine/screens/Home/home_screen.dart';
 import 'package:beach_combine/screens/Home/method_select_screen.dart';
-import 'package:beach_combine/screens/Home/preview_screen.dart';
+import 'package:beach_combine/screens/Home/before_preview_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
