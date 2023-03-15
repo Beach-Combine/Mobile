@@ -29,10 +29,9 @@ class _SeperateTrashScreenState extends State<SeperateTrashScreen> {
   Set<Marker> markers = {};
   StreamSubscription? stream;
   BitmapDescriptor currentLocationIcon = BitmapDescriptor.defaultMarker;
-  PanelController _pc = new PanelController();
 
-  // final controller = Get.find<MapController>();
-  final controller = Get.put(MapController());
+  final controller = Get.find<MapController>();
+  //final controller = Get.put(MapController());
 
   @override
   void initState() {
@@ -51,7 +50,7 @@ class _SeperateTrashScreenState extends State<SeperateTrashScreen> {
   }
 
   Set<Marker> getMarkers() {
-    controller.markers.forEach((marker) {
+    controller.trashcanSelectionMarkers.forEach((marker) {
       if (marker.markerId.value.contains('trashcan') ||
           marker.markerId.value.contains('current_position')) {
         markers.add(marker);
@@ -81,9 +80,9 @@ class _SeperateTrashScreenState extends State<SeperateTrashScreen> {
                     onMapCreated: (GoogleMapController controller) {
                       mapController = controller;
                     },
-                    markers: markers,
+                    markers: controller.trashcanSelectionMarkers,
                   ),
-                  _SaparateHereAndReportPanel(controller: _pc)
+                  _SaparateHereAndReportPanel()
                 ])),
     );
   }
@@ -154,18 +153,16 @@ class _SeperateTrashScreenState extends State<SeperateTrashScreen> {
 }
 
 class _SaparateHereAndReportPanel extends StatelessWidget {
-  _SaparateHereAndReportPanel({Key? key, required this.controller})
-      : super(key: key);
-  final controller;
+  _SaparateHereAndReportPanel({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SlidingUpPanel(
-      controller: controller,
+      controller: Get.find<MapController>().pc,
       borderRadius: BorderRadius.only(
           topLeft: Radius.circular(24), topRight: Radius.circular(24)),
       maxHeight: 250,
-      minHeight: 20,
+      minHeight: 35,
       defaultPanelState: PanelState.OPEN,
       panel: Container(
         width: double.infinity,
@@ -188,9 +185,9 @@ class _SaparateHereAndReportPanel extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () async {
-                  controller.close();
+                  Get.find<MapController>().pc.close();
                   await Get.dialog(NoticeModal(onTap: () => Get.back()));
-                  controller.open();
+                  Get.find<MapController>().pc.open();
                 },
                 child: Text(
                   'if the trash can is not registered on the map?',

@@ -39,8 +39,8 @@ class AuthController extends GetxController with TokenManager {
       final bool isFinished = await _login();
       print(FirebaseAuth.instance.currentUser);
       if (isFinished) {
-        // Get.offAll(BeachCombine());
-        Get.offAll(SeperateTrashScreen());
+        Get.offAll(BeachCombine());
+        // Get.offAll(SeperateTrashScreen());
       }
     } catch (e) {
       print(e);

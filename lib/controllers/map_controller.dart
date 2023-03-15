@@ -4,26 +4,33 @@ import 'package:beach_combine/models/Beach_Info/beach_info.dart';
 import 'package:beach_combine/models/beach_location.dart';
 import 'package:beach_combine/models/trashcan_location.dart';
 import 'package:beach_combine/services/location_service.dart';
+import 'package:beach_combine/services/point_service.dart';
+import 'package:beach_combine/services/ranking_service.dart';
 import 'package:beach_combine/widgets/beach_select_bottom_sheet.dart';
 import 'package:beach_combine/widgets/modal_dialog.dart';
 import 'package:beach_combine/widgets/not_cleaned_modal.dart';
 import 'package:beach_combine/widgets/trashcan_modal.dart';
+import 'package:beach_combine/widgets/trashcan_select_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:custom_marker/marker_icon.dart';
-import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class MapController extends GetxController {
   List<BeachLocation> beachLocations = <BeachLocation>[].obs;
   List<TrashcanLocation> trashcanLocations = <TrashcanLocation>[].obs;
   var markers = RxSet<Marker>();
   var beachSelectionMarkers = RxSet<Marker>();
+  var trashcanSelectionMarkers = RxSet<Marker>();
   var isLoading = false.obs;
   LocationService locationService = LocationService();
+  PointService pointService = PointService();
   Position? currentPosition;
   int selectedBeach = 0;
+  var isBottomSheetOpen = false.obs;
+  PanelController pc = PanelController();
 
   setSelectedBeach(int id) {
     selectedBeach = id;
@@ -57,8 +64,29 @@ class MapController extends GetxController {
                 double.parse(element.lat),
                 double.parse(element.lng),
               ),
-              onTap: (() {
-                Get.dialog(TrashcanModal(address: element.address));
+              onTap: (() async {
+                isBottomSheetOpen.value = true;
+                await Get.dialog(TrashcanModal(address: element.address));
+                isBottomSheetOpen.value = false;
+              })),
+        );
+        trashcanSelectionMarkers.add(
+          Marker(
+              markerId: MarkerId('trashcan${element.id.toString()}'),
+              icon: await MarkerIcon.pictureAsset(
+                  assetPath: "assets/icons/trashcan.png",
+                  width: 100,
+                  height: 100),
+              position: LatLng(
+                double.parse(element.lat),
+                double.parse(element.lng),
+              ),
+              onTap: (() async {
+                pc.close();
+                await Get.bottomSheet(
+                    barrierColor: Colors.transparent,
+                    TrashCanSelectBottomSheet());
+                pc.open();
               })),
         );
       });
@@ -133,6 +161,11 @@ class MapController extends GetxController {
 
   Future<bool> checkBeachRange(double lat, double lng, int id) async {
     final result = locationService.checkBeachRange(lat, lng, id);
+    return result;
+  }
+
+  Future<bool> getPoint(int option) async {
+    final result = await pointService.getPoint(option);
     return result;
   }
 }
