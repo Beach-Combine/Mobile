@@ -10,8 +10,11 @@ class GiftCard extends StatelessWidget {
   final String storeName;
   final String address;
   final int point;
+  final int id;
+
   const GiftCard({
     super.key,
+    required this.id,
     required this.path,
     required this.address,
     required this.storeName,
@@ -24,6 +27,7 @@ class GiftCard extends StatelessWidget {
       onTap: () {
         Get.to(PurchaseScreen(
           point: point,
+          id: id,
         ));
       },
       child: Container(
@@ -35,7 +39,7 @@ class GiftCard extends StatelessWidget {
           child: Row(children: [
             CircleAvatar(
               radius: radius,
-              backgroundImage: AssetImage(path),
+              backgroundImage: NetworkImage(path),
             ),
             Gap(12),
             Column(

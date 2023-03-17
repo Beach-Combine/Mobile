@@ -4,6 +4,7 @@ import 'package:beach_combine/widgets/flat_appbar.dart';
 import 'package:beach_combine/widgets/selection_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 
@@ -41,11 +42,20 @@ class SelectToWriteScreen extends StatelessWidget {
           }
           if (controller.records.isEmpty) {
             return Center(
-              child: Text(
-                '청소 기록이 없습니다\n해변을 청소하고 기록을 남겨보세요!',
-                style: Styles.titleText,
-                textAlign: TextAlign.center,
-              ),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/images/empty_record.png',
+                      width: MediaQuery.of(context).size.width / 5,
+                    ),
+                    Gap(12),
+                    Text(
+                      'You don\'t have a record\nof cleaning the beach yet.',
+                      style: Styles.body02Text.copyWith(color: Styles.gray1Color),
+                      textAlign: TextAlign.center,
+                    ),
+                  ]),
             );
           }
           return ListView.builder(

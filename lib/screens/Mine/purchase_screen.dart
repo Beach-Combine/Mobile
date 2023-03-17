@@ -1,3 +1,4 @@
+import 'package:beach_combine/controllers/mine_controller.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:beach_combine/widgets/primary_button.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,9 +8,9 @@ import 'package:get/get.dart';
 
 class PurchaseScreen extends StatelessWidget {
   final int point;
-
-  const PurchaseScreen({super.key, required this.point});
-
+  final int id;
+  PurchaseScreen({super.key, required this.point, required this.id});
+  final controller = Get.find<MineController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,8 +70,12 @@ class PurchaseScreen extends StatelessWidget {
               PrimaryButton(
                   height: 60,
                   text: "Yes, I do",
-                  onTap: () {
+                  onTap: () async {
                     print('clicked!');
+                    final result = await controller.purchaseGiftcard(id);
+                    if (result) {
+                      Get.back();
+                    }
                   }),
             ],
           )),

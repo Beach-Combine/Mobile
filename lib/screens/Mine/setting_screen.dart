@@ -10,7 +10,7 @@ import 'package:get/get_connect/http/src/utils/utils.dart';
 class SettingScreen extends StatelessWidget {
   SettingScreen({super.key});
 
-  final authCtrl = Get.put(AuthController());
+  final authCtrl = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {

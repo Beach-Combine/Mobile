@@ -40,6 +40,10 @@ class _PostCardState extends State<PostCard> {
     super.initState();
   }
 
+  calcLikes() {
+    
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -107,7 +111,7 @@ class _PostCardState extends State<PostCard> {
                 ),
                 Gap(6),
                 Text(
-                  "${_likes}m",
+                  "${_likes}",
                   style: Styles.body12Text,
                 )
               ],

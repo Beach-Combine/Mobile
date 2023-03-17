@@ -27,5 +27,6 @@ class CommunityController extends GetxController {
 
   getRecords() async {
     final result = await communityService.getRecords();
+    records.addAll(result);
   }
 }
