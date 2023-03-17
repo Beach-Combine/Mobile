@@ -4,7 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
-  final authCtrl = Get.put(AuthController());
+  final authCtrl = Get.find<AuthController>();
   LoginScreen({super.key});
 
   @override

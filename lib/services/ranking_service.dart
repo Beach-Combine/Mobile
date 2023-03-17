@@ -16,7 +16,7 @@ class RankingService {
             "accessToken": "true",
           }));
       print(res.data);
-      final ranking = Ranking.fromJsonList(res.data);
+      final ranking = Ranking.fromJsonList(res.data['memberDtoList']);
       return ranking;
     } catch (e) {
       print(e);
@@ -35,7 +35,7 @@ class RankingService {
               "Content-Type": "application/json",
               "accessToken": "true",
             }));
-        final ranking = Ranking.fromJsonList(res.data);
+        final ranking = Ranking.fromJsonList(res.data['memberDtoList']);
         return ranking;
       } else {
         final res = await dio.get(
@@ -44,8 +44,8 @@ class RankingService {
               'Content-Type': "application/json",
               "accessToken": "true"
             }));
-        print(res.data);
-        final ranking = Ranking.fromJsonList(res.data);
+        print(res.data['memberDtoList']);
+        final ranking = Ranking.fromJsonList(res.data['memberDtoList']);
         return ranking;
       }
     } catch (e) {

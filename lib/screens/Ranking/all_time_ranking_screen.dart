@@ -69,7 +69,7 @@ class _AllTimeRankingScreenState extends State<AllTimeRankingScreen> {
                                   point: ranker.point,
                                   index: index + 1);
                             })),
-                        isLoading
+                        rankingcontroller.nextPage.value
                             ? Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: CircularProgressIndicator(

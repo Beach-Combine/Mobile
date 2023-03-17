@@ -34,7 +34,7 @@ class AuthController extends GetxController with TokenManager {
       googleAcc.value = await _googleSignIn.signIn();
       isSignedIn.value = true;
       update();
-      print(googleAcc.value!.authentication);
+      //print(googleAcc.value!.authentication);
 
       final bool isFinished = await _login();
       print(FirebaseAuth.instance.currentUser);

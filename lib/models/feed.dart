@@ -12,6 +12,8 @@ class Feed {
       required this.memberId,
       required this.afterImage,
       required this.beachName,
+      required this.preferred,
+      required this.like,
       required this.beforeImage});
 
   // "id": 1,
@@ -30,6 +32,8 @@ class Feed {
   String beforeImage;
   String afterImage;
   String beachName;
+  int like;
+  bool preferred;
 
   factory Feed.fromJson(Map<String, dynamic> json) => _$FeedFromJson(json);
 

@@ -1,15 +1,16 @@
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 
-class PostCard extends StatelessWidget {
+class PostCard extends StatefulWidget {
   final String name;
   final String profilePath;
   final String beforePath;
   final String afterPath;
   final String location;
-  final bool myLike;
-  final int likes;
+  bool myLike;
+  int likes;
   final String comment;
 
   PostCard({
@@ -25,6 +26,21 @@ class PostCard extends StatelessWidget {
   });
 
   @override
+  State<PostCard> createState() => _PostCardState();
+}
+
+class _PostCardState extends State<PostCard> {
+  late int _likes;
+  late bool _myLike;
+  @override
+  void initState() {
+    // TODO: implement initState
+    _likes = widget.likes;
+    _myLike = widget.myLike;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
@@ -37,7 +53,7 @@ class PostCard extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 21,
-                  backgroundImage: AssetImage(profilePath),
+                  backgroundImage: AssetImage(widget.profilePath),
                 ),
                 Gap(14),
                 Column(
@@ -47,7 +63,7 @@ class PostCard extends StatelessWidget {
                       children: [
                         Gap(4),
                         Text(
-                          name,
+                          widget.name,
                           style: Styles.body12Text,
                         ),
                       ],
@@ -56,10 +72,12 @@ class PostCard extends StatelessWidget {
                       children: [
                         ImageIcon(
                           AssetImage('assets/icons/card_location.png'),
+                          size: 15,
                           color: Styles.gray1Color,
                         ),
+                        Gap(3),
                         Text(
-                          location,
+                          widget.location,
                           style: Styles.body3Text
                               .copyWith(color: Styles.gray1Color),
                         )
@@ -68,21 +86,37 @@ class PostCard extends StatelessWidget {
                   ],
                 ),
                 Spacer(),
-                Image.asset(myLike
-                    ? 'assets/icons/like.png'
-                    : 'assets/icons/unlike.png'),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      if (_myLike) {
+                        _likes--;
+                        _myLike = false;
+                      } else {
+                        _likes++;
+                        _myLike = true;
+                      }
+                    });
+                  },
+                  child: Image.asset(
+                    _myLike
+                        ? 'assets/icons/like.png'
+                        : 'assets/icons/unlike.png',
+                    width: 20,
+                  ),
+                ),
                 Gap(6),
                 Text(
-                  "${likes}m",
+                  "${_likes}m",
                   style: Styles.body12Text,
-                ),
+                )
               ],
             ),
             Gap(12),
             Align(
               alignment: Alignment.topLeft,
               child: Text(
-                comment,
+                widget.comment,
                 style: Styles.body21Text,
                 textAlign: TextAlign.left,
               ),
@@ -91,18 +125,18 @@ class PostCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset(
+                Image.network(
                   fit: BoxFit.cover,
-                  beforePath,
+                  widget.beforePath,
                   width: 160,
                   height: 160,
                 ),
                 Gap(6),
-                Image.asset(
+                Image.network(
                   fit: BoxFit.cover,
                   width: 160,
                   height: 160,
-                  afterPath,
+                  widget.afterPath,
                 ),
               ],
             )

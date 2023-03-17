@@ -14,6 +14,8 @@ Feed _$FeedFromJson(Map<String, dynamic> json) => Feed(
       memberId: json['memberId'] as int,
       afterImage: json['afterImage'] as String,
       beachName: json['beachName'] as String,
+      preferred: json['preferred'] as bool,
+      like: json['like'] as int,
       beforeImage: json['beforeImage'] as String,
     );
 
@@ -26,4 +28,6 @@ Map<String, dynamic> _$FeedToJson(Feed instance) => <String, dynamic>{
       'beforeImage': instance.beforeImage,
       'afterImage': instance.afterImage,
       'beachName': instance.beachName,
+      'like': instance.like,
+      'preferred': instance.preferred,
     };

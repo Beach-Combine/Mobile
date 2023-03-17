@@ -1,3 +1,4 @@
+import 'package:beach_combine/common/splash_screen.dart';
 import 'package:beach_combine/data.dart';
 import 'package:beach_combine/screens/Home/location_track_screen.dart';
 import 'package:beach_combine/screens/Home/map_screen.dart';
@@ -32,12 +33,12 @@ class MyApp extends StatelessWidget with TokenManager {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           primaryColor: Styles.primaryColor, fontFamily: "SpoqaHanSansNeo"),
-      initialRoute: getToken(ACCESS_TOKEN_KEY) == null ? '/home' : '/login',
-      getPages: [
-        GetPage(name: '/login', page: () => LoginScreen()),
-        GetPage(name: '/home', page: () => BeachCombine()),
-      ],
-      //.home: LoginScreen(),
+      // initialRoute: getToken(ACCESS_TOKEN_KEY) == null ? '/home' : '/login',
+      // getPages: [
+      //   GetPage(name: '/login', page: () => LoginScreen()),
+      //   GetPage(name: '/home', page: () => BeachCombine()),
+      // ],
+      home: SplashScreen(),
     );
   }
 }

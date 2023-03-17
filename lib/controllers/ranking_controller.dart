@@ -9,6 +9,7 @@ class RankingController extends GetxController {
   final rankingService = RankingService();
   bool isFirst = true;
   int lastId = 0, lastPoint = 0, pageSize = 10;
+  final nextPage = true.obs;
 
   @override
   onInit() {
@@ -37,7 +38,7 @@ class RankingController extends GetxController {
       print(lastId);
       print(lastPoint);
     } else {
-      return false;
+      nextPage.value = false;
     }
   }
 

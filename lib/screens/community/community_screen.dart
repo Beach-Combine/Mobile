@@ -96,24 +96,21 @@ class CommunityScreen extends StatelessWidget {
                   )
                 : ListView.builder(
                     padding: EdgeInsets.only(top: 50, bottom: 20),
-                    itemCount: 10,
+                    itemCount: controller.feedList.length,
                     itemBuilder: (context, index) {
-                      final myLike = index == 0 ? true : false;
-                      final likes = index == 0 ? 999 : 100;
+                      final feed = controller.feedList[index];
                       return Center(
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 16),
                           child: PostCard(
-                            likes: likes,
-                            name: "Nickname",
-                            comment:
-                                "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-                            myLike: myLike,
+                            likes: feed.like,
+                            name: feed.nickname,
+                            comment: feed.review!,
+                            myLike: feed.preferred,
                             profilePath: 'assets/images/person4.png',
-                            location: "Gwangalli Beach",
-                            beforePath:
-                                "assets/images/AdobeStock_210419020.png",
-                            afterPath: "assets/images/after.png",
+                            location: feed.beachName,
+                            beforePath: feed.beforeImage,
+                            afterPath: feed.afterImage,
                           ),
                         ),
                       );
