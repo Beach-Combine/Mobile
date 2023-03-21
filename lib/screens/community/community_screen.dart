@@ -126,6 +126,7 @@ class CommunityScreen extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.only(bottom: 16),
                         child: PostCard(
+                          id: feed.id,
                           likes: feed.like,
                           name: feed.nickname,
                           comment: feed.review!,
