@@ -2,10 +2,9 @@ import 'package:beach_combine/utils/app_style.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 class ModalDialog extends StatelessWidget {
-  final DateTime date;
+  final String date;
   final String location;
   final String time;
   final int range;
@@ -48,7 +47,7 @@ class ModalDialog extends StatelessWidget {
                     ),
                     Gap(12),
                     Text(
-                      DateFormat('yy.MM.dd').format(date),
+                      date,
                       style:
                           Styles.body21Text.copyWith(color: Styles.gray1Color),
                     ),
@@ -88,14 +87,36 @@ class _BeforeAfterImage extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Image.asset(
-          beforePath,
-          width: 104,
+        Stack(
+          children: [
+            Container(
+              color: Styles.gray1Color,
+              width: 104,
+              height: 104,
+            ),
+            Image.network(
+              beforePath,
+              width: 104,
+              height: 104,
+              fit: BoxFit.fill,
+            ),
+          ],
         ),
         Gap(12),
-        Image.asset(
-          afterPath,
-          width: 104,
+        Stack(
+          children: [
+            Container(
+              color: Styles.gray1Color,
+              width: 104,
+              height: 104,
+            ),
+            Image.network(
+              afterPath,
+              width: 104,
+              height: 104,
+              fit: BoxFit.fill,
+            ),
+          ],
         ),
       ],
     );

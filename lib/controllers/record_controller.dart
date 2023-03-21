@@ -18,19 +18,22 @@ class RecordController extends GetxController {
 
   final recordService = RecordService();
 
-  Future<void> recordCleaning() async {
+  Future<bool> recordCleaning() async {
     final id = mapController.selectedBeach;
     final time = timeController.cleaningTime;
     final range = rangeController.cleaningDistance;
     final beforeImage = imageController.beforeImage;
     final afterImage = imageController.afterImage;
+    mapController.cleaningTime = time;
+    mapController.cleaningRange = range;
     // print(id);
     // print(time);
     // print(range);
     // print(imageController.beforeImage);
     // print(imageController.afterImage);
 
-    final result = await recordService.recordCleaning(id, time, range, beforeImage, afterImage);
-    // return result;
+    final result = await recordService.recordCleaning(
+        id, time, range, beforeImage, afterImage);
+    return result;
   }
 }

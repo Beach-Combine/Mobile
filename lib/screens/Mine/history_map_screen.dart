@@ -1,6 +1,10 @@
 import 'package:beach_combine/controllers/history_controller.dart';
+import 'package:beach_combine/controllers/map_controller.dart';
+import 'package:beach_combine/controllers/mine_controller.dart';
+import 'package:beach_combine/models/record.dart';
 import 'package:beach_combine/screens/Mine/history_list_screen.dart';
 import 'package:beach_combine/utils/map_manager.dart';
+import 'package:beach_combine/widgets/history_modal_dialog.dart';
 import 'package:beach_combine/widgets/modal_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,120 +21,115 @@ class HistoryMapScreen extends StatefulWidget {
 
 class _HistoryMapScreenState extends State<HistoryMapScreen> {
   final controller = Get.put(HistoryContorller());
+  final mineController = Get.find<MineController>();
   GoogleMapController? mapController;
   LocationData? currentLocation;
   Set<Marker> markers = Set();
   static final LatLng kMapCenter = LatLng(35.3830798112092, 127.75461824125226);
-  static final List<LatLng> myBadgeList = [
-    LatLng(37.59263650131627, 126.45833478728932),
-    LatLng(37.38525822760204, 126.40885499187159),
-    LatLng(35.242735293873274, 126.30619487477078),
-    LatLng(34.713383506552844, 127.27149712084598),
-    LatLng(334.824204931234306, 128.43994213019323),
-    LatLng(35.031682077724405, 128.68978990449128),
-    LatLng(35.159087, 129.162814),
-    LatLng(38.11788478931436, 128.63388806207118),
-    LatLng(38.02511097211657, 128.72204637081694),
-    LatLng(33.211082568254106, 126.26074339287213),
-    LatLng(33.54472332697766, 126.6741666971654),
+
+  final records = [
+    Record(
+        beachId: 0,
+        isWritten: false,
+        time: '300',
+        recordId: 0,
+        date: DateTime.now(),
+        afterImage: 'assets/images/after.png',
+        range: 100,
+        beforeImage: 'assets/images/AdobeStock_210419020.png'),
+    Record(
+        beachId: 1,
+        isWritten: false,
+        time: '300',
+        recordId: 1,
+        date: DateTime.now(),
+        afterImage: 'assets/images/after.png',
+        range: 100,
+        beforeImage: 'assets/images/AdobeStock_210419020.png')
   ];
 
-  static final CameraPosition _kInitialPosition =
-      CameraPosition(target: kMapCenter, zoom: 6.7, tilt: 0, bearing: 0);
+  static final CameraPosition _kInitialPosition = CameraPosition(
+      target: LatLng(35.3830798112092, 127.75461824125226),
+      zoom: 6.7,
+      tilt: 0,
+      bearing: 0);
 
   @override
   void initState() {
-    _addMarkers();
+    // _addMarkers();
     super.initState();
   }
 
-  _addMarkers() async {
-    // Position position = await Geolocator.getCurrentPosition(
-    //     desiredAccuracy: LocationAccuracy.high);
-    // final LatLng currentLocation =
-    //     LatLng(position.latitude, position.longitude);
-    // print(currentLocation);
+  // _addMarkers() async {
+  //   // Position position = await Geolocator.getCurrentPosition(
+  //   //     desiredAccuracy: LocationAccuracy.high);
+  //   // final LatLng currentLocation =
+  //   //     LatLng(position.latitude, position.longitude);
+  //   // print(currentLocation);
 
-    setState(() {
-      markers.add(Marker(
-          markerId: MarkerId("mylocation"),
-          draggable: true,
-          onTap: () => print("Marker!"),
-          position: LatLng(35.1539, 129.1203)));
-    });
+  //   setState(() {
+  //     markers.add(Marker(
+  //         markerId: MarkerId("mylocation"),
+  //         draggable: true,
+  //         onTap: () {
+  //           Get.find<MineController>().getMarkerRecords();
+  //           Get.dialog(HistoryModalDialog(records: records));
+  //         },
+  //         position: LatLng(35.1539, 129.1203)));
+  //   });
 
-    for (int i = 0; i < myBadgeList.length; i++) {
-      final Marker marker = await MapMananger.resizeImage(
-          myBadgeList[i],
-          'assets/icons/badge.png',
-          'self$i',
-          100,
-          (() => showDialog<String>(
-              context: context,
-              builder: (BuildContext context) => ModalDialog(
-                    afterPath: 'assets/images/after.png',
-                    beforePath: 'assets/images/AdobeStock_210419020.png',
-                    date: DateTime.utc(2022, 4, 5),
-                    location: "Gwangalli Beach",
-                    imagePath: 'assets/icons/badge_ver2.png',
-                    range: 100,
-                    time: '00:59:59',
-                  ))));
+  //   for (int i = 0; i < myBadgeList.length; i++) {
+  //     final Marker marker = await MapMananger.resizeImage(
+  //         myBadgeList[i],
+  //         'assets/icons/badge.png',
+  //         'self$i',
+  //         100,
+  //         (() => showDialog<String>(
+  //             context: context,
+  //             builder: (BuildContext context) => ModalDialog(
+  //                   afterPath: 'assets/images/after.png',
+  //                   beforePath: 'assets/images/AdobeStock_210419020.png',
+  //                   date: DateTime.utc(2022, 4, 5).toString(),
+  //                   location: "Gwangalli Beach",
+  //                   imagePath: 'assets/icons/badge_ver2.png',
+  //                   range: 100,
+  //                   time: '00:59:59',
+  //                 ))));
 
-      setState(() {
-        markers.add(marker);
-      });
-    }
-  }
+  //     setState(() {
+  //       markers.add(marker);
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).size.height / 12, right: 12),
+        child: FloatingActionButton(
+          onPressed: () {
+            controller.changeRoute();
+          },
+          elevation: 5,
+          backgroundColor: Colors.white,
+          child: Image.asset(
+            "assets/icons/list.png",
+            width: 30,
+          ),
+        ),
+      ),
       body: SafeArea(
-        bottom: false,
-        child: Stack(children: [
-          GoogleMap(
+          bottom: false,
+          child: GoogleMap(
             myLocationEnabled: false,
             zoomGesturesEnabled: true,
             zoomControlsEnabled: false,
             myLocationButtonEnabled: false,
             initialCameraPosition: _kInitialPosition,
-            markers: markers,
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(
-                vertical: MediaQuery.of(context).size.height / 10.5,
-                horizontal: MediaQuery.of(context).size.width / 14),
-            child: Align(
-                alignment: Alignment.bottomRight,
-                child: GestureDetector(
-                  onTap: () {
-                    controller.changeRoute();
-                  },
-                  child: Container(
-                    height: 52,
-                    width: 52,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(100),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey,
-                          offset: Offset(0.0, 1.0), //(x,y)
-                          blurRadius: 6.0,
-                        ),
-                      ],
-                    ),
-                    child: Center(
-                      child: ImageIcon(
-                        AssetImage("assets/icons/list.png"),
-                      ),
-                    ),
-                  ),
-                )),
-          ),
-        ]),
-      ),
+            markers: mineController.markerRecords,
+          )),
     );
   }
 }

@@ -7,11 +7,11 @@ class Record {
   Record(
       {required this.beachId,
       required this.isWritten,
-      required this.duration,
+      required this.time,
       required this.recordId,
       required this.date,
       required this.afterImage,
-      required this.distance,
+      required this.range,
       required this.beforeImage});
 
   // "recordId": 3,
@@ -24,9 +24,9 @@ class Record {
   //   “isWritten": true
   int recordId;
   int beachId;
-  int duration;
-  String date;
-  int distance;
+  String time;
+  DateTime date;
+  int range;
   String beforeImage;
   String afterImage;
   bool isWritten;

@@ -1,3 +1,4 @@
+import 'package:beach_combine/controllers/mine_controller.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:beach_combine/widgets/purchase_history.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,7 +7,8 @@ import 'package:get/get.dart';
 
 class PurchaseHistoryScreen extends StatelessWidget {
   final int point;
-  const PurchaseHistoryScreen({super.key, required this.point});
+  PurchaseHistoryScreen({super.key, required this.point});
+  final controller = Get.find<MineController>();
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +17,8 @@ class PurchaseHistoryScreen extends StatelessWidget {
       appBar: _FlatAppBar(
         appBar: AppBar(),
       ),
-      body: SingleChildScrollView(
-        child: Column(
+      body: SingleChildScrollView(child: Obx(() {
+        return Column(
           children: [
             Padding(
               padding: const EdgeInsets.all(24.0),
@@ -25,18 +27,19 @@ class PurchaseHistoryScreen extends StatelessWidget {
             ListView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: 10,
+                itemCount: controller.purchaseList.length,
                 itemBuilder: (context, index) {
+                  final purchase = controller.purchaseList[index];
                   return PurchaseHistory(
-                    point: -600,
+                    point: -purchase.cost,
                     date: DateTime.utc(2022, 9, 29),
-                    path: "assets/images/store.png",
-                    name: "zero-waste store",
+                    path: purchase.image,
+                    name: purchase.name,
                   );
                 }),
           ],
-        ),
-      ),
+        );
+      })),
     );
   }
 }

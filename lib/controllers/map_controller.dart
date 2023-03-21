@@ -24,16 +24,22 @@ class MapController extends GetxController {
   var markers = RxSet<Marker>();
   var beachSelectionMarkers = RxSet<Marker>();
   var trashcanSelectionMarkers = RxSet<Marker>();
+
+
   var isLoading = false.obs;
   LocationService locationService = LocationService();
   PointService pointService = PointService();
   Position? currentPosition;
   int selectedBeach = 0;
+  String cleaningTime = '';
+  int cleaningRange = 0;
+  String selectedBeachName = '';
   var isBottomSheetOpen = false.obs;
   PanelController pc = PanelController();
 
-  setSelectedBeach(int id) {
+  setSelectedBeach(int id, String name) {
     selectedBeach = id;
+    selectedBeachName = name;
   }
 
   getLocation() async {
@@ -85,7 +91,14 @@ class MapController extends GetxController {
                 pc.close();
                 await Get.bottomSheet(
                     barrierColor: Colors.transparent,
-                    TrashCanSelectBottomSheet());
+                    TrashCanSelectBottomSheet(
+                      lat: double.parse(element.lat),
+                      lng: double.parse(element.lng),
+                      name: selectedBeachName,
+                      time: cleaningTime,
+                      range: cleaningRange,
+                      beachId: selectedBeach,
+                    ));
                 pc.open();
               })),
         );
@@ -117,13 +130,13 @@ class MapController extends GetxController {
                   Get.dialog(NotCleanedModal());
                 } else {
                   Get.dialog(ModalDialog(
-                    afterPath: 'assets/images/after.png',
-                    beforePath: 'assets/images/AdobeStock_210419020.png',
-                    date: DateTime.utc(2022, 4, 5),
+                    afterPath: beachInfo.record!.afterImage,
+                    beforePath: beachInfo.record!.beforeImage,
+                    date: beachInfo.record!.date,
                     location: beachInfo.beach.name,
                     imagePath: 'assets/icons/beach.png',
-                    range: 100,
-                    time: '00:59:59',
+                    range: beachInfo.record!.range,
+                    time: beachInfo.record!.time,
                   ));
                 }
               }),
@@ -154,18 +167,41 @@ class MapController extends GetxController {
     }
   }
 
+  // Future<
+
   Future<BeachInfo?> getBeachInfo(int id) async {
     final result = await locationService.getBeachInfo(id);
     return result;
   }
 
   Future<bool> checkBeachRange(double lat, double lng, int id) async {
+    print('[거리검증] 현재위치 lat:$lat, lng:$lng');
     final result = locationService.checkBeachRange(lat, lng, id);
     return result;
+  }
+
+  Future<bool> checkTrashcanRange(double lat, double lng) async {
+    final distance = await Geolocator.distanceBetween(
+        currentPosition!.latitude, currentPosition!.longitude, lat, lng);
+    print(distance);
+    if (distance <= 200) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   Future<bool> getPoint(int option) async {
     final result = await pointService.getPoint(option);
     return result;
+  }
+
+  Future<String> getBeachBadge(int id) async {
+    final result = await locationService.getBeachBadge(id);
+    if (result != null) {
+      return result;
+    } else {
+      return '';
+    }
   }
 }

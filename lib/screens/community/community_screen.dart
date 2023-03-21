@@ -3,6 +3,7 @@ import 'package:beach_combine/screens/community/select_to_write_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:beach_combine/widgets/post_card.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
 class CommunityScreen extends StatelessWidget {
@@ -88,33 +89,57 @@ class CommunityScreen extends StatelessWidget {
           //   ],
           // )
           body: Obx(
-            () => controller.feedList.isEmpty
-                ? Center(
-                    child: CircularProgressIndicator(
-                      color: Styles.primaryColor,
-                    ),
-                  )
-                : ListView.builder(
-                    padding: EdgeInsets.only(top: 50, bottom: 20),
-                    itemCount: controller.feedList.length,
-                    itemBuilder: (context, index) {
-                      final feed = controller.feedList[index];
-                      return Center(
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 16),
-                          child: PostCard(
-                            likes: feed.like,
-                            name: feed.nickname,
-                            comment: feed.review!,
-                            myLike: feed.preferred,
-                            profilePath: 'assets/images/person4.png',
-                            location: feed.beachName,
-                            beforePath: feed.beforeImage,
-                            afterPath: feed.afterImage,
-                          ),
+            () {
+              if (controller.isLoading.value) {
+                return Center(
+                  child: CircularProgressIndicator(
+                    color: Styles.primaryColor,
+                  ),
+                );
+              }
+              if (controller.feedList.isEmpty) {
+                return Center(
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/images/empty_community.png',
+                          width: MediaQuery.of(context).size.width / 5,
                         ),
-                      );
-                    }),
+                        Gap(12),
+                        Text(
+                          'There\'re no beachcombers\nwho wrote it yet.',
+                          style: Styles.body02Text
+                              .copyWith(color: Styles.gray1Color),
+                          textAlign: TextAlign.center,
+                        ),
+                      ]),
+                );
+              }
+
+              return ListView.builder(
+                  padding: EdgeInsets.only(top: 50, bottom: 20),
+                  itemCount: controller.feedList.length,
+                  itemBuilder: (context, index) {
+                    final feed = controller.feedList[index];
+                    return Center(
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 16),
+                        child: PostCard(
+                          id: feed.id,
+                          likes: feed.like,
+                          name: feed.nickname,
+                          comment: feed.review!,
+                          myLike: feed.preferred,
+                          profilePath: 'assets/images/person4.png',
+                          location: feed.beachName,
+                          beforePath: feed.beforeImage,
+                          afterPath: feed.afterImage,
+                        ),
+                      ),
+                    );
+                  });
+            },
           )),
     );
   }

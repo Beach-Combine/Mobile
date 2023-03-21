@@ -56,6 +56,14 @@ class _MapScreenState extends State<MapScreen> {
     super.dispose();
   }
 
+  moveCameraCurrentLocation() {
+    mapController!.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+      target: LatLng(locationCtrl.currentPosition!.latitude,
+          locationCtrl.currentPosition!.longitude),
+      zoom: 16.5,
+    )));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,6 +95,7 @@ class _MapScreenState extends State<MapScreen> {
                 ),
                 _DoubleFloatingButton(
                   controller: locationCtrl,
+                  onTap: moveCameraCurrentLocation,
                 ),
                 HomeAppbar(),
               ])));
@@ -146,8 +155,10 @@ class _MapScreenState extends State<MapScreen> {
 }
 
 class _DoubleFloatingButton extends StatelessWidget {
-  final controller;
+  final MapController controller;
+  final Function()? onTap;
   const _DoubleFloatingButton({
+    this.onTap,
     required this.controller,
     Key? key,
   }) : super(key: key);
@@ -179,10 +190,7 @@ class _DoubleFloatingButton extends StatelessWidget {
             width: MediaQuery.of(context).size.width / 20,
           ),
           GestureDetector(
-            onTap: () async {
-              final result = await controller.getBeachLocation();
-              print(result);
-            },
+            onTap: onTap,
             child: Container(
               height: 60,
               width: 60,

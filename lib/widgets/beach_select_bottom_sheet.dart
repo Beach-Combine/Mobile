@@ -2,14 +2,13 @@ import 'package:beach_combine/controllers/map_controller.dart';
 import 'package:beach_combine/data.dart';
 import 'package:beach_combine/screens/Home/camera_screen.dart';
 import 'package:beach_combine/screens/Home/cleaning_screen.dart';
-import 'package:beach_combine/screens/Home/before_preview_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
+import 'package:beach_combine/widgets/out_of_range_modal.dart';
 import 'package:beach_combine/widgets/primary_button.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class BeachSelectBottomSheet extends StatelessWidget {
   String name;
@@ -63,7 +62,7 @@ class BeachSelectBottomSheet extends StatelessWidget {
                         controller.currentPosition!.longitude,
                         id);
                     print(result);
-                    controller.setSelectedBeach(id);
+                    controller.setSelectedBeach(id, name);
                     if (result) {
                       await availableCameras().then((value) => Navigator.push(
                           context,
@@ -72,15 +71,10 @@ class BeachSelectBottomSheet extends StatelessWidget {
                                   text: 'before',
                                   imageType: BEFORE_IMAGE,
                                   cameras: value,
-                                  onPressed: () => Get.to(CleaningScreen())
-                                  // Get.to(PreviewScreen(
-                                  //   imagePath:
-                                  //       "assets/images/beforepic.png",
-                                  //   onTap: () {
-                                  //     Get.offAll(CleaningScreen());
-                                  //   },
-                                  // ));,
-                                  ))));
+                                  onPressed: () => Get.to(CleaningScreen())))));
+                    } else {
+                      Get.back();
+                      Get.dialog(OutOfRangeModal());
                     }
                   })
             ],

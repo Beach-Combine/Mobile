@@ -1,11 +1,13 @@
 import 'dart:async';
 
 import 'package:beach_combine/controllers/map_controller.dart';
+import 'package:beach_combine/screens/Home/report_camera_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:beach_combine/widgets/black_button.dart';
 import 'package:beach_combine/widgets/home_appbar.dart';
 import 'package:beach_combine/widgets/notice_modal.dart';
 import 'package:beach_combine/widgets/seperate_here_bottom_sheet.dart';
+import 'package:camera/camera.dart';
 import 'package:custom_marker/marker_icon.dart';
 
 import 'package:flutter/material.dart';
@@ -201,7 +203,14 @@ class _SaparateHereAndReportPanel extends StatelessWidget {
               BlackButton(
                   height: 60,
                   text: 'Saparate the trash here and report it',
-                  onTap: () async {})
+                  onTap: () async {
+                    await availableCameras().then((value) => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => ReportCameraScreen(
+                                  cameras: value,
+                                  ))));
+                  })
             ],
           ),
         ),

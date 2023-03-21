@@ -4,6 +4,7 @@ import 'package:beach_combine/widgets/flat_appbar.dart';
 import 'package:beach_combine/widgets/selection_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 
@@ -41,27 +42,40 @@ class SelectToWriteScreen extends StatelessWidget {
           }
           if (controller.records.isEmpty) {
             return Center(
-              child: Text(
-                '청소 기록이 없습니다\n해변을 청소하고 기록을 남겨보세요!',
-                style: Styles.titleText,
-                textAlign: TextAlign.center,
-              ),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/images/empty_record.png',
+                      width: MediaQuery.of(context).size.width / 5,
+                    ),
+                    Gap(12),
+                    Text(
+                      'You don\'t have a record\nof cleaning the beach yet.',
+                      style:
+                          Styles.body02Text.copyWith(color: Styles.gray1Color),
+                      textAlign: TextAlign.center,
+                    ),
+                  ]),
             );
           }
           return ListView.builder(
               padding: EdgeInsets.symmetric(vertical: 14),
-              itemCount: 10,
-              itemBuilder: ((context, index) {
-                final isWritten = (index == 3 || index == 4) ? true : false;
+              itemCount: controller.records.length,
+              itemBuilder: ((_, index) {
+                final record = controller.records[index];
                 return Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
                   child: SelectionCard(
-                    isWritten: isWritten,
-                    date: DateTime.utc(2022, 4, 5),
+                    isWritten: record.isWritten,
+                    date: record.date,
                     location: "Gwangalli Beach",
-                    range: 100,
-                    time: "03:59:59",
+                    range: record.range,
+                    time: record.time,
+                    beforeImage:record.beforeImage,
+                    afterImage: record.afterImage,
+                    id: record.recordId,
                   ),
                 );
               }));

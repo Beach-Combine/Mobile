@@ -47,10 +47,14 @@ class MethodSelectScreen extends StatelessWidget {
             ),
             Spacer(),
             PrimaryButton(
-              height: 60,
-              text: 'Go to seperate the trash',
-              onTap: () => Get.offAll(SeperateTrashScreen()),
-            ),
+                height: 60,
+                text: 'Go to seperate the trash',
+                onTap: () async {
+                  final result = await recordController.recordCleaning();
+                  if (result) {
+                    Get.offAll(SeperateTrashScreen());
+                  }
+                }),
           ]),
         ),
         Padding(

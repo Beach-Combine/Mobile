@@ -81,18 +81,43 @@ class LocationService with TokenManager {
   Future<bool> checkBeachRange(double lat, double lng, int id) async {
     try {
       print('[현재위치] lat :$lat | lng :$lng');
+      final formData = FormData.fromMap({
+        'lat': lat,
+        'lng': lng,
+      });
       Dio dio = Dio();
       dio.interceptors.add(CustomInterceptor());
-      final res = await dio.get('$url/beaches/${id}',
+      final res = await dio.get('$url/beaches/${id}/range',
           options: Options(
-            headers: {'accessToken': 'true'},
+            headers: {
+              'accessToken': 'true',
+              'Content-type': 'multipart/form-data'
+            },
           ),
-          data: {"lat": lat, "lng": lng});
+          data: formData);
       print(res.data);
       return true;
     } catch (e) {
       print(e);
       return false;
+    }
+  }
+
+  Future<String?> getBeachBadge(int id) async {
+    try {
+      final dio = Dio();
+      dio.interceptors.add(CustomInterceptor());
+      final res = await dio.get('$url/beaches/$id/badge',
+          options: Options(headers: {
+            'Content-type': 'application/json',
+            'accessToken': 'true',
+          }));
+      print(res.data);
+      final image = res.data['badgeImage'];
+      return image;
+    } catch (e) {
+      print(e);
+      return null;
     }
   }
 }

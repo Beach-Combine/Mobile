@@ -1,13 +1,26 @@
 import 'package:beach_combine/controllers/map_controller.dart';
 import 'package:beach_combine/screens/Home/reward_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
+import 'package:beach_combine/widgets/out_of_range_trashcan_modal.dart';
 import 'package:beach_combine/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
 class TrashCanSelectBottomSheet extends StatelessWidget {
+  final double lat;
+  final double lng;
+  final String name;
+  final String time;
+  final int range;
+  final int beachId;
   TrashCanSelectBottomSheet({
+    required this.beachId,
+    required this.lat,
+    required this.lng,
+    required this.name,
+    required this.time,
+    required this.range,
     Key? key,
   }) : super(key: key);
   final controller = Get.find<MapController>();
@@ -43,10 +56,22 @@ class TrashCanSelectBottomSheet extends StatelessWidget {
                   height: 60,
                   text: 'Saparate the trash here',
                   onTap: () async {
-                    final result = await controller.getPoint(0);
-                    if (result) {
-                      Get.offAll(RewardScreen(
-                          location: 'location', isDifferentArea: false));
+                    final image = await controller.getBeachBadge(beachId);
+                    final isChecked =
+                        await controller.checkTrashcanRange(lat, lng);
+                    if (isChecked) {
+                      final result = await controller.getPoint(0);
+                      if (result) {
+                        Get.offAll(RewardScreen(
+                          location: name,
+                          isDifferentArea: false,
+                          time: time,
+                          range: range,
+                          image: image,
+                        ));
+                      }
+                    } else {
+                      Get.dialog(OutOfRangeTrashcanModal());
                     }
                   })
             ],
