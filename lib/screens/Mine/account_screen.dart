@@ -47,6 +47,20 @@ class _AccountScreenState extends State<AccountScreen> {
         ),
         backgroundColor: Colors.white,
         elevation: 0,
+        actions: [
+          profileController.showEditButton.value
+              ? TextButton(
+                  onPressed: () {
+                    profileController.editAccount();
+                  },
+                  child: Text(
+                    'Done',
+                    style:
+                        Styles.body12Text.copyWith(color: Styles.primaryColor),
+                  ),
+                )
+              : Container()
+        ],
       ),
       body: Center(
         child: Column(
@@ -135,6 +149,7 @@ class _NameTextField extends StatelessWidget {
     Key? key,
   }) : super(key: key);
   final controller;
+  final mineController = Get.find<MineController>();
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -149,6 +164,10 @@ class _NameTextField extends StatelessWidget {
             height: 42,
             width: 250,
             child: TextFormField(
+              onChanged: (value) {
+                mineController.editedName.value = value;
+                mineController.setShowEditButton();
+              },
               controller: controller,
               style: Styles.body21Text.copyWith(height: 1),
               cursorColor: Styles.primaryColor,
@@ -183,6 +202,7 @@ class _EmailTextField extends StatelessWidget {
     Key? key,
   }) : super(key: key);
   final controller;
+  final mineController = Get.find<MineController>();
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -198,6 +218,10 @@ class _EmailTextField extends StatelessWidget {
             width: 250,
             child: TextFormField(
               controller: controller,
+              onChanged: (value) {
+                mineController.editedEmail.value = value;
+                mineController.setShowEditButton();
+              },
               style: Styles.body21Text.copyWith(height: 1),
               cursorColor: Styles.primaryColor,
               decoration: InputDecoration(

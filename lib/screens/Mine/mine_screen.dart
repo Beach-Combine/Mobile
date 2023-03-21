@@ -32,10 +32,9 @@ class _MineScreenState extends State<MineScreen> with TickerProviderStateMixin {
                 onTap: () {
                   Get.to(SettingScreen());
                 },
-                child: ImageIcon(
-                  AssetImage("assets/icons/settings.png"),
+                child: Image.asset("assets/icons/settings.png",
                   color: Styles.buttonBlackColor,
-                  size: 25,
+                  width: 26,
                 ),
               ),
             ),
