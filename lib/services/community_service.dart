@@ -43,4 +43,46 @@ class CommunityService {
       return [];
     }
   }
+
+  Future<bool> postFeed(int id, String review) async {
+    try {
+      final formData = FormData.fromMap({
+        'review': review,
+      });
+      final dio = Dio();
+      dio.interceptors.add(CustomInterceptor());
+      final res = dio.post('$url/feeds/$id',
+          options: Options(headers: {'accessToken': 'true'}), data: formData);
+      print(res);
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  Future<void> postLike(int id) async {
+    try {
+      print(id);
+      final dio = Dio();
+      dio.interceptors.add(CustomInterceptor());
+      final res = await dio.post('$url/members/preferred-feeds/$id',
+          options: Options(headers: {'accessToken': 'true'}));
+      print('[POST] [피드 좋아요 하기] ${res.data}');
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> deleteLike(int id) async {
+    try {
+      final dio = Dio();
+      dio.interceptors.add(CustomInterceptor());
+      final res = await dio.delete('$url/members/preferred-feeds/$id',
+          options: Options(headers: {'accessToken': 'true'}));
+      print('[POST] [피드 좋아요 삭제 하기] ${res.data}');
+    } catch (e) {
+      print(e);
+    }
+  }
 }

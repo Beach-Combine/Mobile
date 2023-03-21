@@ -4,11 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 
-class BadgeTile extends StatelessWidget {
-  final DateTime date;
-  final String location;
+import '../models/record.dart';
 
-  const BadgeTile({super.key, required this.date, required this.location});
+class BadgeTile extends StatelessWidget {
+  // final DateTime date;
+  // final String location;
+  final Record record;
+
+  const BadgeTile({
+    super.key,
+    // required this.date,
+    // required this.location,
+    required this.record,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,13 +24,13 @@ class BadgeTile extends StatelessWidget {
       onTap: () => showDialog<String>(
           context: context,
           builder: (BuildContext context) => ModalDialog(
-                afterPath: 'assets/images/after.png',
-                beforePath: 'assets/images/AdobeStock_210419020.png',
-                date: DateTime.utc(2022, 4, 5),
-                location: "Gwangalli Beach",
+                afterPath: record.afterImage,
+                beforePath: record.beforeImage,
+                date: DateFormat('yy.MM.dd').format(record.date),
+                location: "Beach",
                 imagePath: 'assets/images/badge_final.png',
-                range: 100,
-                time: '00:59:59',
+                range: record.range,
+                time: record.time,
               )),
       child: Container(
         child: Column(
@@ -34,14 +42,14 @@ class BadgeTile extends StatelessWidget {
             ),
             Gap(12),
             Text(
-              DateFormat('yy.MM.dd').format(date),
+              DateFormat('yy.MM.dd').format(record.date),
               style: Styles.body21Text.copyWith(
                 color: Styles.gray1Color,
               ),
               textAlign: TextAlign.center,
             ),
             Text(
-              location,
+              'location',
               style: Styles.body12Text,
               textAlign: TextAlign.center,
             ),

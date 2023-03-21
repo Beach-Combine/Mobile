@@ -11,14 +11,21 @@ class SelectionCard extends StatelessWidget {
   final String time;
   final int range;
   final bool isWritten;
+  final String beforeImage;
+  final String afterImage;
+  final int id;
 
-  const SelectionCard(
-      {super.key,
-      required this.date,
-      required this.location,
-      required this.time,
-      required this.range,
-      required this.isWritten});
+  const SelectionCard({
+    super.key,
+    required this.date,
+    required this.location,
+    required this.time,
+    required this.range,
+    required this.isWritten,
+    required this.beforeImage,
+    required this.afterImage,
+    required this.id,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +37,9 @@ class SelectionCard extends StatelessWidget {
             location: location,
             time: time,
             range: range,
+            beforeImage: beforeImage,
+            afterImage: afterImage,
+            id: id,
           ));
         },
         child: Container(

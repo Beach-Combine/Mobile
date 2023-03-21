@@ -17,7 +17,7 @@ class BeachInfo {
     required this.record,
     required this.member,
   });
-
+  
   Beach beach;
   Record? record;
   Member? member;

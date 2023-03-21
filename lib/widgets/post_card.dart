@@ -1,9 +1,12 @@
+import 'package:beach_combine/controllers/community_controller.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 class PostCard extends StatefulWidget {
+  final int id;
   final String name;
   final String profilePath;
   final String beforePath;
@@ -15,6 +18,7 @@ class PostCard extends StatefulWidget {
 
   PostCard({
     super.key,
+    required this.id,
     required this.comment,
     required this.name,
     required this.profilePath,
@@ -40,12 +44,11 @@ class _PostCardState extends State<PostCard> {
     super.initState();
   }
 
-  calcLikes() {
-    
-  }
+  calcLikes() {}
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<CommunityController>();
     return Container(
       width: double.infinity,
       child: Padding(
@@ -96,9 +99,11 @@ class _PostCardState extends State<PostCard> {
                       if (_myLike) {
                         _likes--;
                         _myLike = false;
+                        controller.deleteLike(widget.id);
                       } else {
                         _likes++;
                         _myLike = true;
+                        controller.postLike(widget.id);
                       }
                     });
                   },

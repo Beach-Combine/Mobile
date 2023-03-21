@@ -8,8 +8,18 @@ import 'package:get/get.dart';
 class RewardScreen extends StatelessWidget {
   final String location;
   final bool isDifferentArea;
-  const RewardScreen(
-      {super.key, required this.location, required this.isDifferentArea});
+  final String time;
+  final int range;
+  final String image;
+
+  const RewardScreen({
+    super.key,
+    required this.location,
+    required this.isDifferentArea,
+    required this.time,
+    required this.range,
+    required this.image,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,57 +27,64 @@ class RewardScreen extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(24.0),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Spacer(),
-                Text(
-                  'Thank you for your effort',
-                  style: Styles.body12Text,
-                ),
-                Text(
-                  'You got a badge!',
-                  style: Styles.titleText,
-                ),
-                Gap(50),
-                Image.asset(
-                  'assets/images/badgeImage.png',
-                  width: 165,
-                ),
-                Gap(15),
-                _LocationText(location: location),
-                Gap(20),
-                _TimeRangeTextBox(),
-                Spacer(),
-                isDifferentArea
-                    ? Column(
-                        children: [
-                          Container(
-                            width: 320,
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 20),
-                              child: Text(
-                                'Only 30 points will be paid for throwing away into unregistered trash cans.\n After checking the location of the trash can, we will pay 70 points more.',
-                                textAlign: TextAlign.center,
-                                style: Styles.body3Text
-                                    .copyWith(color: Styles.gray1Color),
+          child: Stack(children: [
+            Image.asset('assets/images/sparkle.png'),
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Spacer(),
+                  Text(
+                    'Thank you for your effort',
+                    style: Styles.body12Text,
+                  ),
+                  Text(
+                    'You got a badge!',
+                    style: Styles.titleText,
+                  ),
+                  Gap(50),
+                  Image.network(
+                    image,
+                    width: 165,
+                  ),
+                  Gap(15),
+                  _LocationText(location: location),
+                  Gap(20),
+                  _TimeRangeTextBox(
+                    time: time,
+                    range: range,
+                  ),
+                  Spacer(),
+                  isDifferentArea
+                      ? Column(
+                          children: [
+                            Container(
+                              width: 320,
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 20),
+                                child: Text(
+                                  'Only 30 points will be paid for throwing away into unregistered trash cans.\n After checking the location of the trash can, we will pay 70 points more.',
+                                  textAlign: TextAlign.center,
+                                  style: Styles.body3Text
+                                      .copyWith(color: Styles.gray1Color),
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      )
-                    : Gap(0),
-                PrimaryButton(
-                    height: 60,
-                    text: 'Get 100 points',
-                    onTap: () {
-                      Get.offAll(BeachCombine());
-                    }),
-              ],
+                          ],
+                        )
+                      : Gap(0),
+                  PrimaryButton(
+                      height: 60,
+                      text:
+                          isDifferentArea ? 'Get 30 points' : 'Get 100 points',
+                      onTap: () {
+                        Get.offAll(BeachCombine());
+                      }),
+                ],
+              ),
             ),
-          ),
+          ]),
         ),
       ),
     );
@@ -75,9 +92,21 @@ class RewardScreen extends StatelessWidget {
 }
 
 class _TimeRangeTextBox extends StatelessWidget {
+  final String time;
+  final int range;
   const _TimeRangeTextBox({
+    required this.time,
+    required this.range,
     Key? key,
   }) : super(key: key);
+
+  rangeRender() {
+    if (range >= 1000) {
+      return '${(range / 1000).toString()} km';
+    } else {
+      return '$range m';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +121,7 @@ class _TimeRangeTextBox extends StatelessWidget {
               style: Styles.body21Text.copyWith(color: Styles.gray1Color),
             ),
             Text(
-              '00:00:05',
+              time,
               style: Styles.number2Text,
             )
           ],
@@ -106,7 +135,7 @@ class _TimeRangeTextBox extends StatelessWidget {
               style: Styles.body21Text.copyWith(color: Styles.gray1Color),
             ),
             Text(
-              '001km',
+              rangeRender(),
               style: Styles.number2Text,
             )
           ],

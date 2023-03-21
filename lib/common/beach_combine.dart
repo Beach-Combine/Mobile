@@ -6,17 +6,31 @@ import 'package:beach_combine/screens/community/community_screen.dart';
 import 'package:beach_combine/screens/Mine/mine_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class BeachCombine extends StatefulWidget {
-  const BeachCombine({super.key});
-
+  const BeachCombine({
+    super.key,
+  });
   @override
   State<BeachCombine> createState() => _BeachCombineState();
 }
 
 class _BeachCombineState extends State<BeachCombine> {
   int _selectedIndex = 0;
+  dynamic index = Get.arguments;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    if (index == 2) {
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
+    super.initState();
+  }
 
   void _onItemTapped(int index) {
     setState(() {
