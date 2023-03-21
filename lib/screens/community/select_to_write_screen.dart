@@ -1,3 +1,4 @@
+import 'package:beach_combine/controllers/community_controller.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:beach_combine/widgets/flat_appbar.dart';
 import 'package:beach_combine/widgets/selection_card.dart';
@@ -7,7 +8,9 @@ import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 
 class SelectToWriteScreen extends StatelessWidget {
-  const SelectToWriteScreen({super.key});
+  final controller = Get.find<CommunityController>();
+
+  SelectToWriteScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,57 +31,40 @@ class SelectToWriteScreen extends StatelessWidget {
           backgroundColor: Styles.gray3Color,
           elevation: 0,
         ),
-        body: ListView(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-              child: SelectionCard(
-                isWritten: false,
-                date: DateTime.utc(2022, 4, 5),
-                location: "Gwangalli Beach",
-                range: 6,
-                time: "02:12:33",
+        body: Obx(() {
+          if (controller.isLoading.value) {
+            return Center(
+              child: CircularProgressIndicator(
+                color: Styles.primaryColor,
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-              child: SelectionCard(
-                isWritten: true,
-                date: DateTime.utc(2022, 4, 5),
-                location: "Haeundae Beach",
-                range: 12,
-                time: "05:11:05",
+            );
+          }
+          if (controller.records.isEmpty) {
+            return Center(
+              child: Text(
+                '청소 기록이 없습니다\n해변을 청소하고 기록을 남겨보세요!',
+                style: Styles.titleText,
+                textAlign: TextAlign.center,
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-              child: SelectionCard(
-                isWritten: false,
-                date: DateTime.utc(2022, 4, 5),
-                location: "Gwangalli Beach",
-                range: 3,
-                time: "00:53:19",
-              ),
-            )
-          ],
-        )
-        // ListView.builder(
-        //     padding: EdgeInsets.symmetric(vertical: 14),
-        //     itemCount: 10,
-        //     itemBuilder: ((context, index) {
-        //       final isWritten = (index == 3 || index == 4) ? true : false;
-        //       return Padding(
-        //         padding:
-        //             const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-        //         child: SelectionCard(
-        //           isWritten: isWritten,
-        //           date: DateTime.utc(2022, 4, 5),
-        //           location: "Gwangalli Beach",
-        //           range: 100,
-        //           time: "03:59:59",
-        //         ),
-        //       );
-        //     }))
-        );
+            );
+          }
+          return ListView.builder(
+              padding: EdgeInsets.symmetric(vertical: 14),
+              itemCount: 10,
+              itemBuilder: ((context, index) {
+                final isWritten = (index == 3 || index == 4) ? true : false;
+                return Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                  child: SelectionCard(
+                    isWritten: isWritten,
+                    date: DateTime.utc(2022, 4, 5),
+                    location: "Gwangalli Beach",
+                    range: 100,
+                    time: "03:59:59",
+                  ),
+                );
+              }));
+        }));
   }
 }

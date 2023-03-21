@@ -52,6 +52,9 @@ dependencies:
   get_storage: ^2.0.3
   flutter_switch: ^0.3.2
   custom_marker: ^1.0.0
+  image_crop: ^0.4.1
+  sliding_up_panel: ^2.0.0+1
+
 
 dev_dependencies:
   flutter_test:

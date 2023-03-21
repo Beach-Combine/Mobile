@@ -7,19 +7,23 @@ part of 'record.dart';
 // **************************************************************************
 
 Record _$RecordFromJson(Map<String, dynamic> json) => Record(
-      id: json['id'] as int,
+      beachId: json['beachId'] as int,
+      isWritten: json['isWritten'] as bool,
+      duration: json['duration'] as int,
+      recordId: json['recordId'] as int,
       date: json['date'] as String,
-      time: json['time'] as String,
-      range: json['range'] as int,
-      beforeImage: json['beforeImage'] as String,
       afterImage: json['afterImage'] as String,
+      distance: json['distance'] as int,
+      beforeImage: json['beforeImage'] as String,
     );
 
 Map<String, dynamic> _$RecordToJson(Record instance) => <String, dynamic>{
-      'id': instance.id,
+      'recordId': instance.recordId,
+      'beachId': instance.beachId,
+      'duration': instance.duration,
       'date': instance.date,
-      'time': instance.time,
-      'range': instance.range,
+      'distance': instance.distance,
       'beforeImage': instance.beforeImage,
       'afterImage': instance.afterImage,
+      'isWritten': instance.isWritten,
     };

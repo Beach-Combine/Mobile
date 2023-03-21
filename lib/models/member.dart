@@ -13,7 +13,7 @@ class Member {
       {required this.email,
       required this.monthPoint,
       required this.nickname,
-      required this.pointUsed,
+      required this.purchasePoint,
       required this.id,
       required this.image,
       required this.profilePublic,
@@ -26,7 +26,7 @@ class Member {
   String image;
   int totalPoint;
   int monthPoint;
-  int pointUsed;
+  int purchasePoint;
   bool profilePublic;
   String role;
 

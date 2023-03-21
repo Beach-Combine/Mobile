@@ -18,7 +18,7 @@ class Record {
       required this.afterImage});
   int id;
   String date;
-  int time;
+  String time;
   int range;
   String beforeImage;
   String afterImage;

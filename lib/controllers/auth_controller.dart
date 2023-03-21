@@ -1,5 +1,7 @@
 import 'package:beach_combine/common/beach_combine.dart';
 import 'package:beach_combine/data.dart';
+import 'package:beach_combine/screens/Home/method_select_screen.dart';
+import 'package:beach_combine/screens/Home/saperate_trash_screen.dart';
 import 'package:beach_combine/screens/login_screen.dart';
 import 'package:beach_combine/services/auth_service.dart';
 import 'package:beach_combine/utils/token_manager.dart';
@@ -32,12 +34,13 @@ class AuthController extends GetxController with TokenManager {
       googleAcc.value = await _googleSignIn.signIn();
       isSignedIn.value = true;
       update();
-      print(googleAcc.value!.authentication);
+      //print(googleAcc.value!.authentication);
 
       final bool isFinished = await _login();
       print(FirebaseAuth.instance.currentUser);
       if (isFinished) {
         Get.offAll(BeachCombine());
+        // Get.offAll(SeperateTrashScreen());
       }
     } catch (e) {
       print(e);

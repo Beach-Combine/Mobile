@@ -1,10 +1,12 @@
 import 'dart:math';
 
+import 'package:beach_combine/controllers/auth_controller.dart';
 import 'package:beach_combine/services/profile_service.dart';
 import 'package:get/get.dart';
 
 class ProfileController extends GetxController {
   final profileService = ProfileService();
+  final authController = Get.find<AuthController>();
   var status = false.obs;
 
   var name = ''.obs;

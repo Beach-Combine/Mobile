@@ -10,7 +10,7 @@ class TimerController extends GetxController {
   int hours = 0, minutes = 0, seconds = 0;
   bool isTimerRunning = false, isResetButtonVisible = false;
 
-  int cleaningTime = 0;
+  String cleaningTime = "";
 
   @override
   void onReady() {
@@ -26,9 +26,14 @@ class TimerController extends GetxController {
     super.onClose();
   }
 
+  // setCleaningTime() {
+  //   cleaningTime = hours * 3600 + minutes * 60 + seconds;
+  //   print(cleaningTime);
+  // }
+
   setCleaningTime() {
-    cleaningTime = hours * 3600 + minutes * 60 + seconds;
-    print(cleaningTime);
+    cleaningTime =
+        '${hoursString.value}:${minuteString.value}:${secondString.value}';
   }
 
   void startTimer() {

@@ -1,7 +1,8 @@
 import 'package:beach_combine/controllers/map_controller.dart';
+import 'package:beach_combine/data.dart';
 import 'package:beach_combine/screens/Home/camera_screen.dart';
 import 'package:beach_combine/screens/Home/cleaning_screen.dart';
-import 'package:beach_combine/screens/Home/preview_screen.dart';
+import 'package:beach_combine/screens/Home/before_preview_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:beach_combine/widgets/primary_button.dart';
 import 'package:camera/camera.dart';
@@ -55,8 +56,12 @@ class BeachSelectBottomSheet extends StatelessWidget {
                   height: 60,
                   text: 'Take a picture before cleaning',
                   onTap: () async {
-                    final result =
-                        await controller.checkBeachRange(lat, lng, id);
+                    print(
+                        '[현재 위치] lat : ${controller.currentPosition!.latitude} | lng : ${controller.currentPosition!.longitude}');
+                    final result = await controller.checkBeachRange(
+                        controller.currentPosition!.latitude,
+                        controller.currentPosition!.longitude,
+                        id);
                     print(result);
                     controller.setSelectedBeach(id);
                     if (result) {
@@ -64,16 +69,17 @@ class BeachSelectBottomSheet extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (_) => CameraScreen(
-                                    cameras: value,
-                                    onPressed: () {
-                                      // Get.to(PreviewScreen(
-                                      //   imagePath:
-                                      //       "assets/images/beforepic.png",
-                                      //   onTap: () {
-                                      //     Get.offAll(CleaningScreen());
-                                      //   },
-                                      // ));
-                                    },
+                                  text: 'before',
+                                  imageType: BEFORE_IMAGE,
+                                  cameras: value,
+                                  onPressed: () => Get.to(CleaningScreen())
+                                  // Get.to(PreviewScreen(
+                                  //   imagePath:
+                                  //       "assets/images/beforepic.png",
+                                  //   onTap: () {
+                                  //     Get.offAll(CleaningScreen());
+                                  //   },
+                                  // ));,
                                   ))));
                     }
                   })

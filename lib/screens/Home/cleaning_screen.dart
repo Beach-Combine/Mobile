@@ -1,7 +1,10 @@
 import 'dart:async';
 
 import 'package:beach_combine/controllers/time_controller.dart';
+import 'package:beach_combine/data.dart';
 import 'package:beach_combine/screens/Home/after_camera_screen.dart';
+import 'package:beach_combine/screens/Home/camera_screen.dart';
+import 'package:beach_combine/screens/Home/method_select_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:beach_combine/widgets/primary_button.dart';
 import 'package:camera/camera.dart';
@@ -202,8 +205,13 @@ class _BottomSheetCleaningState extends State<_BottomSheetCleaning> {
                   onTap: () async {
                     Get.find<LocationController>().setCleaningDistance();
                     Get.find<TimerController>().setCleaningTime();
-                    await availableCameras().then(
-                        (value) => Get.to(AfterCameraScreen(cameras: value)));
+                    await availableCameras()
+                        .then((value) => Get.to(CameraScreen(
+                              cameras: value,
+                              text: 'after',
+                              imageType: AFTER_IMAGE,
+                              onPressed: () => Get.to(MethodSelectScreen()),
+                            )));
                   })
             ],
           ),

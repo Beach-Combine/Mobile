@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:beach_combine/controllers/location_controller.dart';
 import 'package:beach_combine/screens/Home/camera_screen.dart';
 import 'package:beach_combine/screens/Home/cleaning_screen.dart';
-import 'package:beach_combine/screens/Home/preview_screen.dart';
+import 'package:beach_combine/screens/Home/before_preview_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:beach_combine/utils/map_manager.dart';
 import 'package:beach_combine/widgets/home_appbar.dart';
@@ -241,20 +241,21 @@ class _DoubleFloatingButton extends StatelessWidget {
               ),
             ),
             onTap: () async {
-              await availableCameras().then((value) => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (_) => CameraScreen(
-                            cameras: value,
-                            onPressed: () {
-                              // Get.to(PreviewScreen(
-                              //   imagePath: "assets/images/beforepic.png",
-                              //   onTap: () {
-                              //     Get.offAll(CleaningScreen());
-                              //   },
-                              // ));
-                            },
-                          ))));
+              // await availableCameras().then((value) => Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (_) => CameraScreen(
+              //           text: 'before',
+              //               cameras: value,
+              //               onPressed: () {
+              //                 // Get.to(PreviewScreen(
+              //                 //   imagePath: "assets/images/beforepic.png",
+              //                 //   onTap: () {
+              //                 //     Get.offAll(CleaningScreen());
+              //                 //   },
+              //                 // ));
+              //               },
+              //             ))));
             },
           ),
           SizedBox(

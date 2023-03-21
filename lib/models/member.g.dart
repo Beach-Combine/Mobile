@@ -10,7 +10,7 @@ Member _$MemberFromJson(Map<String, dynamic> json) => Member(
       email: json['email'] as String,
       monthPoint: json['monthPoint'] as int,
       nickname: json['nickname'] as String,
-      pointUsed: json['pointUsed'] as int,
+      purchasePoint: json['purchasePoint'] as int,
       id: json['id'] as int,
       image: json['image'] as String,
       profilePublic: json['profilePublic'] as bool,
@@ -25,7 +25,7 @@ Map<String, dynamic> _$MemberToJson(Member instance) => <String, dynamic>{
       'image': instance.image,
       'totalPoint': instance.totalPoint,
       'monthPoint': instance.monthPoint,
-      'pointUsed': instance.pointUsed,
+      'purchasePoint': instance.purchasePoint,
       'profilePublic': instance.profilePublic,
       'role': instance.role,
     };

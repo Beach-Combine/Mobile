@@ -36,7 +36,7 @@ class CommunityService {
             'Content-type': 'application/json',
             'accessToken': 'true'
           }));
-      print('[GET] [레코드 요청] ${res}');
+      print('[GET] [레코드 요청] ${res.data}');
       final records = Record.fromJsonList(res.data);
       return records;
     } catch (e) {

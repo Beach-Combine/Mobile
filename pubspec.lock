@@ -506,6 +506,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.2"
+  image_crop:
+    dependency: "direct main"
+    description:
+      name: image_crop
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.1"
   intl:
     dependency: "direct main"
     description:
@@ -763,6 +770,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  sliding_up_panel:
+    dependency: "direct main"
+    description:
+      name: sliding_up_panel
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0+1"
   source_gen:
     dependency: transitive
     description:
