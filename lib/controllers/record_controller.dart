@@ -26,11 +26,6 @@ class RecordController extends GetxController {
     final afterImage = imageController.afterImage;
     mapController.cleaningTime = time;
     mapController.cleaningRange = range;
-    // print(id);
-    // print(time);
-    // print(range);
-    // print(imageController.beforeImage);
-    // print(imageController.afterImage);
 
     final result = await recordService.recordCleaning(
         id, time, range, beforeImage, afterImage);

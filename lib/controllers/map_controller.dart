@@ -25,7 +25,6 @@ class MapController extends GetxController {
   var beachSelectionMarkers = RxSet<Marker>();
   var trashcanSelectionMarkers = RxSet<Marker>();
 
-
   var isLoading = false.obs;
   LocationService locationService = LocationService();
   PointService pointService = PointService();
@@ -106,37 +105,40 @@ class MapController extends GetxController {
     }
     if (onlyTrashcans == false) {
       beachLocations.forEach((element) async {
-        print(element.image);
         final beachInfo = await getBeachInfo(element.id);
 
         markers.add(
           Marker(
               markerId: MarkerId('${element.id}'),
-              icon: beachInfo!.record == null
+              icon: element.memberImage.length == 4
                   ? await MarkerIcon.pictureAsset(
-                      assetPath: "assets/icons/not_cleaned.png",
+                      assetPath: "assets/icons/${element.memberImage}.png",
                       width: 100,
                       height: 100)
-                  : await MarkerIcon.pictureAsset(
-                      assetPath: "assets/icons/beach.png",
-                      width: 150,
-                      height: 150),
+                  : await MarkerIcon.downloadResizePictureCircle(
+                      element.memberImage,
+                      addBorder: true,
+                      borderColor: Colors.black,
+                      borderSize: 12,
+                      size: 115),
               position: LatLng(
                 double.parse(element.lat),
                 double.parse(element.lng),
               ),
               onTap: () {
-                if (beachInfo.record == null) {
+                if (beachInfo!.record == null) {
                   Get.dialog(NotCleanedModal());
                 } else {
                   Get.dialog(ModalDialog(
+                    nickname: beachInfo.member!.nickname,
                     afterPath: beachInfo.record!.afterImage,
                     beforePath: beachInfo.record!.beforeImage,
                     date: beachInfo.record!.date,
                     location: beachInfo.beach.name,
-                    imagePath: 'assets/icons/beach.png',
+                    imagePath: element.memberImage,
                     range: beachInfo.record!.range,
                     time: beachInfo.record!.time,
+                    isBadge: false,
                   ));
                 }
               }),
@@ -144,13 +146,17 @@ class MapController extends GetxController {
 
         beachSelectionMarkers.add(Marker(
           markerId: MarkerId(element.id.toString()),
-          icon: beachInfo.record == null
+          icon: element.memberImage.length == 4
               ? await MarkerIcon.pictureAsset(
-                  assetPath: "assets/icons/not_cleaned.png",
+                  assetPath: "assets/icons/${element.memberImage}.png",
                   width: 100,
                   height: 100)
-              : await MarkerIcon.pictureAsset(
-                  assetPath: "assets/icons/beach.png", width: 150, height: 150),
+              : await MarkerIcon.downloadResizePictureCircle(
+                  element.memberImage,
+                  addBorder: true,
+                  borderColor: Colors.black,
+                  borderSize: 12,
+                  size: 115),
           position: LatLng(
             double.parse(element.lat),
             double.parse(element.lng),
@@ -158,7 +164,7 @@ class MapController extends GetxController {
           onTap: () => Get.bottomSheet(
               barrierColor: Colors.transparent,
               BeachSelectBottomSheet(
-                  name: beachInfo.beach.name,
+                  name: beachInfo!.beach.name,
                   lat: currentPosition!.latitude,
                   lng: currentPosition!.longitude,
                   id: element.id)),

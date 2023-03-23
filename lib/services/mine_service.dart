@@ -6,7 +6,6 @@ import 'package:beach_combine/models/member.dart';
 import 'package:beach_combine/models/my_record/my_record.dart';
 import 'package:beach_combine/models/purchase.dart';
 import 'package:beach_combine/models/record.dart';
-import 'package:beach_combine/widgets/gift_card.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 
@@ -110,6 +109,7 @@ class MineService {
       final markerRecords = MarkerRecord.fromJsonList(res.data);
       return markerRecords;
     } catch (e) {
+      print(e);
       return [];
     }
   }
@@ -142,6 +142,7 @@ class MineService {
             'accessToken': 'true'
           }));
       final records = Record.fromJsonList(res.data);
+      print('[GET] [청소기록 뱃지 리스트형태]${res.data}');
       return records;
     } catch (e) {
       print(e);
@@ -152,8 +153,11 @@ class MineService {
   Future<bool> editAccount(String nickname) async {
     try {
       print(nickname);
-      final formData = FormData.fromMap(
-          {'nickname': nickname, 'image': await MultipartFile.fromBytes([],filename: 'empty.png'), 'isChanged': false});
+      final formData = FormData.fromMap({
+        'nickname': nickname,
+        'image': await MultipartFile.fromBytes([], filename: 'empty.png'),
+        'isChanged': false
+      });
       final dio = Dio();
       print(formData.fields);
       dio.interceptors.add(CustomInterceptor());

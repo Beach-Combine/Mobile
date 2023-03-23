@@ -20,74 +20,6 @@ class CommunityScreen extends StatelessWidget {
           appBar: _FlatAppBar(
             appBar: AppBar(),
           ),
-          // body: ListView(
-          //   children: [
-          //     Center(
-          //       child: Padding(
-          //         padding: const EdgeInsets.only(bottom: 16),
-          //         child: PostCard(
-          //           likes: 101,
-          //           name: "Joy",
-          //           comment:
-          //               "There's nothing more satisfying than seeing a beach that was once littered with trash now clean and pristine.",
-          //           myLike: true,
-          //           profilePath: 'assets/images/Joy.png',
-          //           location: "Gwangalli Beach",
-          //           beforePath: "assets/images/AdobeStock_210419020.png",
-          //           afterPath: "assets/images/after.png",
-          //         ),
-          //       ),
-          //     ),
-          //     Center(
-          //       child: Padding(
-          //         padding: const EdgeInsets.only(bottom: 16),
-          //         child: PostCard(
-          //           likes: 53,
-          //           name: "James",
-          //           comment:
-          //               "I feel so much better knowing that I made a difference in preserving our beautiful beaches.",
-          //           myLike: false,
-          //           profilePath: 'assets/images/James.png',
-          //           location: "Haeundae Beach",
-          //           beforePath: "assets/images/before_1.jpeg",
-          //           afterPath: "assets/images/after_1.jpeg",
-          //         ),
-          //       ),
-          //     ),
-          //     Center(
-          //       child: Padding(
-          //         padding: const EdgeInsets.only(bottom: 16),
-          //         child: PostCard(
-          //           likes: 122,
-          //           name: "Lia",
-          //           comment:
-          //               "It not only benefits the environment but also benefits your own well-being.",
-          //           myLike: true,
-          //           profilePath: 'assets/images/person4.png',
-          //           location: "Gwangalli Beach",
-          //           beforePath: "assets/images/before_2.jpeg",
-          //           afterPath: "assets/images/after_2.jpeg.webp",
-          //         ),
-          //       ),
-          //     ),
-          //     Center(
-          //       child: Padding(
-          //         padding: const EdgeInsets.only(bottom: 16),
-          //         child: PostCard(
-          //           likes: 11,
-          //           name: "Rora",
-          //           comment:
-          //               "Join me in this effort to keep our beaches clean and beautiful for generations to come!",
-          //           myLike: false,
-          //           profilePath: 'assets/images/person1.png',
-          //           location: "Haeundae Beach",
-          //           beforePath: "assets/images/before_3.jpeg",
-          //           afterPath: "assets/images/after_3.png",
-          //         ),
-          //       ),
-          //     ),
-          //   ],
-          // )
           body: Obx(
             () {
               if (controller.isLoading.value) {
@@ -124,7 +56,7 @@ class CommunityScreen extends StatelessWidget {
                     final feed = controller.feedList[index];
                     return Center(
                       child: Padding(
-                        padding: const EdgeInsets.only(bottom: 16),
+                        padding: const EdgeInsets.only(bottom: 30),
                         child: PostCard(
                           id: feed.id,
                           likes: feed.like,

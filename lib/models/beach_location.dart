@@ -13,11 +13,11 @@ class BeachLocation {
       {required this.lat,
       required this.lng,
       required this.id,
-      required this.image});
+      required this.memberImage});
 
   String lat;
   String lng;
-  String? image;
+  String memberImage;
   int id;
 
   /// A necessary factory constructor for creating a new User instance

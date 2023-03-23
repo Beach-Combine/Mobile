@@ -27,6 +27,14 @@ class SelectionCard extends StatelessWidget {
     required this.id,
   });
 
+  rangeRender() {
+    if (range >= 1000) {
+      return '${(range / 1000).toString()} km';
+    } else {
+      return '$range m';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
@@ -99,7 +107,7 @@ class SelectionCard extends StatelessWidget {
                                 .copyWith(color: Styles.gray1Color),
                           ),
                           Text(
-                            "${range}km",
+                            rangeRender(),
                             style: Styles.number2Text,
                           )
                         ],

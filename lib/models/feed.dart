@@ -4,17 +4,19 @@ part 'feed.g.dart';
 
 @JsonSerializable()
 class Feed {
-  Feed(
-      {required this.nickname,
-      required this.id,
-      required this.review,
-      required this.recordId,
-      required this.memberId,
-      required this.afterImage,
-      required this.beachName,
-      required this.preferred,
-      required this.like,
-      required this.beforeImage});
+  Feed({
+    required this.nickname,
+    required this.id,
+    required this.review,
+    required this.recordId,
+    required this.memberId,
+    required this.afterImage,
+    required this.beachName,
+    required this.preferred,
+    required this.like,
+    required this.beforeImage,
+    required this.memberImage,
+  });
 
   // "id": 1,
   //   "review": "review1234",
@@ -34,6 +36,7 @@ class Feed {
   String beachName;
   int like;
   bool preferred;
+  String memberImage;
 
   factory Feed.fromJson(Map<String, dynamic> json) => _$FeedFromJson(json);
 

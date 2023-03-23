@@ -175,7 +175,13 @@ class _TimeRangeText extends StatelessWidget {
     required this.range,
     Key? key,
   }) : super(key: key);
-
+  rangeRender() {
+    if (range >= 1000) {
+      return '${(range / 1000).toString()} km';
+    } else {
+      return '$range m';
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -221,7 +227,7 @@ class _TimeRangeText extends StatelessWidget {
                     style: Styles.detailText.copyWith(color: Styles.gray1Color),
                   ),
                   Text(
-                    "${range}km",
+                    rangeRender(),
                     style: Styles.number2Text,
                   )
                 ],

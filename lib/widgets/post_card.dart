@@ -134,18 +134,36 @@ class _PostCardState extends State<PostCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.network(
-                  fit: BoxFit.cover,
-                  widget.beforePath,
-                  width: 160,
-                  height: 160,
+                Stack(
+                  children: [
+                    Container(
+                      color: Styles.gray1Color,
+                      width: MediaQuery.of(context).size.width / 2.5,
+                      height: MediaQuery.of(context).size.width / 2.5,
+                    ),
+                    Image.network(
+                      fit: BoxFit.cover,
+                      widget.beforePath,
+                      width: MediaQuery.of(context).size.width / 2.5,
+                      height: MediaQuery.of(context).size.width / 2.5,
+                    ),
+                  ],
                 ),
-                Gap(6),
-                Image.network(
-                  fit: BoxFit.cover,
-                  width: 160,
-                  height: 160,
-                  widget.afterPath,
+                Gap(8),
+                Stack(
+                  children: [
+                    Container(
+                      color: Styles.gray1Color,
+                      width: MediaQuery.of(context).size.width / 2.5,
+                      height: MediaQuery.of(context).size.width / 2.5,
+                    ),
+                    Image.network(
+                      fit: BoxFit.cover,
+                      width: MediaQuery.of(context).size.width / 2.5,
+                      height: MediaQuery.of(context).size.width / 2.5,
+                      widget.afterPath,
+                    ),
+                  ],
                 ),
               ],
             )

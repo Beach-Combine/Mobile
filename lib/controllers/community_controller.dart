@@ -33,13 +33,14 @@ class CommunityController extends GetxController {
 
   postFeed(int id, String review) async {
     final result = await communityService.postFeed(id, review);
+    await getFeeds();
   }
 
-  postLike(int id ) async {
+  postLike(int id) async {
     await communityService.postLike(id);
   }
 
-  deleteLike(int id ) async {
+  deleteLike(int id) async {
     await communityService.deleteLike(id);
   }
 }

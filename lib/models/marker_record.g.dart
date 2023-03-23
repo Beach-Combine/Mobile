@@ -11,7 +11,6 @@ MarkerRecord _$MarkerRecordFromJson(Map<String, dynamic> json) => MarkerRecord(
       name: json['name'] as String,
       lat: json['lat'] as String,
       lng: json['lng'] as String,
-      image: json['image'] as String,
     );
 
 Map<String, dynamic> _$MarkerRecordToJson(MarkerRecord instance) =>
@@ -20,5 +19,4 @@ Map<String, dynamic> _$MarkerRecordToJson(MarkerRecord instance) =>
       'name': instance.name,
       'lat': instance.lat,
       'lng': instance.lng,
-      'image': instance.image,
     };

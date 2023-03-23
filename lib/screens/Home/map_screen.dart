@@ -123,6 +123,13 @@ class _MapScreenState extends State<MapScreen> {
         position: LatLng(position.latitude, position.longitude),
       ),
     );
+    locationCtrl.trashcanSelectionMarkers.add(
+      Marker(
+        icon: currentLocationIcon,
+        markerId: MarkerId('current_position'),
+        position: LatLng(position.latitude, position.longitude),
+      ),
+    );
 
     final Stream<Position> positionStream = Geolocator.getPositionStream(
       desiredAccuracy: LocationAccuracy.high,
@@ -144,6 +151,16 @@ class _MapScreenState extends State<MapScreen> {
       locationCtrl.beachSelectionMarkers
           .removeWhere((marker) => marker.markerId.value == 'current_position');
       locationCtrl.beachSelectionMarkers.add(
+        Marker(
+          icon: currentLocationIcon,
+          markerId: MarkerId('current_position'),
+          position: LatLng(position.latitude, position.longitude),
+        ),
+      );
+
+      locationCtrl.trashcanSelectionMarkers
+          .removeWhere((marker) => marker.markerId.value == 'current_position');
+      locationCtrl.trashcanSelectionMarkers.add(
         Marker(
           icon: currentLocationIcon,
           markerId: MarkerId('current_position'),

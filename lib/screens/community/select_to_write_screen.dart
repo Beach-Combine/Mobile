@@ -70,7 +70,7 @@ class SelectToWriteScreen extends StatelessWidget {
                   child: SelectionCard(
                     isWritten: record.isWritten,
                     date: record.date,
-                    location: "Gwangalli Beach",
+                    location: record.beachName,
                     range: record.range,
                     time: record.time,
                     beforeImage:record.beforeImage,

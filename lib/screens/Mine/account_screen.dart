@@ -24,10 +24,8 @@ class _AccountScreenState extends State<AccountScreen> {
   void initState() {
     nickname = profileController.member.value.nickname;
     email = profileController.member.value.email;
-    nameController =
-        TextEditingController(text: nickname);
-    emailController =
-        TextEditingController(text: email);
+    nameController = TextEditingController(text: nickname);
+    emailController = TextEditingController(text: email);
     super.initState();
   }
 
@@ -52,20 +50,19 @@ class _AccountScreenState extends State<AccountScreen> {
         elevation: 0,
         actions: [
           Obx(() {
-              return profileController.showEditButton.value
-                  ? TextButton(
-                      onPressed: () {
-                        profileController.editAccount(nameController);
-                      },
-                      child: Text(
-                        'Done',
-                        style:
-                            Styles.body12Text.copyWith(color: Styles.primaryColor),
-                      ),
-                    )
-                  : Container();
-            }
-          )
+            return profileController.showEditButton.value
+                ? TextButton(
+                    onPressed: () {
+                      profileController.editAccount();
+                    },
+                    child: Text(
+                      'Done',
+                      style: Styles.body12Text
+                          .copyWith(color: Styles.primaryColor),
+                    ),
+                  )
+                : Container();
+          })
         ],
       ),
       body: Center(

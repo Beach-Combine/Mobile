@@ -1,16 +1,11 @@
-import 'dart:math';
-
 import 'package:beach_combine/controllers/auth_controller.dart';
 import 'package:beach_combine/models/giftcard.dart';
-import 'package:beach_combine/models/marker_record.dart';
 import 'package:beach_combine/models/my_record/my_record.dart';
 import 'package:beach_combine/models/purchase.dart';
 import 'package:beach_combine/models/record.dart';
 import 'package:beach_combine/services/mine_service.dart';
 import 'package:beach_combine/widgets/history_modal_dialog.dart';
-import 'package:beach_combine/widgets/modal_dialog.dart';
 import 'package:custom_marker/marker_icon.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -127,11 +122,10 @@ class MineController extends GetxController {
     return result;
   }
 
-  Future<void> editAccount(TextEditingController nameCtrl) async {
+  Future<void> editAccount() async {
     final result = await mineService.editAccount(editedName.value);
     if (result) {
       await getMember();
-      // nameCtrl.text = member.value.nickname
       setShowEditButton();
     }
   }

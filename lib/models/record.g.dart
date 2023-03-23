@@ -15,6 +15,7 @@ Record _$RecordFromJson(Map<String, dynamic> json) => Record(
       afterImage: json['afterImage'] as String,
       range: json['range'] as int,
       beforeImage: json['beforeImage'] as String,
+      beachName: json['beachName'] as String,
     );
 
 Map<String, dynamic> _$RecordToJson(Record instance) => <String, dynamic>{
@@ -26,4 +27,5 @@ Map<String, dynamic> _$RecordToJson(Record instance) => <String, dynamic>{
       'beforeImage': instance.beforeImage,
       'afterImage': instance.afterImage,
       'isWritten': instance.isWritten,
+      'beachName': instance.beachName,
     };

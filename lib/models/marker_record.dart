@@ -9,14 +9,12 @@ class MarkerRecord {
     required this.name,
     required this.lat,
     required this.lng,
-    required this.image,
   });
 
   int id;
   String name;
   String lat;
   String lng;
-  String image;
 
   factory MarkerRecord.fromJson(Map<String, dynamic> json) =>
       _$MarkerRecordFromJson(json);

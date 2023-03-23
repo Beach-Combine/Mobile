@@ -13,8 +13,6 @@ class BadgeTile extends StatelessWidget {
 
   const BadgeTile({
     super.key,
-    // required this.date,
-    // required this.location,
     required this.record,
   });
 
@@ -24,20 +22,23 @@ class BadgeTile extends StatelessWidget {
       onTap: () => showDialog<String>(
           context: context,
           builder: (BuildContext context) => ModalDialog(
+                nickname: null,
                 afterPath: record.afterImage,
                 beforePath: record.beforeImage,
+                beachId: record.beachId,
                 date: DateFormat('yy.MM.dd').format(record.date),
-                location: "Beach",
+                location: record.beachName,
                 imagePath: 'assets/images/badge_final.png',
                 range: record.range,
                 time: record.time,
+                isBadge: true,
               )),
       child: Container(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/images/badge_final.png',
+              'assets/images/list${record.beachId}.png',
               width: 85,
             ),
             Gap(12),
@@ -49,7 +50,7 @@ class BadgeTile extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             Text(
-              'location',
+              record.beachName,
               style: Styles.body12Text,
               textAlign: TextAlign.center,
             ),

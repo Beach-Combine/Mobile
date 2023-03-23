@@ -11,9 +11,15 @@ class ModalDialog extends StatelessWidget {
   final String beforePath;
   final String afterPath;
   final String imagePath;
+  final String? nickname;
+  final bool isBadge;
+  final int? beachId;
 
   const ModalDialog(
       {super.key,
+      this.beachId,
+      required this.isBadge,
+      required this.nickname,
       required this.date,
       required this.location,
       required this.range,
@@ -41,10 +47,28 @@ class ModalDialog extends StatelessWidget {
                 padding: const EdgeInsets.only(right: 24, left: 24, bottom: 24),
                 child: Column(
                   children: [
-                    Image.asset(
-                      imagePath,
-                      width: 56,
-                    ),
+                    isBadge
+                        ? Image.asset(
+                            'assets/images/list$beachId.png',
+                            width: MediaQuery.of(context).size.width / 6.5,
+                          )
+                        : Container(
+                            padding: EdgeInsets.all(3),
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(200),
+                            ),
+                            child: CircleAvatar(
+                              backgroundImage: NetworkImage(imagePath),
+                              radius: 25,
+                            ),
+                          ),
+                    isBadge
+                        ? Container()
+                        : Text(
+                            nickname!,
+                            style: Styles.body02Text,
+                          ),
                     Gap(12),
                     Text(
                       date,
@@ -133,23 +157,38 @@ class _TimeRangeText extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
+  rangeRender() {
+    if (range >= 1000) {
+      return '${(range / 1000).toString()} km';
+    } else {
+      return '$range m';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Time',
-                style: Styles.detailText.copyWith(
-                  color: Styles.gray1Color,
-                )),
-            Text(
-              time,
-              style: Styles.number2Text,
-            )
-          ],
+        Expanded(
+          child: Row(
+            children: [
+              Gap(14),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Time',
+                      style: Styles.detailText.copyWith(
+                        color: Styles.gray1Color,
+                      )),
+                  Text(
+                    time,
+                    style: Styles.number2Text,
+                  )
+                ],
+              ),
+            ],
+          ),
         ),
         Container(
           height: 28,
@@ -159,20 +198,26 @@ class _TimeRangeText extends StatelessWidget {
             color: Styles.gray1Color,
           ),
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Range',
-              style: Styles.detailText.copyWith(color: Styles.gray1Color),
-            ),
-            Text(
-              "${range}km",
-              style: Styles.number2Text,
-            )
-          ],
+        Expanded(
+          child: Row(
+            children: [
+              Gap(2),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Range',
+                    style: Styles.detailText.copyWith(color: Styles.gray1Color),
+                  ),
+                  Text(
+                    rangeRender(),
+                    style: Styles.number2Text,
+                  )
+                ],
+              ),
+            ],
+          ),
         ),
-        Gap(16),
       ],
     );
   }
