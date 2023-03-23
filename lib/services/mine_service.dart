@@ -153,10 +153,11 @@ class MineService {
     try {
       print(nickname);
       final formData = FormData.fromMap(
-          {'nickname': nickname, 'image': null, 'isChanged': false});
+          {'nickname': nickname, 'image': await MultipartFile.fromBytes([],filename: 'empty.png'), 'isChanged': false});
       final dio = Dio();
+      print(formData.fields);
       dio.interceptors.add(CustomInterceptor());
-      final res = dio.patch('$url/members',
+      final res = await dio.patch('$url/members',
           options: Options(headers: {
             'Content-type': 'multipart/form-data',
             'accessToken': 'true'
@@ -164,6 +165,7 @@ class MineService {
           data: formData);
       return true;
     } catch (e) {
+      print(e);
       return false;
     }
   }

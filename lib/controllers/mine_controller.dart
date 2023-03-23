@@ -10,6 +10,7 @@ import 'package:beach_combine/services/mine_service.dart';
 import 'package:beach_combine/widgets/history_modal_dialog.dart';
 import 'package:beach_combine/widgets/modal_dialog.dart';
 import 'package:custom_marker/marker_icon.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -74,6 +75,7 @@ class MineController extends GetxController {
   }
 
   Future<void> getMember() async {
+    print('[멤버 업데이트]');
     final member = await mineService.getMember();
     this.member.value = member!;
     this.editedName.value = member.nickname;
@@ -125,8 +127,13 @@ class MineController extends GetxController {
     return result;
   }
 
-  Future<void> editAccount() async {
+  Future<void> editAccount(TextEditingController nameCtrl) async {
     final result = await mineService.editAccount(editedName.value);
+    if (result) {
+      await getMember();
+      // nameCtrl.text = member.value.nickname
+      setShowEditButton();
+    }
   }
 
   Future<void> toggleProfilePublic(bool option) async {

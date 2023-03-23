@@ -1,4 +1,5 @@
 import 'package:beach_combine/common/beach_combine.dart';
+import 'package:beach_combine/controllers/map_controller.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:beach_combine/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
@@ -44,8 +45,8 @@ class RewardScreen extends StatelessWidget {
                     style: Styles.titleText,
                   ),
                   Gap(50),
-                  Image.network(
-                    image,
+                  Image.asset(
+                   'assets/images/reward${Get.find<MapController>().selectedBeach}.png',
                     width: 165,
                   ),
                   Gap(15),

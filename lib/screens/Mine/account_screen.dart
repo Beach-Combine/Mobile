@@ -18,13 +18,16 @@ class _AccountScreenState extends State<AccountScreen> {
 
   late TextEditingController nameController;
   late TextEditingController emailController;
-
+  late String nickname;
+  late String email;
   @override
   void initState() {
+    nickname = profileController.member.value.nickname;
+    email = profileController.member.value.email;
     nameController =
-        TextEditingController(text: profileController.member.value.nickname);
+        TextEditingController(text: nickname);
     emailController =
-        TextEditingController(text: profileController.member.value.email);
+        TextEditingController(text: email);
     super.initState();
   }
 
@@ -48,18 +51,21 @@ class _AccountScreenState extends State<AccountScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         actions: [
-          profileController.showEditButton.value
-              ? TextButton(
-                  onPressed: () {
-                    profileController.editAccount();
-                  },
-                  child: Text(
-                    'Done',
-                    style:
-                        Styles.body12Text.copyWith(color: Styles.primaryColor),
-                  ),
-                )
-              : Container()
+          Obx(() {
+              return profileController.showEditButton.value
+                  ? TextButton(
+                      onPressed: () {
+                        profileController.editAccount(nameController);
+                      },
+                      child: Text(
+                        'Done',
+                        style:
+                            Styles.body12Text.copyWith(color: Styles.primaryColor),
+                      ),
+                    )
+                  : Container();
+            }
+          )
         ],
       ),
       body: Center(
