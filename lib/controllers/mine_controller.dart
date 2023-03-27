@@ -1,4 +1,5 @@
 import 'package:beach_combine/controllers/auth_controller.dart';
+import 'package:beach_combine/controllers/map_controller.dart';
 import 'package:beach_combine/models/giftcard.dart';
 import 'package:beach_combine/models/my_record/my_record.dart';
 import 'package:beach_combine/models/purchase.dart';
@@ -13,7 +14,7 @@ import '../models/member.dart';
 
 class MineController extends GetxController {
   final mineService = MineService();
-  final authController = Get.find<AuthController>();
+  final mapController = Get.find<MapController>();
   var status = false.obs;
   final isLoading = true.obs;
   var showEditButton = false.obs;
@@ -76,6 +77,7 @@ class MineController extends GetxController {
     this.editedName.value = member.nickname;
     this.editedEmail.value = member.email;
     status.value = member.profilePublic;
+    print(status.value);
   }
 
   Future<void> getGiftcards() async {
@@ -132,6 +134,7 @@ class MineController extends GetxController {
 
   Future<void> toggleProfilePublic(bool option) async {
     mineService.toggleProfilePublic(option);
+    mapController.getLocation();
   }
 
   Future<void> getGridRecord() async {

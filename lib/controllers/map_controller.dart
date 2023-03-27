@@ -21,7 +21,7 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 class MapController extends GetxController {
   List<BeachLocation> beachLocations = <BeachLocation>[].obs;
   List<TrashcanLocation> trashcanLocations = <TrashcanLocation>[].obs;
-  var markers = RxSet<Marker>();
+  var markers = Set<Marker>().obs;
   var beachSelectionMarkers = RxSet<Marker>();
   var trashcanSelectionMarkers = RxSet<Marker>();
 
@@ -44,8 +44,8 @@ class MapController extends GetxController {
   getLocation() async {
     final beaches = await locationService.getBeachLocation();
     final trashcans = await locationService.getTrashcanLocation();
-    beachLocations.addAll(beaches);
-    trashcanLocations.addAll(trashcans);
+    beachLocations = beaches;
+    trashcanLocations = trashcans;
     print(beaches);
     print(trashcans);
     createMarkers();
@@ -57,7 +57,6 @@ class MapController extends GetxController {
   }) {
     if (onlyBeachs == false) {
       trashcanLocations.forEach((element) async {
-        //http.Response response = await http.get(Uri.parse(element.image));
         markers.add(
           Marker(
               markerId: MarkerId('trashcan${element.id.toString()}'),
@@ -70,6 +69,7 @@ class MapController extends GetxController {
                 double.parse(element.lng),
               ),
               onTap: (() async {
+                print(element.id);
                 isBottomSheetOpen.value = true;
                 await Get.dialog(TrashcanModal(address: element.address));
                 isBottomSheetOpen.value = false;
@@ -106,6 +106,9 @@ class MapController extends GetxController {
     if (onlyTrashcans == false) {
       beachLocations.forEach((element) async {
         final beachInfo = await getBeachInfo(element.id);
+
+        markers
+            .removeWhere((marker) => marker.markerId.value == '${element.id}');
 
         markers.add(
           Marker(

@@ -22,13 +22,13 @@ class CommunityController extends GetxController {
 
   getFeeds() async {
     final result = await communityService.getFeeds();
-    feedList.addAll(result);
+    feedList.value = result;
   }
 
   getRecords() async {
     final result = await communityService.getRecords();
 
-    records.addAll(result);
+    records.value = (result);
   }
 
   postFeed(int id, String review) async {

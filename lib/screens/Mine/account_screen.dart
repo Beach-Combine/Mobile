@@ -112,7 +112,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           toggleSize: 25,
                           padding: 2,
                           activeColor: Styles.primaryColor,
-                          value: profileController.status.value,
+                          value: !profileController.status.value,
                           borderRadius: 50,
                           onToggle: (value) {
                             profileController.switchStatus();

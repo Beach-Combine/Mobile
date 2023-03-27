@@ -7,9 +7,9 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
 class CommunityScreen extends StatelessWidget {
-  final controller = Get.put(CommunityController());
-
   CommunityScreen({super.key});
+
+  final controller = Get.put(CommunityController());
 
   @override
   Widget build(BuildContext context) {

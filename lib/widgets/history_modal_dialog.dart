@@ -76,6 +76,7 @@ class _HistoryModalDialogState extends State<HistoryModalDialog> {
                     aspectRatio: 16 / 8,
                     height: 320,
                     viewportFraction: 1,
+                    enableInfiniteScroll: false,
                     autoPlay: false,
                     onPageChanged: (index, reason) {
                       setState(() {
@@ -177,11 +178,12 @@ class _TimeRangeText extends StatelessWidget {
   }) : super(key: key);
   rangeRender() {
     if (range >= 1000) {
-      return '${(range / 1000).toString()} km';
+      return '${(range / 1000).floor().toString()} km';
     } else {
       return '$range m';
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Row(

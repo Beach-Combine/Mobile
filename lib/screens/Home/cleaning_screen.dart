@@ -1,8 +1,8 @@
 import 'dart:async';
 
+import 'package:beach_combine/common/beach_combine.dart';
 import 'package:beach_combine/controllers/time_controller.dart';
 import 'package:beach_combine/data.dart';
-import 'package:beach_combine/screens/Home/after_camera_screen.dart';
 import 'package:beach_combine/screens/Home/camera_screen.dart';
 import 'package:beach_combine/screens/Home/method_select_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
@@ -74,7 +74,39 @@ class CleaningScreennState extends State<CleaningScreen> {
                 ),
                 Align(
                     alignment: Alignment.bottomCenter,
-                    child: _BottomSheetCleaning(timecontroller: timecontroller))
+                    child:
+                        _BottomSheetCleaning(timecontroller: timecontroller)),
+                Padding(
+                  padding: const EdgeInsets.all(50.0),
+                  child: Align(
+                    alignment: Alignment.topCenter,
+                    child: GestureDetector(
+                      onTap: () => Get.offAll(BeachCombine()),
+                      child: Container(
+                        width: 220,
+                        height: 50,
+                        decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(50)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              'assets/icons/back_home.png',
+                              width: 20,
+                            ),
+                            Gap(8),
+                            Text(
+                              'Stop and go home',
+                              style: Styles.body22Text
+                                  .copyWith(color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                )
               ]),
       ),
     );

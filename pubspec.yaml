@@ -55,6 +55,13 @@ dependencies:
   image_crop: ^0.4.1
   sliding_up_panel: ^2.0.0+1
   carousel_slider: ^4.2.1
+  tflite_flutter: ^0.9.0
+  tflite_flutter_helper:
+      git:
+        url: https://github.com/elephantum/tflite_flutter_helper.git
+        ref: a7d7a59a33f7cffa0a2a12ab05625807622cc97a
+
+
 
 
 
@@ -86,6 +93,7 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/fonts/
+    - assets/models/model.tflite
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

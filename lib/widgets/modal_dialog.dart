@@ -58,10 +58,16 @@ class ModalDialog extends StatelessWidget {
                               color: Colors.black,
                               borderRadius: BorderRadius.circular(200),
                             ),
-                            child: CircleAvatar(
-                              backgroundImage: NetworkImage(imagePath),
-                              radius: 25,
-                            ),
+                            child: imagePath == 'lock'
+                                ? CircleAvatar(
+                                    backgroundImage:
+                                        AssetImage('assets/icons/lock.png'),
+                                    radius: 25,
+                                  )
+                                : CircleAvatar(
+                                    backgroundImage: NetworkImage(imagePath),
+                                    radius: 25,
+                                  ),
                           ),
                     isBadge
                         ? Container()
@@ -159,7 +165,7 @@ class _TimeRangeText extends StatelessWidget {
 
   rangeRender() {
     if (range >= 1000) {
-      return '${(range / 1000).toString()} km';
+      return '${(range / 1000).floor().toString()} km';
     } else {
       return '$range m';
     }

@@ -25,7 +25,7 @@ class LocationService with TokenManager {
           "accessToken": "true",
         }),
       );
-      print(res.data);
+      print('[GET] [해변 위치 정보] ${res.data}');
       final beachLocation = BeachLocation.fromJsonList(res.data);
       return beachLocation;
     } catch (e) {
@@ -64,11 +64,10 @@ class LocationService with TokenManager {
       dio.interceptors.add(CustomInterceptor());
       final res = await dio.get('$url/beaches/${id}',
           options: Options(headers: {
-            "Accept": "application/json",
             "Content-type": "application/json",
             "accessToken": "true"
           }));
-      print(res.data);
+      print('[GET] [BEACH INFO]' + '${res.data}');
       final beachInfo = BeachInfo.fromJson(res.data);
       print(beachInfo.beach.name);
       return beachInfo;

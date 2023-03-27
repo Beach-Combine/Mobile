@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:beach_combine/common/beach_combine.dart';
 import 'package:beach_combine/controllers/map_controller.dart';
 import 'package:beach_combine/screens/Home/report_camera_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
@@ -84,7 +85,38 @@ class _SeperateTrashScreenState extends State<SeperateTrashScreen> {
                     },
                     markers: controller.trashcanSelectionMarkers,
                   ),
-                  _SaparateHereAndReportPanel()
+                  _SaparateHereAndReportPanel(),
+                  Padding(
+                    padding: const EdgeInsets.all(50.0),
+                    child: Align(
+                      alignment: Alignment.topCenter,
+                      child: GestureDetector(
+                        onTap: () => Get.offAll(BeachCombine()),
+                        child: Container(
+                          width: 220,
+                          height: 50,
+                          decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(50)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/icons/back_home.png',
+                                width: 20,
+                              ),
+                              Gap(8),
+                              Text(
+                                'Stop and go home',
+                                style: Styles.body22Text
+                                    .copyWith(color: Colors.white),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
                 ])),
     );
   }
@@ -205,11 +237,11 @@ class _SaparateHereAndReportPanel extends StatelessWidget {
                   text: 'Saparate the trash here and report it',
                   onTap: () async {
                     await availableCameras().then((value) => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => ReportCameraScreen(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => ReportCameraScreen(
                                   cameras: value,
-                                  ))));
+                                ))));
                   })
             ],
           ),
