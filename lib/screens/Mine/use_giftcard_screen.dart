@@ -1,17 +1,13 @@
-import 'package:beach_combine/controllers/mine_controller.dart';
-import 'package:beach_combine/screens/Mine/use_giftcard_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:beach_combine/widgets/primary_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:gap/gap.dart';
 
-class PurchaseScreen extends StatelessWidget {
-  final int point;
-  final int id;
-  PurchaseScreen({super.key, required this.point, required this.id});
-  final controller = Get.find<MineController>();
+class UseGiftcardScreen extends StatelessWidget {
+  const UseGiftcardScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,29 +50,16 @@ class PurchaseScreen extends StatelessWidget {
                 style: Styles.body3Text.copyWith(color: Styles.gray1Color),
               ),
               Gap(36),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'assets/icons/point.png',
-                    width: 28,
-                  ),
-                  Text(
-                    '${point}pt',
-                    style: Styles.body02Text,
-                  ),
-                ],
+              Image.asset(
+                'assets/images/barcode.png',
+                width: 255,
               ),
               Spacer(),
               PrimaryButton(
                   height: 60,
-                  text: "Yes, I do",
-                  onTap: () async {
-                    print('clicked!');
-                    final result = await controller.purchaseGiftcard(id);
-                    if (true) {
-                      Get.off(UseGiftcardScreen());
-                    }
+                  text: "OK",
+                  onTap: () {
+                    Get.back();
                   }),
             ],
           )),

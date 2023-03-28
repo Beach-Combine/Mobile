@@ -1,12 +1,12 @@
 import 'package:beach_combine/screens/Mine/purchase_screen.dart';
+import 'package:beach_combine/screens/Mine/use_giftcard_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
-class GiftCard extends StatelessWidget {
+class GiftCard extends StatefulWidget {
   final String path;
-  final double? radius = 21;
   final String storeName;
   final String address;
   final int point;
@@ -22,13 +22,23 @@ class GiftCard extends StatelessWidget {
   });
 
   @override
+  State<GiftCard> createState() => _GiftCardState();
+}
+
+class _GiftCardState extends State<GiftCard> {
+  final double? radius = 21;
+  bool isPurchased = false;
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.to(PurchaseScreen(
-          point: point,
-          id: id,
-        ));
+        isPurchased
+            ? Get.to(UseGiftcardScreen())
+            : Get.to(PurchaseScreen(
+                point: widget.point,
+                id: widget.id,
+              ));
       },
       child: Container(
         width: double.infinity,
@@ -39,17 +49,17 @@ class GiftCard extends StatelessWidget {
           child: Row(children: [
             CircleAvatar(
               radius: radius,
-              backgroundImage: NetworkImage(path),
+              backgroundImage: NetworkImage(widget.path),
             ),
             Gap(12),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  storeName,
+                  widget.storeName,
                   style: Styles.body12Text,
                 ),
-                Text(address,
+                Text(widget.address,
                     style: Styles.body3Text.copyWith(
                       color: Styles.gray1Color,
                     ))
@@ -61,7 +71,7 @@ class GiftCard extends StatelessWidget {
               width: 18,
             ),
             Text(
-              "${point}pt",
+              "${widget.point}pt",
               style: Styles.body12Text,
             )
           ]),
