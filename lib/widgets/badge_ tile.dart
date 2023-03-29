@@ -35,7 +35,7 @@ class BadgeTile extends StatelessWidget {
               )),
       child: Container(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Image.asset(
               'assets/images/list${record.beachId}.png',

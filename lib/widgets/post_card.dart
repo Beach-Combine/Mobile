@@ -60,7 +60,7 @@ class _PostCardState extends State<PostCard> {
               children: [
                 CircleAvatar(
                   radius: 21,
-                  backgroundImage: AssetImage(widget.profilePath),
+                  backgroundImage: NetworkImage(widget.profilePath),
                 ),
                 Gap(14),
                 Column(

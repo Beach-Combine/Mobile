@@ -6,10 +6,23 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
-class PurchaseHistoryScreen extends StatelessWidget {
+class PurchaseHistoryScreen extends StatefulWidget {
   final int point;
   PurchaseHistoryScreen({super.key, required this.point});
+
+  @override
+  State<PurchaseHistoryScreen> createState() => _PurchaseHistoryScreenState();
+}
+
+class _PurchaseHistoryScreenState extends State<PurchaseHistoryScreen> {
   final controller = Get.find<MineController>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    controller.getPurchase();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +39,7 @@ class PurchaseHistoryScreen extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(24.0),
-                    child: _CureentPointsText(point: point),
+                    child: _CureentPointsText(point: widget.point),
                   ),
                   ListView.builder(
                       physics: NeverScrollableScrollPhysics(),
@@ -36,7 +49,7 @@ class PurchaseHistoryScreen extends StatelessWidget {
                         final purchase = controller.purchaseList[index];
                         return PurchaseHistory(
                           point: -purchase.cost,
-                          date: DateTime.utc(2022, 9, 29),
+                          date: DateTime.utc(2023, 3, 29),
                           path: purchase.image,
                           name: purchase.name,
                         );

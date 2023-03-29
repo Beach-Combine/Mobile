@@ -168,6 +168,9 @@ class _BottomSheetCleaningState extends State<_BottomSheetCleaning> {
         : '${dist.round()} m';
   }
 
+  late DateTime _start;
+  late Timer _timer;
+
   @override
   Widget build(BuildContext context) {
     return Wrap(children: [
@@ -231,20 +234,60 @@ class _BottomSheetCleaningState extends State<_BottomSheetCleaning> {
                 ],
               ),
               Gap(16),
-              PrimaryButton(
-                  height: 60,
-                  text: 'Stop Cleaning',
-                  onTap: () async {
-                    Get.find<LocationController>().setCleaningDistance();
-                    Get.find<TimerController>().setCleaningTime();
-                    await availableCameras()
-                        .then((value) => Get.to(CameraScreen(
-                              cameras: value,
-                              text: 'after',
-                              imageType: AFTER_IMAGE,
-                              onPressed: () => Get.to(MethodSelectScreen()),
-                            )));
-                  })
+              GestureDetector(
+                  onTap: () async {},
+                  onTapDown: (TapDownDetails details) {
+                    // 버튼을 누른 순간에 시작 시간을 저장합니다.
+                    _start = DateTime.now();
+                    _timer = Timer(Duration(seconds: 3), () async {
+                      // 3초 이후에 동작할 코드를 작성합니다.
+                      // 예를 들어, 버튼을 누르고 3초 이상 누른 경우 "Button pressed for 3 seconds"를 출력합니다.
+                      Get.find<LocationController>().setCleaningDistance();
+                      Get.find<TimerController>().setCleaningTime();
+                      await availableCameras()
+                          .then((value) => Get.to(CameraScreen(
+                                cameras: value,
+                                text: 'after',
+                                imageType: AFTER_IMAGE,
+                                onPressed: () => Get.to(MethodSelectScreen()),
+                              )));
+                    });
+                  },
+                  onTapUp: (TapUpDetails details) {
+                    // 버튼에서 손을 뗀 순간에 타이머를 취소합니다.
+                    _timer?.cancel();
+                  },
+                  onTapCancel: () {
+                    // 다른 동작으로 인해 버튼을 누르지 않은 경우 타이머를 취소합니다.
+                    _timer?.cancel();
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    height: 60,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Styles.buttonPrimaryColor),
+                    child: Center(
+                      child: Text(
+                        'Press 3 seconds to finish cleaning',
+                        style: Styles.body12Text,
+                      ),
+                    ),
+                  )),
+              // PrimaryButton(
+              //     height: 60,
+              //     text: 'Stop Cleaning',
+              //     onTap: () async {
+              //       Get.find<LocationController>().setCleaningDistance();
+              //       Get.find<TimerController>().setCleaningTime();
+              //       await availableCameras()
+              //           .then((value) => Get.to(CameraScreen(
+              //                 cameras: value,
+              //                 text: 'after',
+              //                 imageType: AFTER_IMAGE,
+              //                 onPressed: () => Get.to(MethodSelectScreen()),
+              //               )));
+              //     })
             ],
           ),
         ),

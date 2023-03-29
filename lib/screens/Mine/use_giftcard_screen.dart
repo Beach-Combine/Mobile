@@ -6,7 +6,16 @@ import 'package:get/get.dart';
 import 'package:gap/gap.dart';
 
 class UseGiftcardScreen extends StatelessWidget {
-  const UseGiftcardScreen({super.key});
+  final String path;
+  final String storeName;
+  final String address;
+
+  const UseGiftcardScreen({
+    super.key,
+    required this.path,
+    required this.storeName,
+    required this.address,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -36,17 +45,17 @@ class UseGiftcardScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               Gap(32),
-              Image.asset(
-                'assets/images/store.png',
-                width: 78,
+              CircleAvatar(
+                backgroundImage: NetworkImage(path),
+                radius: 48,
               ),
               Gap(12),
               Text(
-                'zero-waste store',
+                storeName,
                 style: Styles.body12Text,
               ),
               Text(
-                "Gangnam-gu",
+                address,
                 style: Styles.body3Text.copyWith(color: Styles.gray1Color),
               ),
               Gap(36),

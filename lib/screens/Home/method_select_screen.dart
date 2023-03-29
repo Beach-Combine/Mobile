@@ -33,11 +33,23 @@ class MethodSelectScreen extends StatelessWidget {
       ),
       body: Obx(() {
         return classifierController.category.value.label != 'clean'
-            ? Center(
-                child: Text(
-                'The beach is still dirty,\n please clean it more!',
-                style: Styles.titleText,
-              ))
+            ? Column(
+                children: [
+                  Spacer(),
+                  Text(
+                    'The beach is still dirty,\n please clean it more!',
+                    style: Styles.titleText,
+                  ),
+                  Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.all(24.0),
+                    child: BlackButton(
+                        height: 60,
+                        text: 'Go to clean up more',
+                        onTap: () => Get.back()),
+                  ),
+                ],
+              )
             : Stack(children: [
                 Padding(
                   padding: EdgeInsets.all(24),
@@ -69,11 +81,11 @@ class MethodSelectScreen extends StatelessWidget {
                       ]),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 130),
+                  padding: const EdgeInsets.only(bottom: 150),
                   child: Center(
                     child: Image.asset(
                       'assets/images/stars.png',
-                      width: 300,
+                      width: 335,
                     ),
                   ),
                 ),

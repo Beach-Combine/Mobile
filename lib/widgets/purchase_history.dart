@@ -28,7 +28,7 @@ class PurchaseHistory extends StatelessWidget {
         child: Row(children: [
           CircleAvatar(
             radius: radius,
-            backgroundImage: AssetImage(path),
+            backgroundImage: NetworkImage(path),
           ),
           Gap(12),
           Column(

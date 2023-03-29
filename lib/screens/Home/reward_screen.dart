@@ -46,7 +46,7 @@ class RewardScreen extends StatelessWidget {
                   ),
                   Gap(50),
                   Image.asset(
-                   'assets/images/reward${Get.find<MapController>().selectedBeach}.png',
+                    'assets/images/reward${Get.find<MapController>().selectedBeach}.png',
                     width: 165,
                   ),
                   Gap(15),

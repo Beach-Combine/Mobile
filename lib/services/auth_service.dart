@@ -1,3 +1,4 @@
+import 'package:beach_combine/common/Dio/dio.dart';
 import 'package:beach_combine/data.dart';
 import 'package:beach_combine/models/body/get_token_body.dart';
 import 'package:beach_combine/models/response/get_token_response.dart';
@@ -87,13 +88,17 @@ class AuthService with TokenManager {
   Future<void> logout() async {
     print('$url/logout');
     try {
-      final res = Dio().post(
-        '$url/logout',
-        options: Options(headers: {
-          "Authorization": "Bearer ${getToken(ACCESS_TOKEN_KEY)}",
-          "content-type": "application/json"
-        }),
-      );
+      final dio = Dio();
+      dio.interceptors.add(CustomInterceptor());
+
+      final res = dio.post('$url/logout',
+          options: Options(
+            headers: {
+              "accessToken": "true",
+              "content-type": "application/json"
+            },
+          ),
+          data: {'accessToken': 'Bearer ${getToken(ACCESS_TOKEN_KEY)}'});
       print('logout success');
     } catch (e) {
       print(e);

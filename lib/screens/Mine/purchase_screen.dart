@@ -10,7 +10,19 @@ import 'package:get/get.dart';
 class PurchaseScreen extends StatelessWidget {
   final int point;
   final int id;
-  PurchaseScreen({super.key, required this.point, required this.id});
+  final String path;
+  final String address;
+  final String storeName;
+
+  PurchaseScreen({
+    super.key,
+    required this.point,
+    required this.id,
+    required this.path,
+    required this.address,
+    required this.storeName,
+  });
+
   final controller = Get.find<MineController>();
   @override
   Widget build(BuildContext context) {
@@ -31,55 +43,64 @@ class PurchaseScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 34),
           child: Container(
-              child: Column(
-            children: [
-              Gap(MediaQuery.of(context).size.height / 6),
-              Text(
-                'Do you want to\npurchase a gift card?',
-                style: Styles.titleText,
-                textAlign: TextAlign.center,
-              ),
-              Gap(32),
-              Image.asset(
-                'assets/images/store.png',
-                width: 78,
-              ),
-              Gap(12),
-              Text(
-                'zero-waste store',
-                style: Styles.body12Text,
-              ),
-              Text(
-                "Gangnam-gu",
-                style: Styles.body3Text.copyWith(color: Styles.gray1Color),
-              ),
-              Gap(36),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'assets/icons/point.png',
-                    width: 28,
-                  ),
-                  Text(
-                    '${point}pt',
-                    style: Styles.body02Text,
-                  ),
-                ],
-              ),
-              Spacer(),
-              PrimaryButton(
+            child: Column(
+              children: [
+                Gap(MediaQuery.of(context).size.height / 6),
+                Text(
+                  'Do you want to\npurchase a gift card?',
+                  style: Styles.titleText,
+                  textAlign: TextAlign.center,
+                ),
+                Gap(32),
+                CircleAvatar(
+                  backgroundImage: NetworkImage(path),
+                  radius: 48,
+                ),
+                Gap(12),
+                Text(
+                  storeName,
+                  style: Styles.body12Text,
+                ),
+                Text(
+                  address,
+                  style: Styles.body3Text.copyWith(color: Styles.gray1Color),
+                ),
+                Gap(36),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/icons/point.png',
+                      width: 28,
+                    ),
+                    Text(
+                      '${point}pt',
+                      style: Styles.body02Text,
+                    ),
+                  ],
+                ),
+                Spacer(),
+                PrimaryButton(
                   height: 60,
                   text: "Yes, I do",
                   onTap: () async {
                     print('clicked!');
                     final result = await controller.purchaseGiftcard(id);
-                    if (true) {
-                      Get.off(UseGiftcardScreen());
+                    if (result) {
+                      Get.off(
+                        UseGiftcardScreen(
+                          path: path,
+                          address: address,
+                          storeName: storeName,
+                        ),
+                      );
+                      controller.point.value -= point;
                     }
-                  }),
-            ],
-          )),
+                  },
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

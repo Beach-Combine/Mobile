@@ -36,6 +36,7 @@ class MineController extends GetxController {
   final markerRecords = RxSet<Marker>();
   final editedName = ''.obs;
   final editedEmail = ''.obs;
+  final testPoint = 10000.obs;
 
   BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
 
@@ -92,7 +93,7 @@ class MineController extends GetxController {
 
   Future<void> getPurchase() async {
     final result = await mineService.getPurchase();
-    purchaseList.addAll(result);
+    purchaseList.value = result;
   }
 
   Future<bool> purchaseGiftcard(int id) async {

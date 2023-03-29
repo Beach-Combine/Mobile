@@ -34,10 +34,17 @@ class _GiftCardState extends State<GiftCard> {
     return GestureDetector(
       onTap: () {
         isPurchased
-            ? Get.to(UseGiftcardScreen())
+            ? Get.to(UseGiftcardScreen(
+                path: widget.path,
+                address: widget.address,
+                storeName: widget.storeName,
+              ))
             : Get.to(PurchaseScreen(
                 point: widget.point,
                 id: widget.id,
+                path: widget.path,
+                address: widget.address,
+                storeName: widget.storeName,
               ));
       },
       child: Container(
@@ -59,10 +66,18 @@ class _GiftCardState extends State<GiftCard> {
                   widget.storeName,
                   style: Styles.body12Text,
                 ),
-                Text(widget.address,
-                    style: Styles.body3Text.copyWith(
-                      color: Styles.gray1Color,
-                    ))
+                Wrap(
+                  direction: Axis.horizontal,
+                  children: [
+                    Container(
+                      width: 180,
+                      child: Text(widget.address,
+                          style: Styles.body3Text.copyWith(
+                            color: Styles.gray1Color,
+                          )),
+                    ),
+                  ],
+                )
               ],
             ),
             Spacer(),

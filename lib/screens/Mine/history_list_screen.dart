@@ -27,24 +27,24 @@ class HistoryListScreen extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child: Obx( () {
-            final controller = Get.find<MineController>();
-            return GridView.builder(
-              padding: EdgeInsets.all(24),
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 120,
-                  childAspectRatio: 5 / 9,
-                  crossAxisSpacing: 20,
-                  mainAxisSpacing: 20),
-              itemCount: controller.gridRecords.length,
-              itemBuilder: ((_, index) {
-                final item = controller.gridRecords[index];
-                return BadgeTile(
-                    record: item,);
-              }),
-            );
-          }
-        ),
+        child: Obx(() {
+          final controller = Get.find<MineController>();
+          return GridView.builder(
+            padding: EdgeInsets.all(24),
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 120,
+                childAspectRatio: 4.5 / 9,
+                crossAxisSpacing: 20,
+                mainAxisSpacing: 10),
+            itemCount: controller.gridRecords.length,
+            itemBuilder: ((_, index) {
+              final item = controller.gridRecords[index];
+              return BadgeTile(
+                record: item,
+              );
+            }),
+          );
+        }),
       ),
     );
   }
