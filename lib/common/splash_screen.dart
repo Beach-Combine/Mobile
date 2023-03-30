@@ -19,7 +19,6 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    removeToken();
     checkToken();
     super.initState();
   }
@@ -33,6 +32,13 @@ class _SplashScreenState extends State<SplashScreen> {
     final refreshToken = await storage.read(REFRESH_TOKEN_KEY);
     print(refreshToken);
     final accessToken = await storage.read(ACCESS_TOKEN_KEY);
+
+    final result = await authCtrl.refreshToken();
+    if (!result) {
+      Future.delayed(Duration(milliseconds: 2000), () {
+        Get.offAll(LoginScreen(), transition: Transition.fadeIn);
+      });
+    }
 
     if (refreshToken == null || accessToken == null) {
       Future.delayed(Duration(milliseconds: 2000), () {
