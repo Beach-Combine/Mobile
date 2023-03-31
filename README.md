@@ -1,6 +1,7 @@
 <image src='https://github.com/Beach-Combine/.github/blob/main/images/header.png?raw=true' width="800"/>
 <br/>
 
+
 ## 📢 Introduction
 
 Do you remember the warm white and soft sandy beach and the blue and transparent but cool sea under the hot sun?
@@ -43,14 +44,28 @@ This project is an app development project aimed at achieving the UN SDGs goal o
 
 <br/>
 
-## 📲 Execution Method
+## 📲 How to Start
+### Prerequisites
+To run any Android application built with Flutter you need to configure the enviroments in your machine, you can do this following the the tutorial provided by Google in Flutter website
 
-For Android User
+* Flutter SDK
+* Android Studio (to download Android SDK)
+* Xcode (for iOS develop only)
+* Any IDE with Flutter SDK installed (ie. IntelliJ, Android Studio, VSCode etc)
+* A little knowledge of Dart and Flutter
 
-1. Download apk file [here](https://drive.google.com/file/d/1b2KX29Ry0wW-YsW7Ppdn6b2xL5n8T3l2/view?usp=sharing). (Available for Android version 12 or higher)
-2. You can use it right away by installing it on your smartphone!
+### Clone
+Clone this repo to your local machine using:  
+```
+git clone https://github.com/Beach-Combine/Mobile.git
+```
+### Setup
+To run the app you need to have an online emulator or a plugged device and run the following command in the root of the application.
 
-- Currently, this service is providing beta service for Busan, Korea.
+Android
+```
+flutter run
+```
 
 <br/>
 
