@@ -57,12 +57,15 @@ class BeachSelectBottomSheet extends StatelessWidget {
                   onTap: () async {
                     print(
                         '[현재 위치] lat : ${controller.currentPosition!.latitude} | lng : ${controller.currentPosition!.longitude}');
-                    final result = await controller.checkBeachRange(
+                    bool result = await controller.checkBeachRange(
                         controller.currentPosition!.latitude,
                         controller.currentPosition!.longitude,
                         id);
                     print(result);
                     controller.setSelectedBeach(id, name);
+                    if (controller.isTest == true) {
+                      result = true;
+                    }
                     if (result) {
                       await availableCameras().then((value) => Navigator.push(
                           context,

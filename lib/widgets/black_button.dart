@@ -8,12 +8,14 @@ class BlackButton extends StatelessWidget {
   final double height;
   final int? point;
   final onTap;
+  final double width;
 
   const BlackButton(
       {super.key,
       required this.height,
       required this.text,
       this.point,
+      this.width = double.infinity,
       required this.onTap});
 
   @override
@@ -21,7 +23,7 @@ class BlackButton extends StatelessWidget {
     return GestureDetector(
         onTap: onTap,
         child: Container(
-          width: double.infinity,
+          width: width,
           height: height,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8), color: Colors.black),

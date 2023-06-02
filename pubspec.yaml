@@ -60,6 +60,7 @@ dependencies:
       git:
         url: https://github.com/elephantum/tflite_flutter_helper.git
         ref: a7d7a59a33f7cffa0a2a12ab05625807622cc97a
+  onboarding_overlay: ^3.2.1
 
 
 
@@ -93,6 +94,8 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/fonts/
+    - assets/logo/
+    - assets/tutorial/
     - assets/models/model.tflite
   #   - images/a_dot_ham.jpeg
 

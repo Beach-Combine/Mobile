@@ -22,8 +22,13 @@ class MapController extends GetxController {
   List<BeachLocation> beachLocations = <BeachLocation>[].obs;
   List<TrashcanLocation> trashcanLocations = <TrashcanLocation>[].obs;
   var markers = Set<Marker>().obs;
+  var testbeachSelectionMarkers = RxSet<Marker>();
+  var testtrashcanSelectionMarkers = RxSet<Marker>();
   var beachSelectionMarkers = RxSet<Marker>();
   var trashcanSelectionMarkers = RxSet<Marker>();
+
+  double testLatDiffer = 0.0;
+  double testLngDiffer = 0.0;
 
   var isLoading = false.obs;
   LocationService locationService = LocationService();
@@ -35,6 +40,8 @@ class MapController extends GetxController {
   String selectedBeachName = '';
   var isBottomSheetOpen = false.obs;
   PanelController pc = PanelController();
+  bool isTest = false;
+  // final testingPosition;
 
   setSelectedBeach(int id, String name) {
     selectedBeach = id;

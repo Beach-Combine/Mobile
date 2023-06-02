@@ -10,16 +10,16 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:custom_marker/marker_icon.dart';
 
-class BeachSelectScreen extends StatefulWidget {
-  const BeachSelectScreen({
+class TestBeachSelectScreen extends StatefulWidget {
+  const TestBeachSelectScreen({
     super.key,
   });
 
   @override
-  State<BeachSelectScreen> createState() => _BeachSelectScreenState();
+  State<TestBeachSelectScreen> createState() => _TestBeachSelectScreenState();
 }
 
-class _BeachSelectScreenState extends State<BeachSelectScreen> {
+class _TestBeachSelectScreenState extends State<TestBeachSelectScreen> {
   GoogleMapController? mapController;
   Position? currentPosition;
   StreamSubscription? stream;
@@ -34,7 +34,7 @@ class _BeachSelectScreenState extends State<BeachSelectScreen> {
   }
 
   Set<Marker> getMarkers() {
-    controller.beachSelectionMarkers.forEach((marker) {
+    controller.testbeachSelectionMarkers.forEach((marker) {
       if (!marker.markerId.value.contains('trashcan')) {
         markers.add(marker);
       }
@@ -73,8 +73,11 @@ class _BeachSelectScreenState extends State<BeachSelectScreen> {
                   zoomControlsEnabled: false,
                   myLocationButtonEnabled: true,
                   initialCameraPosition: CameraPosition(
-                    target: LatLng(controller.currentPosition.latitude,
-                        controller.currentPosition.longitude),
+                    target: LatLng(
+                        controller.currentPosition.latitude -
+                            controller.testLatDiffer,
+                        controller.currentPosition.longitude -
+                            controller.testLngDiffer),
                     zoom: 16.5,
                   ),
                   onMapCreated: (GoogleMapController controller) {

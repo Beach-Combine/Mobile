@@ -1,6 +1,8 @@
+import 'package:beach_combine/screens/Home/notice_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomeAppbar extends StatelessWidget with PreferredSizeWidget {
@@ -28,6 +30,23 @@ class HomeAppbar extends StatelessWidget with PreferredSizeWidget {
             Colors.white.withOpacity(0.0)
           ],
         ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: GestureDetector(
+              onTap: () {
+                Get.to(NoticeScreen());
+              },
+              child: Image.asset(
+                'assets/icons/notice.png',
+                width: 20,
+              ),
+            ),
+          ),
+        ],
       ),
       // child: Row(
       //     crossAxisAlignment: CrossAxisAlignment.start,

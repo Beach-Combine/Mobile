@@ -4,7 +4,9 @@ import 'package:beach_combine/controllers/map_controller.dart';
 import 'package:beach_combine/screens/Home/beach_select_screen.dart';
 import 'package:beach_combine/screens/Home/cleaning_screen.dart';
 import 'package:beach_combine/screens/Home/before_preview_screen.dart';
+import 'package:beach_combine/screens/Home/test_beach_select_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
+import 'package:beach_combine/widgets/black_button.dart';
 import 'package:beach_combine/widgets/home_appbar.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +26,7 @@ class _MapScreenState extends State<MapScreen> {
   Position? currentPosition;
   Set<Marker> markers = {};
   StreamSubscription? stream;
+  // LatLng(35.1532, 129.1190);
 
   BitmapDescriptor currentLocationIcon = BitmapDescriptor.defaultMarker;
 
@@ -108,6 +111,10 @@ class _MapScreenState extends State<MapScreen> {
     );
     currentPosition = position;
     Get.find<MapController>().currentPosition = position;
+    locationCtrl.testLatDiffer = position.latitude - 35.1532;
+    locationCtrl.testLngDiffer = position.longitude - 129.1190;
+    print(locationCtrl.testLatDiffer);
+    print(locationCtrl.testLngDiffer);
 
     locationCtrl.markers.add(
       Marker(
@@ -128,6 +135,22 @@ class _MapScreenState extends State<MapScreen> {
         icon: currentLocationIcon,
         markerId: MarkerId('current_position'),
         position: LatLng(position.latitude, position.longitude),
+      ),
+    );
+    locationCtrl.testbeachSelectionMarkers.add(
+      Marker(
+        icon: currentLocationIcon,
+        markerId: MarkerId('current_position'),
+        position: LatLng(position.latitude - locationCtrl.testLatDiffer,
+            position.longitude - locationCtrl.testLngDiffer),
+      ),
+    );
+    locationCtrl.testtrashcanSelectionMarkers.add(
+      Marker(
+        icon: currentLocationIcon,
+        markerId: MarkerId('current_position'),
+        position: LatLng(position.latitude - locationCtrl.testLatDiffer,
+            position.longitude - locationCtrl.testLngDiffer),
       ),
     );
 
@@ -167,6 +190,27 @@ class _MapScreenState extends State<MapScreen> {
           position: LatLng(position.latitude, position.longitude),
         ),
       );
+      locationCtrl.testbeachSelectionMarkers
+          .removeWhere((marker) => marker.markerId.value == 'current_position');
+      locationCtrl.testbeachSelectionMarkers.add(
+        Marker(
+          icon: currentLocationIcon,
+          markerId: MarkerId('current_position'),
+          position: LatLng(position.latitude - locationCtrl.testLatDiffer,
+              position.longitude - locationCtrl.testLngDiffer),
+        ),
+      );
+
+      locationCtrl.testtrashcanSelectionMarkers
+          .removeWhere((marker) => marker.markerId.value == 'current_position');
+      locationCtrl.testtrashcanSelectionMarkers.add(
+        Marker(
+          icon: currentLocationIcon,
+          markerId: MarkerId('current_position'),
+          position: LatLng(position.latitude - locationCtrl.testLatDiffer,
+              position.longitude - locationCtrl.testLngDiffer),
+        ),
+      );
     });
   }
 }
@@ -183,43 +227,82 @@ class _DoubleFloatingButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          GestureDetector(
-            child: Container(
-              height: 60,
-              width: 222,
-              decoration: BoxDecoration(
-                  color: Colors.black, borderRadius: BorderRadius.circular(50)),
-              child: Center(
-                child: Text(
-                  "Start cleaning here",
-                  style: Styles.body12Text.copyWith(color: Colors.white),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GestureDetector(
+                child: Container(
+                  height: 40,
+                  width: 100,
+                  decoration: BoxDecoration(
+                      color: Styles.buttonPrimaryColor,
+                      borderRadius: BorderRadius.circular(50)),
+                  child: Center(
+                    child: Text(
+                      "Test",
+                      style: Styles.body12Text,
+                    ),
+                  ),
+                ),
+                onTap: () async {
+                  controller.isTest = true;
+                  Get.to(TestBeachSelectScreen(), arguments: controller);
+                },
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 20 + 182,
+              )
+            ],
+          ),
+          SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Column(
+                children: [
+                  GestureDetector(
+                    child: Container(
+                      height: 60,
+                      width: 222,
+                      decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(50)),
+                      child: Center(
+                        child: Text(
+                          "Start cleaning here",
+                          style:
+                              Styles.body12Text.copyWith(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                    onTap: () async {
+                      Get.to(BeachSelectScreen(), arguments: controller);
+                    },
+                  ),
+                ],
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 20,
+              ),
+              GestureDetector(
+                onTap: onTap,
+                child: Container(
+                  height: 60,
+                  width: 60,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(100)),
+                  child: Center(
+                    child: ImageIcon(
+                      AssetImage("assets/icons/location.png"),
+                    ),
+                  ),
                 ),
               ),
-            ),
-            onTap: () async {
-              Get.to(BeachSelectScreen(), arguments: controller);
-            },
-          ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width / 20,
-          ),
-          GestureDetector(
-            onTap: onTap,
-            child: Container(
-              height: 60,
-              width: 60,
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(100)),
-              child: Center(
-                child: ImageIcon(
-                  AssetImage("assets/icons/location.png"),
-                ),
-              ),
-            ),
+            ],
           ),
         ],
       ),

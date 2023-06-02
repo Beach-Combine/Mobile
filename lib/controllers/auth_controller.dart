@@ -1,7 +1,9 @@
 import 'package:beach_combine/common/beach_combine.dart';
 import 'package:beach_combine/data.dart';
+import 'package:beach_combine/screens/Admin/admin_screen.dart';
 import 'package:beach_combine/screens/Home/method_select_screen.dart';
 import 'package:beach_combine/screens/Home/saperate_trash_screen.dart';
+import 'package:beach_combine/screens/Tutorial/tutorial_screen.dart';
 import 'package:beach_combine/screens/login_screen.dart';
 import 'package:beach_combine/services/auth_service.dart';
 import 'package:beach_combine/utils/token_manager.dart';
@@ -21,6 +23,8 @@ class AuthController extends GetxController with TokenManager {
   var email;
   var id;
   var name;
+  var role;
+  var tutorialCompleted = false;
 
   User? get userProfile => auth.currentUser;
 
@@ -38,9 +42,12 @@ class AuthController extends GetxController with TokenManager {
 
       final bool isFinished = await _login();
       print(FirebaseAuth.instance.currentUser);
-      if (isFinished) {
-        Get.offAll(BeachCombine());
-        // Get.offAll(SeperateTrashScreen());
+      if (isFinished && role == 'ROLE_USER') {
+        // Get.offAll(BeachCombine());
+        // Get.offAll(AdminScreen());
+        Get.offAll(TutorialScreen());
+      } else {
+        Get.offAll(AdminScreen());
       }
     } catch (e) {
       print(e);
@@ -56,17 +63,21 @@ class AuthController extends GetxController with TokenManager {
         photoUrl: googleAcc.value!.photoUrl!,
         code: googleAcc.value!.serverAuthCode!,
         email: googleAcc.value!.email);
-    return result;
+    role = result['role'];
+    print(role);
+    return result['result'];
   }
 
   Future<bool> refreshToken() async {
     final result = await authService.refreshToken();
-    return result;
+    role = result['role'];
+    print(role);
+    return result['result'];
   }
 
   Future<void> logoutGoogle() async {
     await _googleSignIn.signOut();
-    await authService.logout();
+    // await authService.logout();
     Future.wait(
         [removeToken(ACCESS_TOKEN_KEY), removeToken(REFRESH_TOKEN_KEY)]);
     Get.offAll(LoginScreen()); // navigate to your wanted page after logout.
