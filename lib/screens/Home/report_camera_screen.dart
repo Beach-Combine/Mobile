@@ -13,9 +13,12 @@ import 'package:get/get.dart';
 class ReportCameraScreen extends StatefulWidget {
   final List<CameraDescription>? cameras;
 
+  final bool isTest;
+
   const ReportCameraScreen({
     super.key,
     required this.cameras,
+    this.isTest = false,
   });
 
   @override
@@ -51,7 +54,7 @@ class _ReportCameraScreenState extends State<ReportCameraScreen> {
       print('시작');
       XFile picture = await controller.takePicture();
       print('끝');
-      Get.to(ReportPreviewScreen(picture: picture));
+      Get.to(ReportPreviewScreen(picture: picture, isTest: widget.isTest,));
       // Navigator.push(
       //     context,
       //     MaterialPageRoute(

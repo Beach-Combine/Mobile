@@ -14,11 +14,13 @@ class CameraScreen extends StatefulWidget {
   final onPressed;
   final text;
   final imageType;
+  final bool isTest;
   const CameraScreen(
       {super.key,
       required this.cameras,
       required this.onPressed,
       required this.imageType,
+      required this.isTest,
       required this.text});
 
   @override
@@ -59,8 +61,11 @@ class _CameraScreenState extends State<CameraScreen> {
               picture: picture,
               onTap: widget.onPressed,
             ))
-          : Get.to(
-              AfterPreviewScreen(picture: picture, onTap: widget.onPressed));
+          : Get.to(AfterPreviewScreen(
+              picture: picture,
+              onTap: widget.onPressed,
+              isTest: widget.isTest,
+            ));
       // Navigator.push(
       //     context,
       //     MaterialPageRoute(

@@ -14,6 +14,7 @@ class TrashCanSelectBottomSheet extends StatelessWidget {
   final String time;
   final int range;
   final int beachId;
+  final bool isTest;
   TrashCanSelectBottomSheet({
     required this.beachId,
     required this.lat,
@@ -21,6 +22,7 @@ class TrashCanSelectBottomSheet extends StatelessWidget {
     required this.name,
     required this.time,
     required this.range,
+    this.isTest = false,
     Key? key,
   }) : super(key: key);
   final controller = Get.find<MapController>();
@@ -57,18 +59,33 @@ class TrashCanSelectBottomSheet extends StatelessWidget {
                   text: 'Saparate the trash here',
                   onTap: () async {
                     final image = await controller.getBeachBadge(beachId);
-                    final isChecked =
-                        await controller.checkTrashcanRange(lat, lng);
+                    late bool isChecked;
+                    print(isTest);
+                    if (isTest) {
+                      isChecked =
+                          await controller.testCheckTrashcanRange(lat, lng);
+                    } else {
+                      isChecked = await controller.checkTrashcanRange(lat, lng);
+                    }
                     if (isChecked) {
-                      final result = await controller.getPoint(0);
-                      if (result) {
+                      if (isTest) {
                         Get.offAll(RewardScreen(
-                          location: name,
-                          isDifferentArea: false,
-                          time: time,
-                          range: range,
-                          image: image,
-                        ));
+                            location: name,
+                            isDifferentArea: false,
+                            time: time,
+                            range: range,
+                            image: image));
+                      } else {
+                        final result = await controller.getPoint(0);
+                        if (result) {
+                          Get.offAll(RewardScreen(
+                            location: name,
+                            isDifferentArea: false,
+                            time: time,
+                            range: range,
+                            image: image,
+                          ));
+                        }
                       }
                     } else {
                       Get.dialog(OutOfRangeTrashcanModal());

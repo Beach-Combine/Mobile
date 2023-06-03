@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:beach_combine/common/beach_combine.dart';
+import 'package:beach_combine/controllers/map_controller.dart';
 import 'package:beach_combine/controllers/time_controller.dart';
 import 'package:beach_combine/data.dart';
 import 'package:beach_combine/screens/Home/camera_screen.dart';
@@ -17,6 +18,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../controllers/range_controller.dart';
 
 class CleaningScreen extends StatefulWidget {
+  CleaningScreen({super.key, required this.isTest});
+
+  final bool isTest;
   @override
   CleaningScreennState createState() => CleaningScreennState();
 }
@@ -63,8 +67,14 @@ class CleaningScreennState extends State<CleaningScreen> {
             : Stack(children: [
                 GoogleMap(
                   initialCameraPosition: CameraPosition(
-                    target: LatLng(
-                        currentPosition!.latitude, currentPosition!.longitude),
+                    target: widget.isTest
+                        ? LatLng(
+                            currentPosition!.latitude -
+                                Get.find<MapController>().testLatDiffer,
+                            currentPosition!.longitude -
+                                Get.find<MapController>().testLngDiffer)
+                        : LatLng(currentPosition!.latitude,
+                            currentPosition!.longitude),
                     zoom: 15,
                   ),
                   onMapCreated: (GoogleMapController controller) {
@@ -74,8 +84,10 @@ class CleaningScreennState extends State<CleaningScreen> {
                 ),
                 Align(
                     alignment: Alignment.bottomCenter,
-                    child:
-                        _BottomSheetCleaning(timecontroller: timecontroller)),
+                    child: _BottomSheetCleaning(
+                      timecontroller: timecontroller,
+                      isTest: widget.isTest,
+                    )),
                 Padding(
                   padding: const EdgeInsets.all(50.0),
                   child: Align(
@@ -124,7 +136,11 @@ class CleaningScreennState extends State<CleaningScreen> {
         Marker(
           icon: currentLocationIcon,
           markerId: MarkerId('current_position'),
-          position: LatLng(position.latitude, position.longitude),
+          position: widget.isTest
+              ? LatLng(
+                  position.latitude - Get.find<MapController>().testLatDiffer,
+                  position.longitude - Get.find<MapController>().testLngDiffer)
+              : LatLng(position.latitude, position.longitude),
         ),
       );
     });
@@ -140,7 +156,12 @@ class CleaningScreennState extends State<CleaningScreen> {
           Marker(
             icon: currentLocationIcon,
             markerId: MarkerId('current_position'),
-            position: LatLng(position.latitude, position.longitude),
+            position: widget.isTest
+                ? LatLng(
+                    position.latitude - Get.find<MapController>().testLatDiffer,
+                    position.longitude -
+                        Get.find<MapController>().testLngDiffer)
+                : LatLng(position.latitude, position.longitude),
           ),
         );
       });
@@ -152,7 +173,9 @@ class _BottomSheetCleaning extends StatefulWidget {
   const _BottomSheetCleaning({
     Key? key,
     required this.timecontroller,
+    required this.isTest,
   }) : super(key: key);
+  final bool isTest;
 
   final TimerController timecontroller;
 
@@ -246,10 +269,13 @@ class _BottomSheetCleaningState extends State<_BottomSheetCleaning> {
                       Get.find<TimerController>().setCleaningTime();
                       await availableCameras()
                           .then((value) => Get.to(CameraScreen(
+                                isTest: widget.isTest,
                                 cameras: value,
                                 text: 'after',
                                 imageType: AFTER_IMAGE,
-                                onPressed: () => Get.to(MethodSelectScreen()),
+                                onPressed: () => Get.to(MethodSelectScreen(
+                                  isTest: widget.isTest,
+                                )),
                               )));
                     });
                   },

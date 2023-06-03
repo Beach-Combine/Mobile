@@ -1,8 +1,12 @@
 import 'package:beach_combine/controllers/classifier_controller.dart';
+import 'package:beach_combine/controllers/map_controller.dart';
+import 'package:beach_combine/controllers/range_controller.dart';
 import 'package:beach_combine/controllers/record_controller.dart';
+import 'package:beach_combine/controllers/time_controller.dart';
 import 'package:beach_combine/screens/Home/different_area_screen.dart';
 import 'package:beach_combine/screens/Home/nearby_trashcan_screen_temp.dart';
 import 'package:beach_combine/screens/Home/saperate_trash_screen.dart';
+import 'package:beach_combine/screens/Home/test_saperate_trash_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:beach_combine/widgets/black_button.dart';
 import 'package:beach_combine/widgets/primary_button.dart';
@@ -12,7 +16,8 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
 class MethodSelectScreen extends StatelessWidget {
-  MethodSelectScreen({super.key});
+  MethodSelectScreen({super.key, required this.isTest});
+  final bool isTest;
 
   final recordController = Get.put(RecordController());
   final classifierController = Get.put(ClassifierController());
@@ -72,10 +77,19 @@ class MethodSelectScreen extends StatelessWidget {
                             height: 60,
                             text: 'Go to seperate the trash',
                             onTap: () async {
-                              final result =
-                                  await recordController.recordCleaning();
-                              if (result) {
-                                Get.offAll(SeperateTrashScreen());
+                              if (isTest) {
+                                Get.find<MapController>().cleaningTime =
+                                    Get.find<TimerController>().cleaningTime;
+                                Get.find<MapController>().cleaningRange =
+                                    Get.find<LocationController>()
+                                        .cleaningDistance;
+                                Get.offAll(TestSeperateTrashScreen());
+                              } else {
+                                final result =
+                                    await recordController.recordCleaning();
+                                if (result) {
+                                  Get.offAll(SeperateTrashScreen());
+                                }
                               }
                             }),
                       ]),

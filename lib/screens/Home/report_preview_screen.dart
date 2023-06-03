@@ -18,11 +18,8 @@ class ReportPreviewScreen extends StatelessWidget {
   final XFile picture;
   final mapController = Get.find<MapController>();
   final reportController = Get.put(ReportController());
-
-  ReportPreviewScreen({
-    super.key,
-    required this.picture,
-  });
+  final bool isTest;
+  ReportPreviewScreen({super.key, required this.picture, this.isTest = false});
 
   @override
   Widget build(BuildContext context) {
@@ -68,20 +65,32 @@ class ReportPreviewScreen extends StatelessWidget {
                         )),
                     TextButton(
                         onPressed: () async {
-                          final lat = mapController.currentPosition!.latitude;
-                          final lng = mapController.currentPosition!.longitude;
-                          final result = await reportController.reportTrachcan(
-                              lat, lng, picture);
-                          if (result) {
+                          if (isTest) {
                             final image = await mapController
                                 .getBeachBadge(mapController.selectedBeach);
-                            await mapController.getPoint(1);
                             Get.offAll(RewardScreen(
                                 location: mapController.selectedBeachName,
                                 isDifferentArea: true,
                                 time: mapController.cleaningTime,
                                 range: mapController.cleaningRange,
                                 image: image));
+                          } else {
+                            final lat = mapController.currentPosition!.latitude;
+                            final lng =
+                                mapController.currentPosition!.longitude;
+                            final result = await reportController
+                                .reportTrachcan(lat, lng, picture);
+                            if (result) {
+                              final image = await mapController
+                                  .getBeachBadge(mapController.selectedBeach);
+                              await mapController.getPoint(1);
+                              Get.offAll(RewardScreen(
+                                  location: mapController.selectedBeachName,
+                                  isDifferentArea: true,
+                                  time: mapController.cleaningTime,
+                                  range: mapController.cleaningRange,
+                                  image: image));
+                            }
                           }
                           // Get.to(MethodSelectScreen());
                         },

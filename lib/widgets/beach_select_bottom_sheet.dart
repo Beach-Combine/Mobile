@@ -57,24 +57,38 @@ class BeachSelectBottomSheet extends StatelessWidget {
                   onTap: () async {
                     print(
                         '[현재 위치] lat : ${controller.currentPosition!.latitude} | lng : ${controller.currentPosition!.longitude}');
-                    bool result = await controller.checkBeachRange(
-                        controller.currentPosition!.latitude,
-                        controller.currentPosition!.longitude,
-                        id);
+
+                    bool result = true;
+
+                    if (controller.isTest == true) {
+                      result = await controller.checkBeachRange(
+                          controller.currentPosition!.latitude -
+                              controller.testLatDiffer,
+                          controller.currentPosition!.longitude -
+                              controller.testLngDiffer,
+                          id);
+                    } else {
+                      result = await controller.checkBeachRange(
+                          controller.currentPosition!.latitude,
+                          controller.currentPosition!.longitude,
+                          id);
+                    }
                     print(result);
                     controller.setSelectedBeach(id, name);
-                    if (controller.isTest == true) {
-                      result = true;
-                    }
+
                     if (result) {
                       await availableCameras().then((value) => Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (_) => CameraScreen(
+                                  isTest: Get.find<MapController>().isTest,
                                   text: 'before',
                                   imageType: BEFORE_IMAGE,
                                   cameras: value,
-                                  onPressed: () => Get.to(CleaningScreen())))));
+                                  onPressed: () => Get.to(CleaningScreen(
+                                        isTest:
+                                            Get.find<MapController>().isTest,
+                                      ))))));
                     } else {
                       Get.back();
                       Get.dialog(OutOfRangeModal());

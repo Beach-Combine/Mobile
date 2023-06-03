@@ -1,8 +1,11 @@
+import 'package:beach_combine/controllers/admin_controller.dart';
 import 'package:beach_combine/widgets/verification_request_card.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AdminScreen extends StatelessWidget {
-  const AdminScreen({super.key});
+  AdminScreen({super.key});
+  final AdminController adminCtrl = Get.put(AdminController(), permanent: true);
 
   @override
   Widget build(BuildContext context) {
@@ -11,21 +14,29 @@ class AdminScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              ListView.separated(
-                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return VerificationRequestCard();
-                  },
-                  separatorBuilder: (context, index) => SizedBox(
-                        height: 16,
-                      ),
-                  itemCount: 20)
-            ],
-          ),
+          child: Obx(() {
+            return adminCtrl.certificationRequests.isNotEmpty
+                ? Column(
+                    children: [
+                      ListView.separated(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 24, vertical: 16),
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            final item = adminCtrl.certificationRequests[index];
+                            return VerificationRequestCard(
+                              certificationRequests: item,
+                            );
+                          },
+                          separatorBuilder: (context, index) => SizedBox(
+                                height: 16,
+                              ),
+                          itemCount: adminCtrl.certificationRequests.length)
+                    ],
+                  )
+                : SizedBox();
+          }),
         ),
       ),
     );

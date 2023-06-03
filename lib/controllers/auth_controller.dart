@@ -44,8 +44,8 @@ class AuthController extends GetxController with TokenManager {
       print(FirebaseAuth.instance.currentUser);
       if (isFinished && role == 'ROLE_USER') {
         // Get.offAll(BeachCombine());
-        // Get.offAll(AdminScreen());
-        Get.offAll(TutorialScreen());
+        Get.offAll(AdminScreen());
+        // Get.offAll(TutorialScreen());
       } else {
         Get.offAll(AdminScreen());
       }

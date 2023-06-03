@@ -108,6 +108,33 @@ class MapController extends GetxController {
                 pc.open();
               })),
         );
+        testtrashcanSelectionMarkers.add(
+          Marker(
+              markerId: MarkerId('trashcan${element.id.toString()}'),
+              icon: await MarkerIcon.pictureAsset(
+                  assetPath: "assets/icons/trashcan.png",
+                  width: 100,
+                  height: 100),
+              position: LatLng(
+                double.parse(element.lat),
+                double.parse(element.lng),
+              ),
+              onTap: (() async {
+                pc.close();
+                await Get.bottomSheet(
+                    barrierColor: Colors.transparent,
+                    TrashCanSelectBottomSheet(
+                      lat: double.parse(element.lat),
+                      lng: double.parse(element.lng),
+                      name: selectedBeachName,
+                      time: cleaningTime,
+                      range: cleaningRange,
+                      beachId: selectedBeach,
+                      isTest: true,
+                    ));
+                pc.open();
+              })),
+        );
       });
     }
     if (onlyTrashcans == false) {
@@ -179,6 +206,31 @@ class MapController extends GetxController {
                   lng: currentPosition!.longitude,
                   id: element.id)),
         ));
+        testbeachSelectionMarkers.add(Marker(
+          markerId: MarkerId(element.id.toString()),
+          icon: element.memberImage.length == 4
+              ? await MarkerIcon.pictureAsset(
+                  assetPath: "assets/icons/${element.memberImage}.png",
+                  width: 100,
+                  height: 100)
+              : await MarkerIcon.downloadResizePictureCircle(
+                  element.memberImage,
+                  addBorder: true,
+                  borderColor: Colors.black,
+                  borderSize: 12,
+                  size: 115),
+          position: LatLng(
+            double.parse(element.lat),
+            double.parse(element.lng),
+          ),
+          onTap: () => Get.bottomSheet(
+              barrierColor: Colors.transparent,
+              BeachSelectBottomSheet(
+                  name: beachInfo!.beach.name,
+                  lat: currentPosition!.latitude,
+                  lng: currentPosition!.longitude,
+                  id: element.id)),
+        ));
       });
     }
   }
@@ -200,7 +252,21 @@ class MapController extends GetxController {
     final distance = await Geolocator.distanceBetween(
         currentPosition!.latitude, currentPosition!.longitude, lat, lng);
     print(distance);
-    if (distance <= 200) {
+    if (distance <= 50) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> testCheckTrashcanRange(double lat, double lng) async {
+    final distance = await Geolocator.distanceBetween(
+        currentPosition!.latitude - testLatDiffer,
+        currentPosition!.longitude - testLngDiffer,
+        lat,
+        lng);
+    print('test dist: ${distance}');
+    if (distance <= 50) {
       return true;
     } else {
       return false;

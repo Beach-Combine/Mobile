@@ -111,8 +111,8 @@ class _MapScreenState extends State<MapScreen> {
     );
     currentPosition = position;
     Get.find<MapController>().currentPosition = position;
-    locationCtrl.testLatDiffer = position.latitude - 35.1532;
-    locationCtrl.testLngDiffer = position.longitude - 129.1190;
+    locationCtrl.testLatDiffer = position.latitude - 35.1535;
+    locationCtrl.testLngDiffer = position.longitude - 129.1194;
     print(locationCtrl.testLatDiffer);
     print(locationCtrl.testLngDiffer);
 

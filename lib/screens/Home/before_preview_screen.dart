@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:beach_combine/controllers/image_controller.dart';
+import 'package:beach_combine/controllers/map_controller.dart';
 import 'package:beach_combine/controllers/record_controller.dart';
 import 'package:beach_combine/screens/Home/cleaning_screen.dart';
 import 'package:beach_combine/utils/app_style.dart';
@@ -68,7 +69,7 @@ class BeforePreviewScreen extends StatelessWidget {
                         onPressed: () {
                           print('beforePicture 세팅');
                           controller.beforeImage = picture;
-                          Get.offAll(CleaningScreen());
+                          Get.offAll(CleaningScreen(isTest: Get.find<MapController>().isTest,));
                         },
                         child: Text(
                           'Ok',

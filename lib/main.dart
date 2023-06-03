@@ -1,14 +1,6 @@
 import 'package:beach_combine/common/splash_screen.dart';
-import 'package:beach_combine/data.dart';
-import 'package:beach_combine/screens/Home/location_track_screen.dart';
-import 'package:beach_combine/screens/Home/map_screen.dart';
-import 'package:beach_combine/screens/Home/method_select_screen.dart';
-import 'package:beach_combine/screens/community/community_screen.dart';
-import 'package:beach_combine/screens/login_screen.dart';
-import 'package:beach_combine/screens/model_test.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:beach_combine/utils/token_manager.dart';
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -36,11 +28,11 @@ class MyApp extends StatelessWidget with TokenManager {
       theme: ThemeData(
           primaryColor: Styles.primaryColor, fontFamily: "SpoqaHanSansNeo"),
       // initialRoute: getToken(ACCESS_TOKEN_KEY) == null ? '/home' : '/login',
-      getPages: [
-        GetPage(name: '/login', page: () => LoginScreen()),
-        GetPage(name: '/home', page: () => BeachCombine()),
-        GetPage(name: '/community', page: () => CommunityScreen()),
-      ],
+      // getPages: [
+      //   GetPage(name: '/login', page: () => LoginScreen()),
+      //   GetPage(name: '/home', page: () => BeachCombine()),
+      //   GetPage(name: '/community', page: () => CommunityScreen()),
+      // ],
       home: SplashScreen(),
     );
   }

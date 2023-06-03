@@ -15,11 +15,13 @@ class AfterPreviewScreen extends StatelessWidget {
   final XFile picture;
   final onTap;
   final controller = Get.find<ImageController>();
+  final bool isTest;
 
   AfterPreviewScreen({
     super.key,
     required this.picture,
     required this.onTap,
+    required this.isTest,
   });
 
   @override
@@ -67,7 +69,9 @@ class AfterPreviewScreen extends StatelessWidget {
                     TextButton(
                         onPressed: () {
                           controller.afterImage = picture;
-                          Get.to(MethodSelectScreen());
+                          Get.to(MethodSelectScreen(
+                            isTest: isTest,
+                          ));
                         },
                         child: Text(
                           'Ok',
