@@ -73,7 +73,8 @@ In the actual Busan sea, all features can be used without any issues. Come and e
 
 ## 📽 Demo Video Link
 
-[![BeachCombine](https://github.com/Beach-Combine/.github/blob/main/images/video.JPG?raw=true)](https://www.youtube.com/watch?v=QcZ9F5scACw)
+[![BeachCombine](https://github.com/Beach-Combine/.github/blob/main/images/video.JPG?raw=true)](https://youtu.be/AJusc-HUwQA)
+
 
 <br/>
 
