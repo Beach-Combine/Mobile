@@ -6,6 +6,7 @@ import 'package:beach_combine/screens/Home/saperate_trash_screen.dart';
 import 'package:beach_combine/screens/Tutorial/tutorial_screen.dart';
 import 'package:beach_combine/screens/login_screen.dart';
 import 'package:beach_combine/services/auth_service.dart';
+import 'package:beach_combine/services/member_service.dart';
 import 'package:beach_combine/utils/token_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -15,6 +16,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthController extends GetxController with TokenManager {
   final authService = AuthService();
+  final memberService = MemberService();
   FirebaseAuth auth = FirebaseAuth.instance;
   var _googleSignIn = GoogleSignIn();
   var googleAcc = Rx<GoogleSignInAccount?>(null);
@@ -45,7 +47,11 @@ class AuthController extends GetxController with TokenManager {
       if (isFinished && role == 'ROLE_USER') {
         // Get.offAll(BeachCombine());
         // Get.offAll(AdminScreen());
-        Get.offAll(TutorialScreen());
+        if (tutorialCompleted) {
+          Get.offAll(BeachCombine());
+        } else {
+          Get.offAll(TutorialScreen());
+        }
       } else {
         Get.offAll(AdminScreen());
       }
@@ -64,8 +70,13 @@ class AuthController extends GetxController with TokenManager {
         code: googleAcc.value!.serverAuthCode!,
         email: googleAcc.value!.email);
     role = result['role'];
+    tutorialCompleted = result['tutorialCompleted'];
     print(role);
     return result['result'];
+  }
+
+  Future<bool> tutorialComplete() async {
+    return await memberService.tutorialComplete();
   }
 
   Future<bool> refreshToken() async {

@@ -37,7 +37,11 @@ class AuthService with TokenManager {
           }),
           data: {"refreshToken": "Bearer ${getToken(REFRESH_TOKEN_KEY)}"});
       saveToken(ACCESS_TOKEN_KEY, res.data['accessToken']);
-      return {'result': true, 'role': res.data['role'], 'tutorialCompleted' : res.data['tutorialCompleted']};
+      return {
+        'result': true,
+        'role': res.data['role'],
+        'tutorialCompleted': res.data['tutorialCompleted']
+      };
     } catch (e) {
       print(e);
       return {'result': false};
@@ -78,7 +82,12 @@ class AuthService with TokenManager {
       print(result.accessToken);
       saveToken(ACCESS_TOKEN_KEY, result.accessToken);
       saveToken(REFRESH_TOKEN_KEY, result.refreshToken);
-      return {'result': true, 'role': res.data['role'], 'tutorialCompleted' : res.data['tutorialCompleted']};
+      print(res.data['tutorialCompleted']);
+      return {
+        'result': true,
+        'role': res.data['role'],
+        'tutorialCompleted': res.data['tutorialCompleted']
+      };
     } catch (e) {
       print(e);
       return {'result': false};

@@ -1,4 +1,5 @@
 import 'package:beach_combine/common/beach_combine.dart';
+import 'package:beach_combine/controllers/auth_controller.dart';
 import 'package:beach_combine/utils/app_style.dart';
 import 'package:beach_combine/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
@@ -51,8 +52,12 @@ class _TutorialScreenState extends State<TutorialScreen> {
                           elevation: 0,
                           backgroundColor: Styles.primaryColor,
                           fixedSize: Size(double.infinity, 60)),
-                      onPressed: () {
-                        Get.offAll(BeachCombine());
+                      onPressed: () async {
+                        final result =
+                            await Get.find<AuthController>().tutorialComplete();
+                        if (result) {
+                          Get.offAll(BeachCombine());
+                        }
                       },
                       child: Text(
                         "Let's start!",
