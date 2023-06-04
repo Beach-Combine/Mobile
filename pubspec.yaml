@@ -61,6 +61,7 @@ dependencies:
         url: https://github.com/elephantum/tflite_flutter_helper.git
         ref: a7d7a59a33f7cffa0a2a12ab05625807622cc97a
   onboarding_overlay: ^3.2.1
+  smooth_page_indicator: ^1.1.0
 
 
 

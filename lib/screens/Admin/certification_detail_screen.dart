@@ -5,6 +5,7 @@ import 'package:beach_combine/widgets/primary_button.dart';
 import 'package:custom_marker/marker_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class CertificationDetailScreen extends StatefulWidget {
   CertificationDetailScreen({super.key, required this.certificationRequest});
@@ -18,6 +19,7 @@ class CertificationDetailScreen extends StatefulWidget {
 
 class _CertificationDetailScreenState extends State<CertificationDetailScreen> {
   Set<Marker> markers = {};
+  final controller = PageController();
 
   @override
   void initState() {
@@ -110,16 +112,44 @@ class _CertificationDetailScreenState extends State<CertificationDetailScreen> {
               ),
               SizedBox(
                 height: middleSize,
-                child: GoogleMap(
-                  myLocationButtonEnabled: false,
-                  zoomControlsEnabled: false,
-                  initialCameraPosition: CameraPosition(
-                    target: LatLng(
-                        double.parse(widget.certificationRequest.lat),
-                        double.parse(widget.certificationRequest.lng)),
-                    zoom: 16.5,
-                  ),
-                  markers: markers,
+                child: Stack(
+                  children: [
+                    PageView(
+                      controller: controller,
+                      children: [
+                        GoogleMap(
+                          myLocationButtonEnabled: false,
+                          zoomControlsEnabled: false,
+                          initialCameraPosition: CameraPosition(
+                            target: LatLng(
+                                double.parse(widget.certificationRequest.lat),
+                                double.parse(widget.certificationRequest.lng)),
+                            zoom: 16.5,
+                          ),
+                          markers: markers,
+                        ),
+                        Image.network(
+                            widget.certificationRequest.trashcanImage),
+                      ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 10),
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: SmoothPageIndicator(
+                          controller: controller,
+                          count: 2,
+                          effect: WormEffect(
+                            activeDotColor: Colors.black,
+                            dotColor: Colors.white,
+                            dotHeight: 4,
+                            dotWidth: 4,
+                            type: WormType.normal,
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
                 ),
               ),
               SizedBox(
